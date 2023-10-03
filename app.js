@@ -1,5 +1,5 @@
 
-	document.getElementById("verh").innerHTML = "Прива!"
+	document.getElementById("verh").innerHTML = "Прива!";
 let tg = window.Telegram.WebApp;
 
 tg.expand();
