@@ -1,4 +1,4 @@
-document.onload = function() {
+
 	document.getElementById("verh").innerHTML = "Прива!"
 let tg = window.Telegram.WebApp;
 
@@ -96,4 +96,4 @@ p.innerText = `${tg.initDataUnsafe.user.first_name}
 ${tg.initDataUnsafe.user.last_name}`;
 
 usercard.appendChild(p);
-}
+
