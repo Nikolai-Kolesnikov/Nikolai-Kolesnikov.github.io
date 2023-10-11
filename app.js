@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 16";
+document.getElementById("verh").innerHTML = "dynamic 17";
 
 async function sendUserAnswer(answer) {
     let ret;
@@ -13,6 +13,7 @@ async function sendUserAnswer(answer) {
     });
     let responseJson = await response.json();
     ret = JSON.stringify(responseJson);
+    document.getElementById("verh").innerHTML = ret;
     return ret;
 }
 
@@ -41,4 +42,4 @@ try {
 } catch (err) {
     strtrtr = err;
 }
-document.getElementById("verh").innerHTML = strtrtr;
+
