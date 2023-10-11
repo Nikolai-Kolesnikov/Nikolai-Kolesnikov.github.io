@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 20";
+document.getElementById("verh").innerHTML = "dynamic 21";
 
 /*async function sendUserAnswer(answer) {
     let ret;
@@ -24,14 +24,18 @@ fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-}).then((response) => {
+})
+.then((response) => {
     document.getElementById("sverh").innerHTML = response;
-    return response.json()
-}).then((res) => {
+    return response.json();
+})
+.then((res) => {
     document.getElementById("verh").innerHTML = JSON.stringify(res);
-}).catch((error) => {
+})
+.catch((error) => {
    document.getElementById("verh").innerHTML = error;
-});
+})
+;
 
 let tg = window.Telegram;
 
