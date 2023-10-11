@@ -1,7 +1,7 @@
 
-document.getElementById("verh").innerHTML = "dynamic 17";
+document.getElementById("verh").innerHTML = "dynamic 18";
 
-async function sendUserAnswer(answer) {
+/*async function sendUserAnswer(answer) {
     let ret;
     let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
         method: 'post',
@@ -15,11 +15,11 @@ async function sendUserAnswer(answer) {
     ret = JSON.stringify(responseJson);
     document.getElementById("verh").innerHTML = ret;
     return ret;
-}
+}*/
 
-/*fetch("https://jsonplaceholder.typicode.com/posts", {
+fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
     method: 'post',
-    body: post,
+    body: JSON.stringify({'answer':'kuku'}),
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -27,19 +27,10 @@ async function sendUserAnswer(answer) {
 }).then((response) => {
     return response.json()
 }).then((res) => {
-    if (res.status === 201) {
-        console.log("Post successfully created!")
-    }
+    document.getElementById("verh").innerHTML = JSON.stringify(res);
 }).catch((error) => {
-    console.log(error)
+   document.getElementById("verh").innerHTML = error;
 });*/
 
 let tg = window.Telegram;
-
-let strtrtr;
-try {
-    sendUserAnswer('кукарамба').then((result) => {strtrtr = result});
-} catch (err) {
-    strtrtr = err;
-}
 
