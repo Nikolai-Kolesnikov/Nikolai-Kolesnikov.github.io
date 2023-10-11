@@ -1,8 +1,19 @@
 
-document.getElementById("verh").innerHTML = "dynamic 13";
+document.getElementById("verh").innerHTML = "dynamic 14";
 
-function isFetchAPISupported() {
-    return 'fetch' in window;
+async function sendUserAnswer(answer) {
+    let ret;
+    let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
+        method: 'post',
+        body: answer,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    });
+    let responseJson = await response.json();
+    ret = JSON.stringify(responseJson);
+    return ret;
 }
 
 /*fetch("https://jsonplaceholder.typicode.com/posts", {
@@ -24,6 +35,5 @@ function isFetchAPISupported() {
 
 let tg = window.Telegram;
 
-let strtrtr = `dynamic 13 ### <br>${JSON.stringify(tg)}`;
-//let strtrtr = `isFetchAPISupported() = ${isFetchAPISupported()}`;
+let strtrtr = await sendUserAnswer('кукарамба');
 document.getElementById("verh").innerHTML = strtrtr;
