@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 14";
+document.getElementById("verh").innerHTML = "dynamic 15";
 
 async function sendUserAnswer(answer) {
     let ret;
@@ -35,5 +35,10 @@ async function sendUserAnswer(answer) {
 
 let tg = window.Telegram;
 
-let strtrtr = await sendUserAnswer('кукарамба');
+let strtrtr;
+try {
+    strtrtr = await sendUserAnswer('кукарамба');
+} catch (err) {
+    strtrtr = err;
+}
 document.getElementById("verh").innerHTML = strtrtr;
