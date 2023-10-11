@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 12";
+document.getElementById("verh").innerHTML = "dynamic 13";
 
 function isFetchAPISupported() {
     return 'fetch' in window;
@@ -22,8 +22,8 @@ function isFetchAPISupported() {
     console.log(error)
 });*/
 
-let tg = window.Telegram.WebApp;
+let tg = window.Telegram;
 
-let strtrtr = `dynamic 12 ### <br>${JSON.stringify(tg)}`;
+let strtrtr = `dynamic 13 ### <br>${JSON.stringify(tg)}`;
 //let strtrtr = `isFetchAPISupported() = ${isFetchAPISupported()}`;
 document.getElementById("verh").innerHTML = strtrtr;
