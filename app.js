@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 30<br>";
+document.getElementById("verh").innerHTML = "dynamic 31<br>";
 
 /*async function sendUserAnswer(answer) {
     let ret;
@@ -19,10 +19,10 @@ document.getElementById("verh").innerHTML = "dynamic 30<br>";
 
 fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
     method: 'post',
-    body: JSON.stringify({'answer':'kuku'}),
+    body: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
     headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=UTF-8'
     },
 })
 .then((response) => {
