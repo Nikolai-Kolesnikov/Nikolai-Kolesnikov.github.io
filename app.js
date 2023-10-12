@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 25<br>";
+document.getElementById("verh").innerHTML = "dynamic 26<br>";
 
 /*async function sendUserAnswer(answer) {
     let ret;
@@ -23,7 +23,8 @@ fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-    }
+    },
+    mode: 'no-cors',
 })
 .then((response) => {
     document.getElementById("verh").innerHTML += 'получен response';
