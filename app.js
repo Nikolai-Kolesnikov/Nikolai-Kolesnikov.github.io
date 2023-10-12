@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 22";
+document.getElementById("verh").innerHTML = "dynamic 23";
 
 /*async function sendUserAnswer(answer) {
     let ret;
@@ -26,14 +26,14 @@ fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
     }
 })
 .then((response) => {
-    document.getElementById("sverh").innerHTML = 'получен response';
+    document.getElementById("sverh").innerHTML += 'получен response';
     return response.json();
 })
 .then((res) => {
-    document.getElementById("verh").innerHTML = JSON.stringify(res);
+    document.getElementById("verh").innerHTML += JSON.stringify(res);
 })
 .catch((error) => {
-   document.getElementById("verh").innerHTML = error;
+   document.getElementById("verh").innerHTML += error;
 })
 ;
 
