@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 35<br>";
+document.getElementById("verh").innerHTML = "dynamic 35";
 
 let tg = window.Telegram;
 
@@ -31,7 +31,7 @@ async function sendUserAnswer(answer) {
 
 sendUserAnswer(JSON.stringify({'otvet': 'kuku'}))
 .then((sendResult) => {
-    document.getElementById("verh").innerHTML += `${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
+    document.getElementById("verh").innerHTML += `<br>${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
 })
 ;
 
