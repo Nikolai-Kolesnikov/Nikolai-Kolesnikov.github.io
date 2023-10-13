@@ -1,7 +1,13 @@
+let answerInputElm = document.createElement('textarea');
+document.body.appendChild(answerInputElm);
 
-document.getElementById("verh").innerHTML = "dynamic 38";
+window.Telegram.WebApp.BackButton.isVisible = true;
+window.Telegram.WebApp.MainButton.isVisible = true;
 
-let tg = window.Telegram;
+
+document.getElementById("verh").innerHTML = "dynamic 39";
+
+
 
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -55,28 +61,3 @@ sendUserAnswer(JSON.stringify({'otvet': 'kuku'}))
     document.getElementById("verh").innerHTML += `<br>${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
 })
 ;
-
-/*fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
-    method: 'post',
-    body: JSON.stringify({'otvet': 'kuku'}),
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8'
-    },
-})
-.then((response) => {
-    document.getElementById("verh").innerHTML += `получен response. response.headers = ${JSON.stringify(response.headers)} <br> response.statusText = ${response.statusText}`;
-    
-    return response.json();
-})
-.then((res) => {
-    document.getElementById("verh").innerHTML += JSON.stringify(res);
-})
-.catch((error) => {
-   document.getElementById("verh").innerHTML += error;
-})
-;*/
-
-
-
-
