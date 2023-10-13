@@ -1,23 +1,31 @@
 
-document.getElementById("verh").innerHTML = "dynamic 32<br>";
+document.getElementById("verh").innerHTML = "dynamic 33<br>";
 
-/*async function sendUserAnswer(answer) {
+let tg = window.Telegram;
+
+async function sendUserAnswer(answer) {
     let ret;
-    let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
-        method: 'post',
-        body: answer,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    });
-    let responseJson = await response.json();
-    ret = JSON.stringify(responseJson);
-    document.getElementById("verh").innerHTML = ret;
+    try {
+        let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
+            method: 'post',
+            body: answer,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+        let responseJson = await response.json();
+        ret = JSON.stringify(responseJson);
+    } catch (err) {
+        ret = err;
+    }
+    //document.getElementById("verh").innerHTML = ret;
     return ret;
-}*/
+}
+let sendResult = await sendUserAnswer(JSON.stringify({'otvet': 'kuku'}));
+document.getElementById("verh").innerHTML += sendResult;
 
-fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
+/*fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
     method: 'post',
     body: JSON.stringify({'otvet': 'kuku'}),
     headers: {
@@ -36,7 +44,6 @@ fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
 .catch((error) => {
    document.getElementById("verh").innerHTML += error;
 })
-;
+;*/
 
-let tg = window.Telegram;
 
