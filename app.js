@@ -4,6 +4,8 @@ document.getElementById("verh").innerHTML = "dynamic 35";
 let tg = window.Telegram;
 
 async function sendUserAnswer(answer) {
+    let retryIntervals = [1, 2, 2, 5, 5];
+    let retryCount = 0;
     async function tryRequest(answer) {
         let tryRes = {};
         try {
@@ -25,7 +27,11 @@ async function sendUserAnswer(answer) {
         }
         return tryRes;
     }
+    let reqRes;
     let reqRes = await tryRequest(answer);
+    if (reqRes.status !== 'OK') {
+        reqRes = await tryRequest(answer);
+    }
     return reqRes;
 }
 
