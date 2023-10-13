@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 33<br>";
+document.getElementById("verh").innerHTML = "dynamic 34<br>";
 
 let tg = window.Telegram;
 
@@ -22,8 +22,13 @@ async function sendUserAnswer(answer) {
     //document.getElementById("verh").innerHTML = ret;
     return ret;
 }
-let sendResult = await sendUserAnswer(JSON.stringify({'otvet': 'kuku'}));
-document.getElementById("verh").innerHTML += sendResult;
+/*let sendResult = await sendUserAnswer(JSON.stringify({'otvet': 'kuku'}));
+document.getElementById("verh").innerHTML += sendResult;*/
+sendUserAnswer(JSON.stringify({'otvet': 'kuku'}))
+.then((sendResult) => {
+    document.getElementById("verh").innerHTML += sendResult;
+})
+;
 
 /*fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
     method: 'post',
@@ -45,5 +50,7 @@ document.getElementById("verh").innerHTML += sendResult;
    document.getElementById("verh").innerHTML += error;
 })
 ;*/
+
+
 
 
