@@ -1,11 +1,10 @@
 
-document.getElementById("verh").innerHTML = "dynamic 36";
+document.getElementById("verh").innerHTML = "dynamic 37";
 
 let tg = window.Telegram;
 
 async function sendUserAnswer(answer) {
     let retryIntervals = [1, 2, 2, 5, 5];
-    let retryCount = 0;
     async function tryRequest(answer) {
         let tryRes = {};
         try {
