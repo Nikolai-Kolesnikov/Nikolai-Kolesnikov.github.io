@@ -1,5 +1,5 @@
 
-document.getElementById("verh").innerHTML = "dynamic 35";
+document.getElementById("verh").innerHTML = "dynamic 36";
 
 let tg = window.Telegram;
 
@@ -27,11 +27,15 @@ async function sendUserAnswer(answer) {
         }
         return tryRes;
     }
-    let reqRes;
-    let reqRes = await tryRequest(answer);
-    if (reqRes.status !== 'OK') {
-        reqRes = await tryRequest(answer);
+    let reqRes = {'status': 'FAIL', 'error': 'Внутренняя ошибка.'};
+    for (const ri of retryIntervals) {
+        if (reqRes.status == 'OK') {
+            break;
+        } else {
+            reqRes = await tryRequest(answer);
+        }
     }
+    
     return reqRes;
 }
 
