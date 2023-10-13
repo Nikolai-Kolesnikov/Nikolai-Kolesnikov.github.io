@@ -1,37 +1,49 @@
 
-document.getElementById("verh").innerHTML = "dynamic 37";
+document.getElementById("verh").innerHTML = "dynamic 38";
 
 let tg = window.Telegram;
 
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function postpone(fn, ms, ...args) {
+    await timeout(ms);
+    let ret = await fn(...args);
+    return ret;
+}
+
+async function tryRequest(answer) {
+    let tryRes = {};
+    try {
+        let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
+            method: 'post',
+            body: answer,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+        if (!response.ok) {
+            throw new Error("Network response was not OK");
+        }
+        let responseJson = await response.json();
+        tryRes = {'status': 'OK', 'data': responseJson};
+    } catch (err) {
+        tryRes = {'status': 'ERROR', 'error': err};
+    }
+    return tryRes;
+}
+
+
 async function sendUserAnswer(answer) {
     let retryIntervals = [1, 2, 2, 5, 5];
-    async function tryRequest(answer) {
-        let tryRes = {};
-        try {
-            let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
-                method: 'post',
-                body: answer,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8'
-                }
-            });
-            if (!response.ok) {
-                throw new Error("Network response was not OK");
-            }
-            let responseJson = await response.json();
-            tryRes = {'status': 'OK', 'data': responseJson};
-        } catch (err) {
-            tryRes = {'status': 'ERROR', 'error': err};
-        }
-        return tryRes;
-    }
-    let reqRes = {'status': 'FAIL', 'error': 'Внутренняя ошибка.'};
+    
+    let reqRes = await tryRequest(answer);
     for (const ri of retryIntervals) {
         if (reqRes.status == 'OK') {
             break;
         } else {
-            reqRes = await tryRequest(answer);
+            reqRes = await postpone(tryRequest, ri*1000, answer);
         }
     }
     
