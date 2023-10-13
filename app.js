@@ -1,32 +1,37 @@
 
-document.getElementById("verh").innerHTML = "dynamic 34<br>";
+document.getElementById("verh").innerHTML = "dynamic 35<br>";
 
 let tg = window.Telegram;
 
 async function sendUserAnswer(answer) {
-    let ret;
-    try {
-        let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
-            method: 'post',
-            body: answer,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8'
+    async function tryRequest(answer) {
+        let tryRes = {};
+        try {
+            let response = await fetch("https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf", {
+                method: 'post',
+                body: answer,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8'
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not OK");
             }
-        });
-        let responseJson = await response.json();
-        ret = JSON.stringify(responseJson);
-    } catch (err) {
-        ret = err;
+            let responseJson = await response.json();
+            tryRes = {'status': 'OK', 'data': responseJson};
+        } catch (err) {
+            tryRes = {'status': 'ERROR', 'error': err};
+        }
+        return tryRes;
     }
-    //document.getElementById("verh").innerHTML = ret;
-    return ret;
+    let reqRes = await tryRequest(answer);
+    return reqRes;
 }
-/*let sendResult = await sendUserAnswer(JSON.stringify({'otvet': 'kuku'}));
-document.getElementById("verh").innerHTML += sendResult;*/
+
 sendUserAnswer(JSON.stringify({'otvet': 'kuku'}))
 .then((sendResult) => {
-    document.getElementById("verh").innerHTML += sendResult;
+    document.getElementById("verh").innerHTML += `${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
 })
 ;
 
