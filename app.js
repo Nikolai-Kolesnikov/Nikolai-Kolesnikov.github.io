@@ -4,10 +4,11 @@
 //window.Telegram.WebApp.MainButton.isVisible = true;
 
 
-document.getElementById("verh").innerHTML = "dynamic 46";
+document.getElementById("verh").innerHTML = "dynamic 47";
 
 let answerInputElm = document.getElementById("answerInput");
 answerInputElm.focus();
+answerInputElm.click();
 
 // Делаем, чтобы textarea для ввода ответа стала auto resize
 // Source: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
@@ -24,7 +25,7 @@ answerSubmitBtnElm.addEventListener("click", onAnswerSubmitBtnClick);
 function onAnswerSubmitBtnClick() {
   sendUserAnswer(JSON.stringify({'otvet': answerInputElm.value}))
   .then((sendResult) => {
-    document.getElementById("verh").innerHTML += `Сервер ответил:<br>${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
+    document.getElementById("verh").innerHTML += `<br>Сервер ответил:<br>${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
   })
   ;
 }
