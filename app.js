@@ -4,7 +4,7 @@
 //window.Telegram.WebApp.MainButton.isVisible = true;
 
 
-document.getElementById("verh").innerHTML = "dynamic 47";
+document.getElementById("verh").innerHTML = "dynamic 48";
 
 let answerInputElm = document.getElementById("answerInput");
 answerInputElm.focus();
@@ -23,7 +23,7 @@ function OnInput() {
 let answerSubmitBtnElm = document.getElementById("answerSubmitBtn");
 answerSubmitBtnElm.addEventListener("click", onAnswerSubmitBtnClick);
 function onAnswerSubmitBtnClick() {
-  sendUserAnswer(JSON.stringify({'otvet': answerInputElm.value}))
+  sendUserAnswer(JSON.stringify({'initData': window.Telegram.WebApp.initData, 'otvet': answerInputElm.value}))
   .then((sendResult) => {
     document.getElementById("verh").innerHTML += `<br>Сервер ответил:<br>${sendResult.status} ${sendResult.data ? JSON.stringify(sendResult.data) : ''} ${sendResult.error || ''}`;
   })
