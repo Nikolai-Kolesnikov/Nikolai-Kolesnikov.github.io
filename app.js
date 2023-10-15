@@ -1,5 +1,4 @@
-let answerInputElm = document.createElement('textarea');
-document.body.appendChild(answerInputElm);
+
 
 //window.Telegram.WebApp.BackButton.isVisible = true;
 //window.Telegram.WebApp.MainButton.isVisible = true;
@@ -7,12 +6,12 @@ document.body.appendChild(answerInputElm);
 
 document.getElementById("verh").innerHTML = "dynamic 39";
 
-const tx = document.getElementsByTagName("textarea");
-for (let i = 0; i < tx.length; i++) {
-  tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
-  tx[i].addEventListener("input", OnInput, false);
-}
+let answerInputElm = document.getElementById('answerInput');
 
+// Делаем, чтобы textarea для ввода ответа стала auto resize
+answerInputElm.setAttribute("style", "height:16px;overflow-y:hidden;");
+//answerInputElm.setAttribute("style", "height:" + (answerInputElm.scrollHeight) + "px;overflow-y:hidden;");
+answerInputElm.addEventListener("input", OnInput, false);
 function OnInput() {
   this.style.height = 0;
   this.style.height = (this.scrollHeight) + "px";
