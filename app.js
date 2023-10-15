@@ -6,9 +6,10 @@
 
 document.getElementById("verh").innerHTML = "dynamic 40";
 
-let answerInputElm = document.getElementById('answerInput');
+let answerInputElm = document.getElementById("answerInput");
 
 // Делаем, чтобы textarea для ввода ответа стала auto resize
+// Source: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
 answerInputElm.setAttribute("style", "height:16px;overflow-y:hidden;");
 //answerInputElm.setAttribute("style", "height:" + (answerInputElm.scrollHeight) + "px;overflow-y:hidden;");
 answerInputElm.addEventListener("input", OnInput, false);
