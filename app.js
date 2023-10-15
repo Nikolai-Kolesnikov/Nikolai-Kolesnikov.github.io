@@ -4,7 +4,7 @@
 //window.Telegram.WebApp.MainButton.isVisible = true;
 
 
-document.getElementById("verh").innerHTML = "dynamic 42";
+document.getElementById("verh").innerHTML = "dynamic 43";
 
 let answerInputElm = document.getElementById("answerInput");
 
