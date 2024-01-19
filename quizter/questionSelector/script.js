@@ -7,10 +7,10 @@ const table = document.getElementById("table");
 // For sorting ascending or descending 
 const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 let data = [ 
-	{ qstnName: "вопрос про драконов 5", modifiedAt: "17.01.2024 12:43", rubric: "фэнтези" }, 
-	{ qstnName: "задачка с бассейном", modifiedAt: "14.01.2024 11:21", rubric: "логиматика" }, 
-	{ qstnName: "вопрос про хоббитов", modifiedAt: "16.01.2024 09:19", rubric: "фэнтези" }, 
-	{ qstnName: "новогодний вопрос", modifiedAt: "31.12.2023 15:53", rubric: "" }, 
+	{ qstnName: "вопрос про драконов 6", modifiedAt: 1705671948822, rubric: "фэнтези" }, 
+	{ qstnName: "задачка с бассейном", modifiedAt: 1705671948822, rubric: "логиматика" }, 
+	{ qstnName: "вопрос про хоббитов", modifiedAt: 1705671948822, rubric: "фэнтези" }, 
+	{ qstnName: "новогодний вопрос", modifiedAt: 1705671948822, rubric: "" }, 
 	
 ]; 
 
@@ -21,8 +21,9 @@ function addItem(e, i) {
 	let c1 = row.insertCell(1); 
 	let c2 = row.insertCell(2); 
 	let c3 = row.insertCell(3); 
-	c0.innerText = e.qstnName; 
-	c1.innerText = e.modifiedAt; 
+	c0.innerText = e.qstnName;
+	let tempDateTime = new Date(e.modifiedAt);
+	c1.innerText = tempDateTime.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }); 
 	c2.innerText = e.rubric; 
 	c3.innerHTML = "v"; 
 	c3.classList.add("zoom"); 
@@ -70,7 +71,6 @@ function remove() {
 
 // To search and filter items 
 function searchItems() { 
-	console.log(`searchItems() запустился`);
 	let input = document 
 		.getElementById("searchInput") 
 		.value.toLowerCase(); 
