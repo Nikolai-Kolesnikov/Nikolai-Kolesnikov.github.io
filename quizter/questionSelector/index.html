@@ -12,7 +12,6 @@
 
 <body> 
 	<div class="root"> 
-		<h1>Custom Table</h1> 
 		
 		<h2>Search for Item...</h2> 
 		<input type="text"
@@ -23,22 +22,21 @@
 
 		<table id="table"> 
 			<tr class="titles"> 
-				<th style="width: 5%">S.no</th> 
-				<th style="width: 30%"
-					id="name"
-					onclick="sortItems('name')"> 
-					Name 
+				<th style="width: 40%"
+					id="qstnName"
+					onclick="sortItems('qstnName')"> 
+					Вопрос 
 				</th> 
 				<th style="width: 30%"
-					onclick="sortItems('category')"> 
-					Category 
+					onclick="sortItems('modifiedAt')"> 
+					Дата изменения 
 				</th> 
-				<th style="width: 10%"
-					onclick="sortItems('year')"> 
-					Year 
+				<th style="width: 20%"
+					onclick="sortItems('rubric')"> 
+					Рубрика 
 				</th> 
-				<th style="width: 2%">Edit Entry</th> 
-				<th style="width: 2%">Delete Entry</th> 
+				<th style="width: 10%">(О)</th> 
+				
 			</tr> 
 		</table> 
 		<script src="script.js"></script> 
