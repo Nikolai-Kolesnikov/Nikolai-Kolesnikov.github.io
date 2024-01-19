@@ -16,10 +16,11 @@ let data = [
 ]; 
 
 let qs = await webappRequest(
-	url, 
+	'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 	JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionsList'}),
 	[1, 2, 2, 5, 5]
 );
+console.log(qs);
 
 
 // To create table 
