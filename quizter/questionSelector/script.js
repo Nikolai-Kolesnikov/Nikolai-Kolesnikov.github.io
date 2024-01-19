@@ -98,6 +98,6 @@ let qs = await webappRequest(
 	JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionsList'}),
 	[1, 2, 2, 5, 5]
 );
-console.log(qs);
+document.getElementById("logBox").innerHtml = JSON.stringify(qs);
 
 
