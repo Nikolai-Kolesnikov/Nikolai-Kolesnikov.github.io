@@ -1,6 +1,5 @@
 // script.js 
 
-import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
 const table = document.getElementById("table"); 
 
@@ -8,7 +7,7 @@ const table = document.getElementById("table");
 const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 
 let data = [ 
-	{ qstnName: "вопрос про драконов 14", modifiedAt: 1705671948822, rubric: "фэнтези", qstnid: "038be69b-f1cb-4b99-af2d-e5e8a0b7aabc" }, 
+	{ qstnName: "вопрос про драконов 16", modifiedAt: 1705671948822, rubric: "фэнтези", qstnid: "038be69b-f1cb-4b99-af2d-e5e8a0b7aabc" }, 
 	{ qstnName: "задачка с бассейном", modifiedAt: 1705661938822, rubric: "логиматика", qstnid: "545fe30a-09c7-432e-ae8d-2782e7dc2109"  }, 
 	{ qstnName: "вопрос про хоббитов", modifiedAt: 1705651928822, rubric: "фэнтези", qstnid: "9cde4925-7ed1-4f51-9580-7fd159844539"  }, 
 	{ qstnName: "новогодний вопрос", modifiedAt: 1705641918822, rubric: "", qstnid: "b80abf9b-01c7-42bb-8130-8a6dae3bd2fb"  }, 
@@ -92,6 +91,7 @@ function searchItems() {
 // Initiate table
 rebuildTable();
 
+import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
 let qs = await webappRequest(
 	'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
