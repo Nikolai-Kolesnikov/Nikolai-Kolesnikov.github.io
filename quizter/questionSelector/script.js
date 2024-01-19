@@ -18,20 +18,6 @@ let data = [
 	{ Name: "Python", Cat: "Programming", Year: "1991" }, 
 ]; 
 
-// To switch update or add form 
-const switchEdit = () => { 
-	document.getElementById("submitItem").style.display = 
-		"none"; 
-	document.getElementById("editItem").style.display = ""; 
-}; 
-
-const switchAdd = () => { 
-	document.getElementById("submitItem").style.display = 
-		""; 
-	document.getElementById("editItem").style.display = 
-		"none"; 
-}; 
-
 // To create table 
 function addItem(e, i) { 
 	row = table.insertRow(i + 1); 
@@ -171,57 +157,7 @@ function edit(c, i) {
 	} 
 } 
 
-// Submit edit data 
-function editItem() { 
-	console.log("edit"); 
-	nameInput = document.getElementById("nameInput"); 
-	catInput = document.getElementById("catInput"); 
-	yearInput = document.getElementById("yearInput"); 
-	data[index] = { 
-		Name: nameInput.value, 
-		Cat: catInput.value, 
-		Year: yearInput.value, 
-	}; 
-	remove(); 
-	data.map((e, i) => addItem(e, i)); 
 
-	nameInput.value = ""; 
-	catInput.value = ""; 
-	yearInput.value = ""; 
-	switchAdd(); 
-} 
 
-// Add new data 
-function submitItem() { 
-	console.log("submit clicked"); 
-	nameInput = document.getElementById("nameInput").value; 
-	catInput = document.getElementById("catInput").value; 
-	yearInput = document.getElementById("yearInput").value; 
-	if ( 
-		nameInput === "" || 
-		catInput === "" || 
-		yearInput === ""
-	) { 
-		window.alert("incomplete input data"); 
-		return; 
-	} 
-	data.push({ 
-		Name: nameInput, 
-		Cat: catInput, 
-		Year: yearInput, 
-	}); 
-	document.getElementById("nameInput").value = ""; 
-	document.getElementById("catInput").value = ""; 
-	document.getElementById("yearInput").value = ""; 
-	remove(); 
-	data.map((e, i) => addItem(e, i)); 
-	console.log(data); 
-} 
 
-// Delete specific field 
-function del(el) { 
-	console.log("del clicked", el); 
-	remove(); 
-	data = data.filter((e) => e.Name !== el.Name); 
-	data.map((e, i) => addItem(e, i)); 
-}
+
