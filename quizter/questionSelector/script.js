@@ -1,5 +1,7 @@
 // script.js 
 
+import {webappRequest} from './webappRequest.js'; // функция для отправки ajax-запросов
+
 const table = document.getElementById("table"); 
 
 // For sorting ascending or descending 
