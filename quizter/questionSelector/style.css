@@ -13,7 +13,7 @@ body {
 
 .root { 
 	display: "block"; 
-	width: 50rem; 
+	/*width: 50rem;*/ 
 } 
 
 #searchInput { 
