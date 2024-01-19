@@ -15,6 +15,13 @@ let data = [
 	
 ]; 
 
+let qs = await webappRequest(
+	url, 
+	JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionsList'}),
+	[1, 2, 2, 5, 5]
+);
+
+
 // To create table 
 function addItem(e) { 
 	let row = table.insertRow(); 
