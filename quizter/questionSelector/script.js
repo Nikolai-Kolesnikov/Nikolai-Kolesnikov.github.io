@@ -5,33 +5,26 @@ let index = -1;
 const table = document.getElementById("table"); 
 
 // For sorting ascending or descending 
-const flag = { Name: false, Cat: false, Year: false }; 
+const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 let data = [ 
-	{ Name: "HTML", Cat: "Web", Year: "1993" }, 
-	{ 
-		Name: "Java", 
-		Cat: "Programming", 
-		Year: "1995", 
-	}, 
-	{ Name: "JavaScript", Cat: "Web", Year: "1995" }, 
-	{ Name: "MongoDB", Cat: "Database", Year: "2007" }, 
-	{ Name: "Python", Cat: "Programming", Year: "1991" }, 
+	{ qstnName: "вопрос про драконов", modifiedAt: "17.01.2024 12:43", rubric: "фэнтези" }, 
+	{ qstnName: "задачка с бассейном", modifiedAt: "14.01.2024 11:21", rubric: "логиматика" }, 
+	{ qstnName: "вопрос про хоббитов", modifiedAt: "16.01.2024 09:19", rubric: "фэнтези" }, 
+	{ qstnName: "новогодний вопрос", modifiedAt: "31.12.2023 15:53", rubric: "" }, 
+	
 ]; 
 
 // To create table 
 function addItem(e, i) { 
-	row = table.insertRow(i + 1); 
+	let row = table.insertRow(i + 1); 
 	let c0 = row.insertCell(0); 
 	let c1 = row.insertCell(1); 
 	let c2 = row.insertCell(2); 
-	let c3 = row.insertCell(3); 
-	c4 = row.insertCell(4); 
-	let c5 = row.insertCell(5); 
-	c0.innerText = i + 1; 
-	c1.innerText = e.Name; 
-	c2.innerText = e.Cat; 
-	c3.innerText = e.Year; 
-	c4.innerHTML = ""; 
+	let c3 = row.insertCell(2); 
+	c0.innerText = e.qstnName; 
+	c1.innerText = e.modifiedAt; 
+	c2.innerText = e.rubric; 
+	c3.innerHTML = "v"; 
 	c5.innerHTML = "☒"; 
 	c4.classList.add("zoom"); 
 	c5.classList.add("zoom"); 
@@ -64,7 +57,7 @@ function sortItems(title) {
 // Clear the table before updation 
 function remove() { 
 	console.log("removed"); 
-	while (table.rows.length > 1) table.deleteRow(-1); 
+	while (table.s.length > 1) table.delete(-1); 
 } 
 
 // Sort with names 
