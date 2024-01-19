@@ -8,9 +8,9 @@ const table = document.getElementById("table");
 const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 let data = [ 
 	{ qstnName: "вопрос про драконов 6", modifiedAt: 1705671948822, rubric: "фэнтези" }, 
-	{ qstnName: "задачка с бассейном", modifiedAt: 1705671948822, rubric: "логиматика" }, 
-	{ qstnName: "вопрос про хоббитов", modifiedAt: 1705671948822, rubric: "фэнтези" }, 
-	{ qstnName: "новогодний вопрос", modifiedAt: 1705671948822, rubric: "" }, 
+	{ qstnName: "задачка с бассейном", modifiedAt: 1705671938822, rubric: "логиматика" }, 
+	{ qstnName: "вопрос про хоббитов", modifiedAt: 1705671928822, rubric: "фэнтези" }, 
+	{ qstnName: "новогодний вопрос", modifiedAt: 1705671918822, rubric: "" }, 
 	
 ]; 
 
