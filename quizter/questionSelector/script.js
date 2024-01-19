@@ -80,6 +80,6 @@ function searchItems() {
 	}); 
 
 	remove(); 
-	filterItems.map((e, i) => addItem(e, i)); 
+	//filterItems.map((e, i) => addItem(e, i)); 
 } 
 
