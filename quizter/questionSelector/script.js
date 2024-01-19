@@ -7,7 +7,7 @@ const table = document.getElementById("table");
 // For sorting ascending or descending 
 const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 let data = [ 
-	{ qstnName: "вопрос про драконов 7", modifiedAt: 1705671948822, rubric: "фэнтези", qstnid: "038be69b-f1cb-4b99-af2d-e5e8a0b7aabc" }, 
+	{ qstnName: "вопрос про драконов 8", modifiedAt: 1705671948822, rubric: "фэнтези", qstnid: "038be69b-f1cb-4b99-af2d-e5e8a0b7aabc" }, 
 	{ qstnName: "задачка с бассейном", modifiedAt: 1705671938822, rubric: "логиматика", qstnid: "545fe30a-09c7-432e-ae8d-2782e7dc2109"  }, 
 	{ qstnName: "вопрос про хоббитов", modifiedAt: 1705671928822, rubric: "фэнтези", qstnid: "9cde4925-7ed1-4f51-9580-7fd159844539"  }, 
 	{ qstnName: "новогодний вопрос", modifiedAt: 1705671918822, rubric: "", qstnid: "b80abf9b-01c7-42bb-8130-8a6dae3bd2fb"  }, 
@@ -40,7 +40,6 @@ function sortItems(title) {
 	switch (title) { 
 		case "qstnName":
 		case "rubric":
-		case "modifiedAt":
 			data.sort((a, b) => { 
 				let fa = a[title].toLowerCase(), 
 				fb = b[title].toLowerCase(); 
@@ -56,7 +55,12 @@ function sortItems(title) {
 			if (flag[title]) data.reverse(); 
 			flag[title] = !flag[title]; 
 			break;
-		
+
+		case "modifiedAt":
+			data.sort((a, b) => a[title] - b[title]);
+			if (flag[title]) data.reverse(); 
+			flag[title] = !flag[title]; 
+			break;
 			
 	} 
 	data.map((e, i) => addItem(e, i)); 
