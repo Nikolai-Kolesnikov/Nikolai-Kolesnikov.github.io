@@ -7,7 +7,7 @@ const table = document.getElementById("table");
 // For sorting ascending or descending 
 const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 let data = [ 
-	{ qstnName: "вопрос про драконов", modifiedAt: "17.01.2024 12:43", rubric: "фэнтези" }, 
+	{ qstnName: "вопрос про драконов 2", modifiedAt: "17.01.2024 12:43", rubric: "фэнтези" }, 
 	{ qstnName: "задачка с бассейном", modifiedAt: "14.01.2024 11:21", rubric: "логиматика" }, 
 	{ qstnName: "вопрос про хоббитов", modifiedAt: "16.01.2024 09:19", rubric: "фэнтези" }, 
 	{ qstnName: "новогодний вопрос", modifiedAt: "31.12.2023 15:53", rubric: "" }, 
