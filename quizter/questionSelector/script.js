@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 4 \nДанные должны загружаться...';
+logBox.innerText = 'Данные должны загружаться... \nВерсия 5';
 
 const table = document.getElementById("table"); 
 
@@ -109,7 +109,7 @@ let wareqRes = await webappRequest(
 	[1, 2, 2, 5, 5]
 );
 data = { ...wareqRes['data'] };
-logBox.innerText += '\nДанные загрузились!';
+logBox.innerText = data + '\nДанные загрузились!\n' + logBox.innerText;
 // Initiate table
 rebuildTable();
 
