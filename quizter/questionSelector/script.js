@@ -1,7 +1,7 @@
 // script.js 
-
+let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 3 \nДанные должны загружаться...';
+logBox.innerText = 'Версия 4 \nДанные должны загружаться...';
 
 const table = document.getElementById("table"); 
 
@@ -108,7 +108,7 @@ let wareqRes = await webappRequest(
 	JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionsList'}),
 	[1, 2, 2, 5, 5]
 );
-let data = wareqRes['data'];
+data = { ...wareqRes['data'] };
 logBox.innerText += '\nДанные загрузились!';
 // Initiate table
 rebuildTable();
