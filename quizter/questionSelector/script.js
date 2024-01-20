@@ -1,12 +1,16 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 1 \nДанные должны загружаться...';
+logBox.innerText = 'Версия 2 \nДанные должны загружаться...';
 
 const table = document.getElementById("table"); 
 
 for (const elm of ["qstnName", "rubric", "modifiedAt"]) {
-	document.getElementById(elm).addEventListener("click", (e) => sortItems(e.currentTarget.id));
+	document.getElementById(elm).addEventListener("click", (e) => {
+		logBox.innerText += e.currentTarget.id;
+		sortItems(e.currentTarget.id);
+		
+	});
 }
 
 
