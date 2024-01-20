@@ -1,13 +1,13 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 2 \nДанные должны загружаться...';
+logBox.innerText = 'Версия 3 \nДанные должны загружаться...';
 
 const table = document.getElementById("table"); 
 
 for (const elm of ["qstnName", "rubric", "modifiedAt"]) {
 	document.getElementById(elm).addEventListener("click", (e) => {
-		logBox.innerText += e.currentTarget.id;
+		logBox.innerText = e.currentTarget.id + ' fired click event\n' + logBox.innerText;
 		sortItems(e.currentTarget.id);
 		
 	});
@@ -44,7 +44,8 @@ function addItem(e) {
 } 
 
 // For sorting in different cases 
-function sortItems(title) { 
+function sortItems(title) {
+	logBox.innerText = `sortItems(${title}) launched\n` + logBox.innerText;
 	remove(); 
 	switch (title) { 
 		case "qstnName":
