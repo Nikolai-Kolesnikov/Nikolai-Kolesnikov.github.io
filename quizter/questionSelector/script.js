@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Данные должны загружаться... \nВерсия 11';
+logBox.innerText = 'Данные должны загружаться... \nВерсия 12';
 
 const table = document.getElementById("table"); 
 
@@ -51,8 +51,8 @@ function sortItems(title) {
 		case "qstnName":
 		case "rubric":
 			data.sort((a, b) => { 
-				let fa = a[title].toLowerCase(), 
-				fb = b[title].toLowerCase(); 
+				let fa = (a[title] || '').toLowerCase(), 
+				fb = (b[title] || '').toLowerCase(); 
 		
 				if (fa < fb) { 
 					return -1; 
@@ -67,7 +67,7 @@ function sortItems(title) {
 			break;
 
 		case "modifiedAt":
-			data.sort((a, b) => a[title] - b[title]);
+			data.sort((a, b) => new Date(a[title]) - new Date(b[title]));
 			if (flag[title]) data.reverse(); 
 			flag[title] = !flag[title]; 
 			break;
