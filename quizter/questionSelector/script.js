@@ -1,9 +1,14 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Данные должны загружаться...';
+logBox.innerText = 'Версия 1 \nДанные должны загружаться...';
 
 const table = document.getElementById("table"); 
+
+for (const elm of ["qstnName", "rubric", "modifiedAt"]) {
+	document.getElementById(elm).addEventListener("click", (e) => sortItems(e.currentTarget.id));
+}
+
 
 // For sorting ascending or descending 
 const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
