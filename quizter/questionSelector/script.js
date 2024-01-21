@@ -1,17 +1,20 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Данные должны загружаться... \nВерсия 12';
+logBox.innerText = 'Данные должны загружаться... \nВерсия 13';
 
 const table = document.getElementById("table"); 
 
 for (const elm of ["qstnName", "rubric", "modifiedAt"]) {
 	document.getElementById(elm).addEventListener("click", (e) => {
-		logBox.innerText = e.currentTarget.id + ' fired click event\n' + logBox.innerText;
-		sortItems(e.currentTarget.id);
-		
+		//logBox.innerText = e.currentTarget.id + ' fired click event\n' + logBox.innerText;
+		sortItems(e.currentTarget.id);		
 	});
 }
+
+document.getElementById("searchInput").addEventListener("keyup", (e) => {
+	searchItems();
+});
 
 
 // For sorting ascending or descending 
@@ -109,7 +112,7 @@ let wareqRes = await webappRequest(
 	[1, 2, 2, 5, 5]
 );
 data = wareqRes['data'];
-logBox.innerText = JSON.stringify(data) + '\nДанные загрузились!\n' + logBox.innerText;
+//logBox.innerText = JSON.stringify(data) + '\nДанные загрузились!\n' + logBox.innerText;
 // Initiate table
 rebuildTable();
 
