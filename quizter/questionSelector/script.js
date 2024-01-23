@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Данные должны загружаться... \nВерсия 13';
+logBox.innerText = 'Версия 14';
 
 const table = document.getElementById("table"); 
 
@@ -13,7 +13,7 @@ for (const elm of ["qstnName", "rubric", "modifiedAt"]) {
 }
 
 document.getElementById("searchInput").addEventListener("keyup", (e) => {
-	searchItems();
+	searchItems(e.currentTarget.value.toLowerCase());
 });
 
 
@@ -48,7 +48,7 @@ function addItem(e) {
 
 // For sorting in different cases 
 function sortItems(title) {
-	logBox.innerText = `sortItems(${title}) launched\n` + logBox.innerText;
+	//logBox.innerText = `sortItems(${title}) launched\n` + logBox.innerText;
 	remove(); 
 	switch (title) { 
 		case "qstnName":
@@ -91,12 +91,12 @@ function rebuildTable() {
 }
 
 // To search and filter items 
-function searchItems() { 
-	let input = document 
+function searchItems(searchStr) { 
+	/*let input = document 
 		.getElementById("searchInput") 
-		.value.toLowerCase(); 
+		.value.toLowerCase(); */
 	data.map((e) => { 
-		e.filteredOut = !e.qstnName.toLowerCase().includes(input); 
+		e.filteredOut = !e.qstnName.toLowerCase().includes(searchStr); 
 	}); 
 
 	remove(); 
