@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 15';
+logBox.innerText = 'Версия 16';
 
 const table = document.getElementById("table"); 
 
@@ -32,6 +32,9 @@ const flag = { qstnName: false, modifiedAt: false, rubric: false };
 // To create table 
 function addItem(e) { 
 	let row = table.insertRow(); 
+	row.addEventListener("click", (e) => {
+		logBox.innerText = "row clicked: " + e.currentTarget.rowIndex + "\n" + logBox.innerText;
+	});
 	let c0 = row.insertCell(0); 
 	let c1 = row.insertCell(1); 
 	let c2 = row.insertCell(2); 
