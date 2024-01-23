@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 20';
+logBox.innerText = 'Версия 21';
 
 const table = document.getElementById("table"); 
 
@@ -62,7 +62,7 @@ function expandRow(rowToExpand) {
 	subTable.insertRow().insertCell().innerText = "Ячейка в добавленной таблице";
 	let wareqRes = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}),
+		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}}),
 		[1, 2, 2, 5, 5]
 	);
 	logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
