@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 21';
+logBox.innerText = 'Версия 22';
 
 const table = document.getElementById("table"); 
 
@@ -35,9 +35,9 @@ const flag = { qstnName: false, modifiedAt: false, rubric: false };
 function addItem(e) { 
 	let row = table.insertRow(); 
 	row.setAttribute("data-qstnid", e.qstnid);
-	row.addEventListener("click", (event) => {
-		logBox.innerText = "row clicked: " + event.currentTarget.rowIndex + "\n" + logBox.innerText;
-		expandRow(event.currentTarget);
+	row.addEventListener("click", (evt) => {
+		logBox.innerText = "row clicked: " + evt.currentTarget.rowIndex + "\n" + logBox.innerText;
+		expandRow(evt.currentTarget);
 	});
 	let c0 = row.insertCell(0); 
 	let c1 = row.insertCell(1); 
