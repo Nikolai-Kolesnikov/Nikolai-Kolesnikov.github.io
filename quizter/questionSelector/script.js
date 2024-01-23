@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 14';
+logBox.innerText = 'Версия 15';
 
 const table = document.getElementById("table"); 
 
@@ -42,14 +42,25 @@ function addItem(e) {
 	c2.innerText = e.rubric; 
 	c3.innerHTML = "v"; 
 	c3.classList.add("zoom"); 
-	//c3.addEventListener("click", () => edit(c3, i)); 
-	
+	//c3.addEventListener("click", () => edit(c3, i)); 	
+}
+
+// Clear the table before updation 
+function removeTable() { 
+	while (table.rows.length > 1) table.deleteRow(-1); 
 } 
+
+function renderTable() {
+	data.map((e) => {
+		if (!e.filteredOut) addItem(e);
+	}); 
+}
+
 
 // For sorting in different cases 
 function sortItems(title) {
 	//logBox.innerText = `sortItems(${title}) launched\n` + logBox.innerText;
-	remove(); 
+	removeTable(); 
 	switch (title) { 
 		case "qstnName":
 		case "rubric":
@@ -76,19 +87,8 @@ function sortItems(title) {
 			break;
 			
 	} 
-	rebuildTable();
+	renderTable();
 } 
-
-// Clear the table before updation 
-function remove() { 
-	while (table.rows.length > 1) table.deleteRow(-1); 
-} 
-
-function rebuildTable() {
-	data.map((e) => {
-		if (!e.filteredOut) addItem(e);
-	}); 
-}
 
 // To search and filter items 
 function searchItems(searchStr) { 
@@ -99,8 +99,8 @@ function searchItems(searchStr) {
 		e.filteredOut = !e.qstnName.toLowerCase().includes(searchStr); 
 	}); 
 
-	remove(); 
-	rebuildTable(); 
+	removeTable(); 
+	renderTable(); 
 } 
 
 
@@ -113,7 +113,8 @@ let wareqRes = await webappRequest(
 );
 data = wareqRes['data'];
 //logBox.innerText = JSON.stringify(data) + '\nДанные загрузились!\n' + logBox.innerText;
+
 // Initiate table
-rebuildTable();
+renderTable();
 
 
