@@ -1,7 +1,9 @@
 // script.js 
+import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
+
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 18';
+logBox.innerText = 'Версия 19';
 
 const table = document.getElementById("table"); 
 
@@ -32,8 +34,9 @@ const flag = { qstnName: false, modifiedAt: false, rubric: false };
 // To create table 
 function addItem(e) { 
 	let row = table.insertRow(); 
-	row.addEventListener("click", (e) => {
-		logBox.innerText = "row clicked: " + e.currentTarget.rowIndex + "\n" + logBox.innerText;
+	row.setAttribute("data-qstnid", e.qstnid);
+	row.addEventListener("click", (event) => {
+		logBox.innerText = "row clicked: " + event.currentTarget.rowIndex + "\n" + logBox.innerText;
 		expandRow(e.currentTarget);
 	});
 	let c0 = row.insertCell(0); 
@@ -57,7 +60,12 @@ function expandRow(rowToExpand) {
 	let subTable = document.createElement("table");
 	c.appendChild(subTable);
 	subTable.insertRow().insertCell().innerText = "Ячейка в добавленной таблице";
-	
+	let wareqRes = await webappRequest(
+		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}),
+		[1, 2, 2, 5, 5]
+	);
+	logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
 	
 }
 
@@ -119,9 +127,6 @@ function searchItems(searchStr) {
 	renderTable(); 
 } 
 
-
-
-import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 let wareqRes = await webappRequest(
 	'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 	JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionsList'}),
