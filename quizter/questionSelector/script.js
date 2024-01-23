@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 17';
+logBox.innerText = 'Версия 18';
 
 const table = document.getElementById("table"); 
 
@@ -51,10 +51,13 @@ function addItem(e) {
 
 // Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей
 function expandRow(rowToExpand) {
-	let extraRow = table.insertRow(rowToExpand.rowIndex);
+	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
 	let c = extraRow.insertCell(0);
 	c.colSpan = 4;
-	c.innerText = "Добавленная строка";
+	let subTable = document.createElement("table");
+	c.appendChild(subTable);
+	subTable.insertRow().insertCell().innerText = "Ячейка в добавленной таблице";
+	
 	
 }
 
