@@ -1,7 +1,7 @@
 // script.js 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 16';
+logBox.innerText = 'Версия 17';
 
 const table = document.getElementById("table"); 
 
@@ -34,6 +34,7 @@ function addItem(e) {
 	let row = table.insertRow(); 
 	row.addEventListener("click", (e) => {
 		logBox.innerText = "row clicked: " + e.currentTarget.rowIndex + "\n" + logBox.innerText;
+		expandRow(e.currentTarget);
 	});
 	let c0 = row.insertCell(0); 
 	let c1 = row.insertCell(1); 
@@ -46,6 +47,15 @@ function addItem(e) {
 	c3.innerHTML = "v"; 
 	c3.classList.add("zoom"); 
 	//c3.addEventListener("click", () => edit(c3, i)); 	
+}
+
+// Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей
+function expandRow(rowToExpand) {
+	let extraRow = table.insertRow(rowToExpand.rowIndex);
+	let c = extraRow.insertCell(0);
+	c.colSpan = 4;
+	c.innerText = "Добавленная строка";
+	
 }
 
 // Clear the table before updation 
