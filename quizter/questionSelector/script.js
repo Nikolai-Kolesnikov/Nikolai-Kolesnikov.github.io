@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 22';
+logBox.innerText = 'Версия 23';
 
 const table = document.getElementById("table"); 
 
@@ -53,7 +53,7 @@ function addItem(e) {
 }
 
 // Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей
-function expandRow(rowToExpand) {
+async function expandRow(rowToExpand) {
 	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
 	let c = extraRow.insertCell(0);
 	c.colSpan = 4;
