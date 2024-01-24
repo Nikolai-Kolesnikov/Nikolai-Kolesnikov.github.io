@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 23';
+logBox.innerText = 'Версия 24';
 
 const table = document.getElementById("table"); 
 
@@ -59,13 +59,39 @@ async function expandRow(rowToExpand) {
 	c.colSpan = 4;
 	let subTable = document.createElement("table");
 	c.appendChild(subTable);
-	subTable.insertRow().insertCell().innerText = "Ячейка в добавленной таблице";
+	let stR1 = subTable.insertRow(); // для названия рубрики
+	let stR1C1 = stR1.insertCell(); 
+	let stR1C2 = stR1.insertCell(); 
+	let stR2 = subTable.insertRow(); // для сообщения с описанием рубрики
+	let stR2C1 = stR2.insertCell();
+	//let stR2C2 = stR2.insertCell();
+	let stR3 = subTable.insertRow(); // для "Содержание вопроса"
+	let stR3C1 = stR3.insertCell();
+	let stR3C2 = stR3.insertCell();
+	let stR4 = subTable.insertRow(); // для сообщения с содержанием вопроса
+	let stR4C1 = stR4.insertCell();
+	//let stR4C2 = stR4.insertCell();
+	let stR5 = subTable.insertRow(); // для "Правильный ответ"
+	let stR5C1 = stR5.insertCell();
+	let stR5C2 = stR5.insertCell();
+	let stR6 = subTable.insertRow(); // для сообщения с содержанием правильного ответа
+	let stR6C1 = stR6.insertCell();
+	//let stR6C2 = stR6.insertCell();	
+	
 	let wareqRes = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}}),
 		[1, 2, 2, 5, 5]
 	);
-	logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
+
+	stR1C2.rowspan = 2;
+	stR3C2.rowspan = 2;
+	stR5C2.rowspan = 2;	
+
+	stR1C1.innerText = "Рубрика " + (wareqRes.rubricContent.title || "не определена");
+	
+	
+	//logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
 	
 }
 
