@@ -83,15 +83,16 @@ async function expandRow(rowToExpand) {
 		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}}),
 		[1, 2, 2, 5, 5]
 	);
+	let assets = wareqRes[0];
 
 	stR1C2.rowspan = 2;
 	stR3C2.rowspan = 2;
 	stR5C2.rowspan = 2;	
 
-	stR1C1.innerText = "Рубрика " + (wareqRes.rubricContent.title || "не определена");
+	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
 	
 	
-	logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
+	logBox.innerText = JSON.stringify(assets) + logBox.innerText;
 	
 }
 
