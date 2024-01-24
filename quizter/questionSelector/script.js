@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 29';
+logBox.innerText = 'Версия 30';
 
 const table = document.getElementById("table"); 
 
@@ -54,6 +54,7 @@ function addItem(e) {
 
 // Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей
 async function expandRow(rowToExpand) {
+	let qstnid = rowToExpand.getAttribute("data-qstnid");
 	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
 	let c = extraRow.insertCell(0);
 	c.colSpan = 4;
@@ -80,19 +81,45 @@ async function expandRow(rowToExpand) {
 	
 	let wareqRes = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}}),
+		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': qstnid}}),
 		[1, 2, 2, 5, 5]
 	);
 	let assets = wareqRes['data'];
 
-	stR1C2.rowSpan = 2;
-	stR3C2.rowSpan = 2;
-	stR5C2.rowSpan = 2;	
+	stR1C2.setAttribute("data-assetType", "rubric");
+	stR3C2.setAttribute("data-assetType", "question");
+	stR5C2.setAttribute("data-assetType", "answer");
+	
+	for (const cell of [stR1C2, stR3C2, stR5C2]) {
+		cell.rowSpan = 2;
+		cell.innerText = "🔘";
+		cell.setAttribute("data-qstnid", qstnid);
+		cell.addEventListener("click", (evt) => {
+			let selectRes = await webappRequest(
+				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+				JSON.stringify({
+					'initData': window.Telegram.WebApp.initData, 
+					'type': 'selectQuestionAsset', 
+					'data':{
+						'qstnid': evt.currentTarget.getAttribute("data-qstnid"), 
+						'assetType': evt.currentTarget.getAttribute("data-assetType"),
+					}
+				}),
+				[1, 2, 2, 5, 5]
+			);
+			let assets = wareqRes['data'];
+		});
+	}
 
 	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
+	stR2C1.innerText = assets.rubricContent.text;
+	stR3C1.innerText = "Содержание вопроса";
+	stR4C1.innerText = assets.qstnContent.text;
+	stR5C1.innerText = "Правильный ответ";
+	stR6C1.innerText = assets.answerContent.text;
 	
 	
-	logBox.innerText = JSON.stringify(assets) + logBox.innerText;
+	logBox.innerText = JSON.stringify(assets) + "\n" + logBox.innerText;
 	
 }
 
