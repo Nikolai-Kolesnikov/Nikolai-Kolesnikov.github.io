@@ -85,9 +85,9 @@ async function expandRow(rowToExpand) {
 	);
 	let assets = wareqRes[data];
 
-	stR1C2.rowspan = 2;
-	stR3C2.rowspan = 2;
-	stR5C2.rowspan = 2;	
+	stR1C2.rowSpan = 2;
+	stR3C2.rowSpan = 2;
+	stR5C2.rowSpan = 2;	
 
 	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
 	
