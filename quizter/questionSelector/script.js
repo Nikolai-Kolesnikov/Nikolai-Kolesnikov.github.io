@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 26';
+logBox.innerText = 'Версия 27';
 
 const table = document.getElementById("table"); 
 
@@ -83,7 +83,7 @@ async function expandRow(rowToExpand) {
 		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': rowToExpand.getAttribute('data-qstnid')}}),
 		[1, 2, 2, 5, 5]
 	);
-	let assets = wareqRes[0];
+	let assets = wareqRes[data];
 
 	stR1C2.rowspan = 2;
 	stR3C2.rowspan = 2;
