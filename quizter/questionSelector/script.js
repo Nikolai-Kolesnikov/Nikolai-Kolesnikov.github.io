@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 30';
+logBox.innerText = 'Версия 31';
 
 const table = document.getElementById("table"); 
 
@@ -94,7 +94,7 @@ async function expandRow(rowToExpand) {
 		cell.rowSpan = 2;
 		cell.innerText = "🔘";
 		cell.setAttribute("data-qstnid", qstnid);
-		cell.addEventListener("click", (evt) => {
+		cell.addEventListener("click", async (evt) => {
 			let selectRes = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 				JSON.stringify({
@@ -107,7 +107,7 @@ async function expandRow(rowToExpand) {
 				}),
 				[1, 2, 2, 5, 5]
 			);
-			let assets = wareqRes['data'];
+			
 		});
 	}
 
