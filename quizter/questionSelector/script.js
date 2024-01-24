@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 27';
+logBox.innerText = 'Версия 28';
 
 const table = document.getElementById("table"); 
 
