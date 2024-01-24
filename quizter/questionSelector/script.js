@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 24';
+logBox.innerText = 'Версия 25';
 
 const table = document.getElementById("table"); 
 
@@ -91,7 +91,7 @@ async function expandRow(rowToExpand) {
 	stR1C1.innerText = "Рубрика " + (wareqRes.rubricContent.title || "не определена");
 	
 	
-	//logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
+	logBox.innerText = JSON.stringify(wareqRes) + logBox.innerText;
 	
 }
 
