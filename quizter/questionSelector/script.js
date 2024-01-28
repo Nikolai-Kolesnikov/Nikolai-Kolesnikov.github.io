@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 33';
+logBox.innerText = 'Версия 34';
 
 const table = document.getElementById("table"); 
 
@@ -114,7 +114,7 @@ async function expandRow(rowToExpand) {
 	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
 	stR2C1.innerHTML = assets.rubricContent.text;
 	stR3C1.innerText = "Содержание вопроса";
-	stR4C1.innerHTML = `${assets.qstnContent.photo ? `<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?fileId=${assets.qstnContent.photo}">` : ''}${assets.qstnContent.text ? `<br>${assets.qstnContent.text}` : ''}`;
+	stR4C1.innerHTML = `${assets.qstnContent.photo ? `<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${window.Telegram.WebApp.initData}&fileId=${assets.qstnContent.photo}">` : ''}${assets.qstnContent.text ? `<br>${assets.qstnContent.text}` : ''}`;
 	stR5C1.innerText = "Правильный ответ";
 	stR6C1.innerText = assets.answerContent.text;
 	
