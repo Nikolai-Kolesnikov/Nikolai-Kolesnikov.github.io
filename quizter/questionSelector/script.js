@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 36';
+logBox.innerText = 'Версия 37';
 
 const table = document.getElementById("table"); 
 
@@ -89,6 +89,9 @@ async function expandRow(rowToExpand) {
 	stR1C2.setAttribute("data-assetType", "rubric");
 	stR3C2.setAttribute("data-assetType", "question");
 	stR5C2.setAttribute("data-assetType", "answer");
+	stR2C1.setAttribute("data-assetKey", "rubricContent");
+	stR4C1.setAttribute("data-assetKey", "qstnContent");
+	stR6C1.setAttribute("data-assetKey", "answerContent");
 	
 	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
 	stR3C1.innerText = "Содержание вопроса";
@@ -116,13 +119,11 @@ async function expandRow(rowToExpand) {
 	}
 
 	for (const cell of [stR2C1, stR4C1, stR6C1]) {
-		cell.innerHTML = `${assets.qstnContent.photo ? `<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets.qstnContent.photo}">` : ''}`;
-		cell.innerHTML += `${assets.qstnContent.text ? `<br>${assets.qstnContent.text}` : ''}`;
+		let assetKey = cell.getAttribute("data-assetKey");
+		cell.innerHTML = `${assets[assetKey]["photo"] ? `<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">фото</img>` : ''}`;
+		cell.innerHTML += `${assets[assetKey]["text"] ? `<br>${assets[assetKey]["text"]}` : ''}`;
 	}
-	stR2C1.innerHTML = assets.rubricContent.text;
-	stR6C1.innerHTML = assets.answerContent.text;
-	
-	
+		
 	logBox.innerText = JSON.stringify(assets) + "\n" + logBox.innerText;
 	
 }
