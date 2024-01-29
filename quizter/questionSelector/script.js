@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 39';
+logBox.innerText = 'Версия 40';
 
 const table = document.getElementById("table"); 
 
@@ -53,8 +53,8 @@ function addItem(e) {
 	//c3.addEventListener("click", () => edit(c3, i)); 	
 }
 
-// Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей
-// Если подстрока уже создана, то изменить её видимость
+// Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей и загрузить в неё данные.
+// Если подстрока уже создана, то изменить её видимость.
 async function expandRow(rowToExpand) {
 	if (rowToExpand.getAttribute("data-expanded") == "yes") {
 		table.rows[rowToExpand.rowIndex + 1].style.visibility = table.rows[rowToExpand.rowIndex + 1].style.visibility == "collapse" ? "visible" : "collapse";
@@ -127,8 +127,8 @@ async function expandRow(rowToExpand) {
 
 	for (const cell of [stR2C1, stR4C1, stR6C1]) {
 		let assetKey = cell.getAttribute("data-assetKey");
-		cell.innerHTML = `${assets[assetKey]["photo"] ? `<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">` : ''}`;
-		cell.innerHTML += `${assets[assetKey]["text"] ? `<br>${assets[assetKey]["text"]}` : ''}`;
+		cell.innerHTML = `${assets[assetKey]["photo"] ? `<img class="photo" alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">` : ''}`;
+		cell.innerHTML += `${assets[assetKey]["text"] ? `${assets[assetKey]["text"]}` : ''}`;
 	}
 		
 	logBox.innerText = JSON.stringify(assets) + "\n" + logBox.innerText;
