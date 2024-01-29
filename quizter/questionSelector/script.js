@@ -127,7 +127,7 @@ async function expandRow(rowToExpand) {
 
 	for (const cell of [stR2C1, stR4C1, stR6C1]) {
 		let assetKey = cell.getAttribute("data-assetKey");
-		cell.innerHTML = `${assets[assetKey]["photo"] ? `<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">фото</img>` : ''}`;
+		cell.innerHTML = `${assets[assetKey]["photo"] ? `<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">` : ''}`;
 		cell.innerHTML += `${assets[assetKey]["text"] ? `<br>${assets[assetKey]["text"]}` : ''}`;
 	}
 		
