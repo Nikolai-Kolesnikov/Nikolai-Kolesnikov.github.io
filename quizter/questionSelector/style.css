@@ -11,6 +11,10 @@ body {
 
 } 
 
+.photo {
+	display: "block";
+}
+
 .root { 
 	display: "block"; 
 	/*width: 50rem;*/ 
