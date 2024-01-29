@@ -90,6 +90,10 @@ async function expandRow(rowToExpand) {
 	stR3C2.setAttribute("data-assetType", "question");
 	stR5C2.setAttribute("data-assetType", "answer");
 	
+	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
+	stR3C1.innerText = "Содержание вопроса";
+	stR5C1.innerText = "Правильный ответ";
+	
 	for (const cell of [stR1C2, stR3C2, stR5C2]) {
 		cell.rowSpan = 2;
 		cell.innerText = "🔘";
@@ -111,12 +115,12 @@ async function expandRow(rowToExpand) {
 		});
 	}
 
-	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
+	for (const cell of [stR2C1, stR4C1, stR6C1]) {
+		cell.innerHTML = `${assets.qstnContent.photo ? `<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets.qstnContent.photo}">` : ''}`;
+		cell.innerHTML += `${assets.qstnContent.text ? `<br>${assets.qstnContent.text}` : ''}`;
+	}
 	stR2C1.innerHTML = assets.rubricContent.text;
-	stR3C1.innerText = "Содержание вопроса";
-	stR4C1.innerHTML = `${assets.qstnContent.photo ? `<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets.qstnContent.photo}">` : ''}${assets.qstnContent.text ? `<br>${assets.qstnContent.text}` : ''}`;
-	stR5C1.innerText = "Правильный ответ";
-	stR6C1.innerText = assets.answerContent.text;
+	stR6C1.innerHTML = assets.answerContent.text;
 	
 	
 	logBox.innerText = JSON.stringify(assets) + "\n" + logBox.innerText;
