@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 41';
+logBox.innerText = 'Версия 42';
 
 const table = document.getElementById("table"); 
 
@@ -132,7 +132,7 @@ async function expandRow(rowToExpand) {
 		cell.innerHTML += `${
 			assets[assetKey]["video"] ? 
 			`<video controls>
-			<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">
+			<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["video"]}">
 			Your browser does not support the video tag.
 		  	</video>` : 
 			``
