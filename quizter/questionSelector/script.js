@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 37';
+logBox.innerText = 'Версия 38';
 
 const table = document.getElementById("table"); 
 
@@ -35,6 +35,7 @@ const flag = { qstnName: false, modifiedAt: false, rubric: false };
 function addItem(e) { 
 	let row = table.insertRow(); 
 	row.setAttribute("data-qstnid", e.qstnid);
+	row.setAttribute("data-expanded", false);
 	row.addEventListener("click", (evt) => {
 		logBox.innerText = "row clicked: " + evt.currentTarget.rowIndex + "\n" + logBox.innerText;
 		expandRow(evt.currentTarget);
@@ -53,7 +54,13 @@ function addItem(e) {
 }
 
 // Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей
+// Если подстрока уже создана, то изменить её видимость
 async function expandRow(rowToExpand) {
+	if (rowToExpand.getAttribute("data-expanded") == true) {
+		table.rows[rowToExpand.rowIndex + 1].style.visibility = table.rows[rowToExpand.rowIndex + 1].style.visibility == "hidden" ? "visible" : "hidden";
+		return;
+	}
+	rowToExpand.setAttribute("data-expanded", true);
 	let qstnid = rowToExpand.getAttribute("data-qstnid");
 	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
 	let c = extraRow.insertCell(0);
