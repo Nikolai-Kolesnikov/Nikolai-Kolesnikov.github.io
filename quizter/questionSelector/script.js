@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 44';
+logBox.innerText = 'Версия 45';
 
 const table = document.getElementById("table"); 
 
@@ -127,25 +127,42 @@ async function expandRow(rowToExpand) {
 
 	for (const cell of [stR2C1, stR4C1, stR6C1]) {
 		let assetKey = cell.getAttribute("data-assetKey");
-		cell.innerHTML = `${assets[assetKey]["photo"] ? `<img class="photo" alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["photo"]}">` : ''}`;
-		cell.innerHTML += `${
-			assets[assetKey]["video"] ? 
-			`<video width="200" controls>
-			<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["video"]}">
-			Your browser does not support the video tag.
-		  	</video>` : 
-			``
-		}`;
-		for (const mediaType of ["audio", "voice"]) {
+		
+		for (const imgType of ["photo", "animation_img", "sticker_img"]) {
+			cell.innerHTML = `${
+				assets[assetKey][imgType] ? 
+				`<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][imgType]}">` : 
+				''
+			}`;
+		}
+
+		for (const videoType of ["video", "video_note", "animation_video", "sticker_video"]) {
 			cell.innerHTML += `${
-				assets[assetKey][mediaType] ? 
+				assets[assetKey][videoType] ? 
+				`<video width="200" controls>
+				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][videoType]}">
+				Your browser does not support the video tag.
+				</video>` : 
+				``
+			}`;
+		}
+
+		for (const audioType of ["audio", "voice"]) {
+			cell.innerHTML += `${
+				assets[assetKey][audioType] ? 
 				`<audio controls>
-				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][mediaType]}">
+				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][audioType]}">
 				Your browser does not support the audio tag.
 		  		</audio>` : 
 				``
 			}`;
 		}
+
+		cell.innerHTML += `${assets[assetKey]["document"] ? 
+			`<a href="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["document"]}">Документ</a>` : 
+			''
+		}`;
+
 		cell.innerHTML += `${assets[assetKey]["text"] ? `${assets[assetKey]["text"]}` : ''}`;
 		
 	}
