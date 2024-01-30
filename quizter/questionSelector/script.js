@@ -1,11 +1,16 @@
 // script.js 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
-let startapp_param = window.Telegram.WebApp.initDataUnsafe.start_param;
+let startappJson = {};
+try {
+	startappJson = JSON.parse(decodeURIComponent(window.Telegram.WebApp.initDataUnsafe.start_param));
+} catch (err) {
+	// оставляем startappJson пустым объектом
+}
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 45';
+logBox.innerText = 'Версия 46';
 
 const table = document.getElementById("table"); 
 
@@ -90,7 +95,12 @@ async function expandRow(rowToExpand) {
 	
 	let wareqRes = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-		JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionAssets', 'data':{'qstnid': qstnid}}),
+		JSON.stringify({
+			'initData': window.Telegram.WebApp.initData, 
+			'type': 'requestQuestionAssets', 
+			'data':{'qstnid': qstnid},
+			'clientData': startappJson.clientData,
+		}),
 		[1, 2, 2, 5, 5]
 	);
 	let assets = wareqRes['data'];
@@ -119,7 +129,8 @@ async function expandRow(rowToExpand) {
 					'data':{
 						'qstnid': evt.currentTarget.getAttribute("data-qstnid"), 
 						'assetType': evt.currentTarget.getAttribute("data-assetType"),
-					}
+					},
+					'clientData': startappJson.clientData,
 				}),
 				[1, 2, 2, 5, 5]
 			);
@@ -233,7 +244,11 @@ function searchItems(searchStr) {
 
 let wareqRes = await webappRequest(
 	'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-	JSON.stringify({'initData': window.Telegram.WebApp.initData, 'type': 'requestQuestionsList'}),
+	JSON.stringify({
+		'initData': window.Telegram.WebApp.initData, 
+		'type': 'requestQuestionsList',
+		'clientData': startappJson.clientData,
+	}),
 	[1, 2, 2, 5, 5]
 );
 data = wareqRes['data'];
