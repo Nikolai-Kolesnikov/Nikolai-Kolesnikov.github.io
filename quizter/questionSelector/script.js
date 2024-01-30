@@ -3,7 +3,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 43';
+logBox.innerText = 'Версия 44';
 
 const table = document.getElementById("table"); 
 
@@ -136,6 +136,16 @@ async function expandRow(rowToExpand) {
 		  	</video>` : 
 			``
 		}`;
+		for (const mediaType of ["audio", "voice"]) {
+			cell.innerHTML += `${
+				assets[assetKey][mediaType] ? 
+				`<audio controls>
+				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][mediaType]}">
+				Your browser does not support the audio tag.
+		  		</audio>` : 
+				``
+			}`;
+		}
 		cell.innerHTML += `${assets[assetKey]["text"] ? `${assets[assetKey]["text"]}` : ''}`;
 		
 	}
