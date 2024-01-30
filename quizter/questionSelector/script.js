@@ -1,6 +1,8 @@
 // script.js 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
+let startapp_param = window.Telegram.WebApp.initDataUnsafe.start_param;
+
 let data = [];
 let logBox = document.getElementById("logbox");
 logBox.innerText = 'Версия 45';
