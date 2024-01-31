@@ -10,7 +10,7 @@ try {
 
 let data = [];
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 46';
+logBox.innerText = 'Версия 47';
 
 const table = document.getElementById("table"); 
 
@@ -99,7 +99,7 @@ async function expandRow(rowToExpand) {
 			'initData': window.Telegram.WebApp.initData, 
 			'type': 'requestQuestionAssets', 
 			'data':{'qstnid': qstnid},
-			'clientData': startappJson.clientData,
+			'roundbackData': startappJson.roundbackData,
 		}),
 		[1, 2, 2, 5, 5]
 	);
@@ -130,7 +130,7 @@ async function expandRow(rowToExpand) {
 						'qstnid': evt.currentTarget.getAttribute("data-qstnid"), 
 						'assetType': evt.currentTarget.getAttribute("data-assetType"),
 					},
-					'clientData': startappJson.clientData,
+					'roundbackData': startappJson.roundbackData,
 				}),
 				[1, 2, 2, 5, 5]
 			);
@@ -247,7 +247,7 @@ let wareqRes = await webappRequest(
 	JSON.stringify({
 		'initData': window.Telegram.WebApp.initData, 
 		'type': 'requestQuestionsList',
-		'clientData': startappJson.clientData,
+		'roundbackData': startappJson.roundbackData,
 	}),
 	[1, 2, 2, 5, 5]
 );
