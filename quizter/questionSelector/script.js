@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 53';
+logBox.innerText = 'Версия 55';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -11,7 +11,9 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let startappJson = {};
 try {
-	let startappKVs = (window.Telegram.WebApp.initDataUnsafe.start_param).split('___');
+	let startappStr = window.Telegram.WebApp.initDataUnsafe.start_param || window.location.search;
+	startappStr = startappStr.replace("?startapp=", "");
+	let startappKVs = startappStr.split('___');
 	for (const kv of startappKVs) {
 		let kvArr = kv.split('_-_');
 		startappJson[kvArr[0]] = kvArr[1];
