@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 50';
+logBox.innerText = 'Версия 51';
 
 
 
@@ -15,6 +15,7 @@ try {
 }
 
 logBox.innerText = startappJson + '\n' + logBox.innerText;
+startappJson = {};
 
 let data = [];
 
