@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 51';
+logBox.innerText = 'Версия 52';
 
 
 
@@ -9,13 +9,17 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let startappJson = {};
 try {
-	startappJson = window.Telegram.WebApp.initDataUnsafe.start_param;
+	let startappKVs = (window.Telegram.WebApp.initDataUnsafe.start_param).split('___');
+	for (const kv of startappKVs) {
+		let kvArr = kv.split('_-_');
+		startappJson[kvArr[0]] = kvArr[1];
+	}
+
 } catch (err) {
 	// оставляем startappJson пустым объектом
 }
 
-logBox.innerText = startappJson + '\n' + logBox.innerText;
-startappJson = {};
+logBox.innerText = JSON.stringify(startappJson) + '\n' + logBox.innerText;
 
 let data = [];
 
@@ -107,7 +111,7 @@ async function expandRow(rowToExpand) {
 			'initData': window.Telegram.WebApp.initData, 
 			'type': 'requestQuestionAssets', 
 			'data':{'qstnid': qstnid},
-			'roundbackData': startappJson.roundbackData,
+			'startappData': startappJson,
 		}),
 		[1, 2, 2, 5, 5]
 	);
@@ -138,7 +142,7 @@ async function expandRow(rowToExpand) {
 						'qstnid': evt.currentTarget.getAttribute("data-qstnid"), 
 						'assetType': evt.currentTarget.getAttribute("data-assetType"),
 					},
-					'roundbackData': startappJson.roundbackData,
+					'startappData': startappJson,
 				}),
 				[1, 2, 2, 5, 5]
 			);
@@ -255,7 +259,7 @@ let wareqRes = await webappRequest(
 	JSON.stringify({
 		'initData': window.Telegram.WebApp.initData, 
 		'type': 'requestQuestionsList',
-		'roundbackData': startappJson.roundbackData,
+		'startappData': startappJson,
 	}),
 	[1, 2, 2, 5, 5]
 );
