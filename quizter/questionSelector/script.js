@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 49';
+logBox.innerText = 'Версия 50';
 
 
 
@@ -9,7 +9,7 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 
 let startappJson = {};
 try {
-	startappJson = decodeURIComponent(window.Telegram.WebApp.initDataUnsafe.start_param);
+	startappJson = window.Telegram.WebApp.initDataUnsafe.start_param;
 } catch (err) {
 	// оставляем startappJson пустым объектом
 }
