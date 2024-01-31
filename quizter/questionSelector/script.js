@@ -1,8 +1,10 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 52';
+logBox.innerText = 'Версия 53';
 
+logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
+logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
 
 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
@@ -19,7 +21,7 @@ try {
 	// оставляем startappJson пустым объектом
 }
 
-logBox.innerText = JSON.stringify(startappJson) + '\n' + logBox.innerText;
+logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
 
 let data = [];
 
