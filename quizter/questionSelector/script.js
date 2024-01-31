@@ -1,4 +1,10 @@
 // script.js 
+
+let logBox = document.getElementById("logbox");
+logBox.innerText = 'Версия 48';
+
+
+
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
 let startappJson = {};
@@ -8,9 +14,10 @@ try {
 	// оставляем startappJson пустым объектом
 }
 
+logBox.innerText = JSON.stringify(startappJson) + '\n' + logBox.innerText;
+
 let data = [];
-let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 47';
+
 
 const table = document.getElementById("table"); 
 
