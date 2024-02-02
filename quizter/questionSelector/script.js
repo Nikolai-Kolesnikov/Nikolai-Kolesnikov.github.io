@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 57';
+logBox.innerText = 'Версия 58';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -151,8 +151,13 @@ async function expandRow(rowToExpand) {
 				[1, 2, 2, 5, 5]
 			);
 			logBox.innerText = 'selectRes = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
-			window.Telegram.WebApp.close();
-			
+			try {
+				if (selectRes.data.status = "OK") {
+					window.Telegram.WebApp.close();
+				}
+			} catch (err) {
+				// TODO выдать сообщение об ошибке
+			}
 		});
 	}
 
