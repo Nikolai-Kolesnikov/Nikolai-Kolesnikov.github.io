@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 63';
+logBox.innerText = 'Версия 64';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -33,9 +33,10 @@ if (startappJson.action) {
 const settingsObj = {
 	'editSending': {
 		'columns': [
-			{dataKey: 'qstnName', name: 'Вопрос', parsingType: ''},
-			{dataKey: 'rubric', name: 'Рубрика', parsingType: ''},
-			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString'},
+			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%'},
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '30%'},
+			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '20%'},
+			{control: 'expandRow', name: '(_)', width: '10%'}
 		],
 
 	}
@@ -46,8 +47,17 @@ logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + log
 
 let data = [];
 
-
-const table = document.getElementById("table"); 
+const table = document.createElement('table');
+document.getElementById('mainTableDiv').appendChild(table);
+let headRow = table.insertRow();
+for (const column of settingsObj[startappJson.action]['columns']) {
+	let th = document.createElement('th');
+	if (column.dataKey) th.id = column.dataKey;
+	th.style.width = column.width;
+	th.innerText = column.name;
+	headRow.appendChild(th);
+}
+//const table = document.getElementById("table"); 
 
 for (const elm of settingsObj[startappJson.action]['columns']) {
 	document.getElementById(elm.dataKey).addEventListener("click", (e) => {
