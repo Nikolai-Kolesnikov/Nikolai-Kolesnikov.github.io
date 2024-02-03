@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 70';
+logBox.innerText = 'Версия 71';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -33,9 +33,9 @@ try {
 const settingsObj = {
 	'editSending': {
 		'columns': [
-			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%'},
-			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%'},
-			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%'},
+			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic'},
+			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%', sortable: 'dateTime'},
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic'},
 			{control: 'expandRow', name: '(_)', width: '10%'}
 		],
 
@@ -47,6 +47,8 @@ logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + log
 
 let data = [];
 
+let flag = {};
+
 const table = document.createElement('table');
 document.getElementById('mainTableDiv').appendChild(table);
 let headRow = table.insertRow();
@@ -54,9 +56,12 @@ for (const column of settingsObj[startappJson.action]['columns']) {
 	let th = document.createElement('th');
 	if (column.dataKey) {
 		th.id = column.dataKey;
+	}
+	if (column.sortable) {
 		th.addEventListener("click", (evt) => {
 			sortItems(evt.currentTarget.id);		
 		});
+		flag[column.dataKey] = false;
 	}
 	th.style.width = column.width;
 	th.innerText = column.name;
@@ -70,7 +75,7 @@ document.getElementById("searchInput").addEventListener("keyup", (e) => {
 
 
 // For sorting ascending or descending 
-const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
+//const flag = { qstnName: false, modifiedAt: false, rubric: false }; 
 
 /*let data = [ 
 	{ qstnName: "вопрос про драконов 25", modifiedAt: 1705671948822, rubric: "фэнтези", qstnid: "038be69b-f1cb-4b99-af2d-e5e8a0b7aabc" }, 
