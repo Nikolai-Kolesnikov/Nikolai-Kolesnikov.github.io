@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 72';
+logBox.innerText = 'Версия 73';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -130,7 +130,7 @@ async function expandRow(rowToExpand) {
 	let rowid = rowToExpand.getAttribute("data-rowid");
 	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
 	let c = extraRow.insertCell(0);
-	c.colSpan = 4;
+	c.colSpan = settingsObj[startappJson.action]['columns'].length;
 	let subTable = document.createElement("table");
 	c.appendChild(subTable);
 	let stR1 = subTable.insertRow(); // для названия рубрики
@@ -210,7 +210,7 @@ async function expandRow(rowToExpand) {
 		for (const imgType of ["photo", "animation_img", "sticker_img"]) {
 			cell.innerHTML = `${
 				assets[assetType][imgType] ? 
-				`<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][imgType]}">` : 
+				`<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][imgType]}" />` : 
 				''
 			}`;
 		}
