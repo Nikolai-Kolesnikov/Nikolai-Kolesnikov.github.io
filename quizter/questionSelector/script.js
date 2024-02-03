@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 65';
+logBox.innerText = 'Версия 66';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -85,6 +85,7 @@ const flag = { qstnName: false, modifiedAt: false, rubric: false };
 
 // To create table 
 function addItem(e) { 
+	logBox.innerText = `addItem(${JSON.stringify(e)})`;
 	let row = table.insertRow(); 
 	row.setAttribute("data-qstnid", e.qstnid);
 	row.setAttribute("data-expanded", "no");
@@ -101,7 +102,7 @@ function addItem(e) {
 	c1.innerText = tempDateTime.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }); 
 	c2.innerText = e.rubric; 
 	c3.innerHTML = "v"; 
-	c3.classList.add("zoom"); 
+	//c3.classList.add("zoom"); 
 	//c3.addEventListener("click", () => edit(c3, i)); 	
 }
 
