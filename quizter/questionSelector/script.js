@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 64';
+logBox.innerText = 'Версия 65';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -34,8 +34,8 @@ const settingsObj = {
 	'editSending': {
 		'columns': [
 			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%'},
-			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '30%'},
-			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '20%'},
+			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%'},
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%'},
 			{control: 'expandRow', name: '(_)', width: '10%'}
 		],
 
