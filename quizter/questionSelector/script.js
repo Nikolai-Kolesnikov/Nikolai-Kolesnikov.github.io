@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 66';
+logBox.innerText = 'Версия 67';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -305,7 +305,7 @@ let wareqRes = await webappRequest(
 	[1, 2, 2, 5, 5]
 );
 data = wareqRes['data'];
-//logBox.innerText = JSON.stringify(data) + '\nДанные загрузились!\n' + logBox.innerText;
+logBox.innerText = JSON.stringify(data) + '\nДанные загрузились!\n' + logBox.innerText;
 
 // Initiate table
 renderTable();
