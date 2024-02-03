@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 71';
+logBox.innerText = 'Версия 72';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -38,7 +38,7 @@ const settingsObj = {
 			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic'},
 			{control: 'expandRow', name: '(_)', width: '10%'}
 		],
-
+		
 	}
 };
 
@@ -90,23 +90,33 @@ document.getElementById("searchInput").addEventListener("keyup", (e) => {
 function addItem(e) { 
 	logBox.innerText = `addItem(${JSON.stringify(e)})`;
 	let row = table.insertRow(); 
-	row.setAttribute("data-qstnid", e.qstnid);
+	row.setAttribute("data-rowid", e.rowid);
 	row.setAttribute("data-expanded", "no");
 	row.addEventListener("click", (evt) => {
 		logBox.innerText = "row clicked: " + evt.currentTarget.rowIndex + "\n" + logBox.innerText;
 		expandRow(evt.currentTarget);
 	});
-	let c0 = row.insertCell(0); 
-	let c1 = row.insertCell(1); 
-	let c2 = row.insertCell(2); 
-	let c3 = row.insertCell(3); 
-	c0.innerText = e.qstnName;
-	let tempDateTime = new Date(e.modifiedAt);
-	c1.innerText = tempDateTime.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }); 
-	c2.innerText = e.rubric; 
-	c3.innerHTML = "v"; 
-	//c3.classList.add("zoom"); 
-	//c3.addEventListener("click", () => edit(c3, i)); 	
+	for (const column of settingsObj[startappJson.action]['columns']) {
+		let cell = row.insertCell();
+		if (column.dataKey) {
+			switch (column.parsingType) {
+				case '':
+				case undefined:
+				case null:
+					cell.innerText = e[column.dataKey];
+					break;
+				case 'dateTimeString':
+					let tempDateTime = new Date(e[column.dataKey]);
+					cell.innerText = tempDateTime.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+					break;
+			}
+		}
+		switch (column.control) {
+			case 'expandRow':
+				cell.innerText = 'v';
+				break;
+		}
+	} 	
 }
 
 // Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей и загрузить в неё данные.
@@ -117,7 +127,7 @@ async function expandRow(rowToExpand) {
 		return;
 	}
 	rowToExpand.setAttribute("data-expanded", "yes");
-	let qstnid = rowToExpand.getAttribute("data-qstnid");
+	let rowid = rowToExpand.getAttribute("data-rowid");
 	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
 	let c = extraRow.insertCell(0);
 	c.colSpan = 4;
@@ -147,7 +157,7 @@ async function expandRow(rowToExpand) {
 		JSON.stringify({
 			'initData': window.Telegram.WebApp.initData, 
 			'type': 'requestQuestionAssets', 
-			'data':{'qstnid': qstnid},
+			'data':{'qstnid': rowid},
 			'startappData': startappJson,
 		}),
 		[1, 2, 2, 5, 5]
@@ -168,7 +178,7 @@ async function expandRow(rowToExpand) {
 	for (const cell of [stR1C2, stR3C2, stR5C2]) {
 		cell.rowSpan = 2;
 		cell.innerText = "🔘";
-		cell.setAttribute("data-qstnid", qstnid);
+		cell.setAttribute("data-rowid", rowid);
 		cell.addEventListener("click", async (evt) => {
 			let selectRes = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
@@ -176,7 +186,7 @@ async function expandRow(rowToExpand) {
 					'initData': window.Telegram.WebApp.initData, 
 					'type': 'selectQuestionAsset', 
 					'data':{
-						'qstnid': evt.currentTarget.getAttribute("data-qstnid"), 
+						'qstnid': evt.currentTarget.getAttribute("data-rowid"), 
 						'assetType': evt.currentTarget.getAttribute("data-assetType"),
 					},
 					'startappData': startappJson,
