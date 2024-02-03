@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 61';
+logBox.innerText = 'Версия 62';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -20,8 +20,9 @@ try {
 	}
 
 } catch (err) {
-	// оставляем startappJson пустым объектом
-	logBox.innerText = 'Неверный или отсутствует параметр startapp' + '\n' + logBox.innerText;
+	
+	logBox.innerText = 'Неверный или отсутствует параметр startapp\n' 
+		+ err + '\n' + logBox.innerText;
 	startappJson = undefined;
 }
 if (startappJson) {
