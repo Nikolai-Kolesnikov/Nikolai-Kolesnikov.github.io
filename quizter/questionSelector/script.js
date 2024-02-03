@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 69';
+logBox.innerText = 'Версия 70';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -52,19 +52,17 @@ document.getElementById('mainTableDiv').appendChild(table);
 let headRow = table.insertRow();
 for (const column of settingsObj[startappJson.action]['columns']) {
 	let th = document.createElement('th');
-	if (column.dataKey) th.id = column.dataKey;
+	if (column.dataKey) {
+		th.id = column.dataKey;
+		th.addEventListener("click", (evt) => {
+			sortItems(evt.currentTarget.id);		
+		});
+	}
 	th.style.width = column.width;
 	th.innerText = column.name;
 	headRow.appendChild(th);
 }
 //const table = document.getElementById("table"); 
-
-for (const elm of settingsObj[startappJson.action]['columns']) {
-	document.getElementById(elm.dataKey).addEventListener("click", (e) => {
-		//logBox.innerText = e.currentTarget.id + ' fired click event\n' + logBox.innerText;
-		sortItems(e.currentTarget.id);		
-	});
-}
 
 document.getElementById("searchInput").addEventListener("keyup", (e) => {
 	searchItems(e.currentTarget.value.toLowerCase());
