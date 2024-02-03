@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 60';
+logBox.innerText = 'Версия 61';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -24,7 +24,7 @@ try {
 	logBox.innerText = 'Неверный или отсутствует параметр startapp' + '\n' + logBox.innerText;
 	startappJson = undefined;
 }
-if (!startappJson) return;
+if (startappJson) {
 
 const settingsObj = {
 	'editSending': {
@@ -295,4 +295,4 @@ data = wareqRes['data'];
 // Initiate table
 renderTable();
 
-
+}
