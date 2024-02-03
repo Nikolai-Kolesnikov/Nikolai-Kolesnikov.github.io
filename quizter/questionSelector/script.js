@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 62';
+logBox.innerText = 'Версия 63';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -9,7 +9,9 @@ logBox.innerText = 'window.location.search = ' + window.location.search + '\n' +
 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
-let startappJson;
+let goOn = true;
+
+let startappJson = {};
 try {
 	let startappStr = window.Telegram.WebApp.initDataUnsafe.start_param || window.location.search;
 	startappStr = startappStr.replace("?startapp=", "");
@@ -23,9 +25,10 @@ try {
 	
 	logBox.innerText = 'Неверный или отсутствует параметр startapp\n' 
 		+ err + '\n' + logBox.innerText;
-	startappJson = undefined;
+	
 }
-if (startappJson) {
+
+if (startappJson.action) {
 
 const settingsObj = {
 	'editSending': {
