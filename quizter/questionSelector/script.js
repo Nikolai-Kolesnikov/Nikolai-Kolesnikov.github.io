@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 58';
+logBox.innerText = 'Версия 59';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -21,7 +21,21 @@ try {
 
 } catch (err) {
 	// оставляем startappJson пустым объектом
+	logBox.innerText = 'Неверный или отсутствует параметр startapp' + '\n' + logBox.innerText;
+	return;
 }
+
+const settingsObj = {
+	'editSending': {
+		'columns': [
+			{dataKey: 'qstnName', name: 'Вопрос', parsingType: ''},
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: ''},
+			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString'},
+		],
+
+	}
+};
+
 
 logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
 
@@ -30,8 +44,8 @@ let data = [];
 
 const table = document.getElementById("table"); 
 
-for (const elm of ["qstnName", "rubric", "modifiedAt"]) {
-	document.getElementById(elm).addEventListener("click", (e) => {
+for (const elm of settingsObj[startappJson.action]['columns']) {
+	document.getElementById(elm.dataKey).addEventListener("click", (e) => {
 		//logBox.innerText = e.currentTarget.id + ' fired click event\n' + logBox.innerText;
 		sortItems(e.currentTarget.id);		
 	});
@@ -121,12 +135,12 @@ async function expandRow(rowToExpand) {
 	);
 	let assets = wareqRes['data'];
 
-	stR1C2.setAttribute("data-assetType", "rubric");
-	stR3C2.setAttribute("data-assetType", "question");
-	stR5C2.setAttribute("data-assetType", "answer");
-	stR2C1.setAttribute("data-assetKey", "rubricContent");
-	stR4C1.setAttribute("data-assetKey", "qstnContent");
-	stR6C1.setAttribute("data-assetKey", "answerContent");
+	stR1C2.setAttribute("data-assetType", "rubricContent");
+	stR3C2.setAttribute("data-assetType", "qstnContent");
+	stR5C2.setAttribute("data-assetType", "answerContent");
+	stR2C1.setAttribute("data-assetType", "rubricContent");
+	stR4C1.setAttribute("data-assetType", "qstnContent");
+	stR6C1.setAttribute("data-assetType", "answerContent");
 	
 	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
 	stR3C1.innerText = "Содержание вопроса";
@@ -162,21 +176,21 @@ async function expandRow(rowToExpand) {
 	}
 
 	for (const cell of [stR2C1, stR4C1, stR6C1]) {
-		let assetKey = cell.getAttribute("data-assetKey");
+		let assetType = cell.getAttribute("data-assetType");
 		
 		for (const imgType of ["photo", "animation_img", "sticker_img"]) {
 			cell.innerHTML = `${
-				assets[assetKey][imgType] ? 
-				`<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][imgType]}">` : 
+				assets[assetType][imgType] ? 
+				`<img alt="🖼⌛" src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][imgType]}">` : 
 				''
 			}`;
 		}
 
 		for (const videoType of ["video", "video_note", "animation_video", "sticker_video"]) {
 			cell.innerHTML += `${
-				assets[assetKey][videoType] ? 
+				assets[assetType][videoType] ? 
 				`<video width="200" controls>
-				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][videoType]}">
+				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][videoType]}">
 				Your browser does not support the video tag.
 				</video>` : 
 				``
@@ -185,21 +199,21 @@ async function expandRow(rowToExpand) {
 
 		for (const audioType of ["audio", "voice"]) {
 			cell.innerHTML += `${
-				assets[assetKey][audioType] ? 
+				assets[assetType][audioType] ? 
 				`<audio controls>
-				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey][audioType]}">
+				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][audioType]}">
 				Your browser does not support the audio tag.
 		  		</audio>` : 
 				``
 			}`;
 		}
 
-		cell.innerHTML += `${assets[assetKey]["document"] ? 
-			`<a href="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetKey]["document"]}">Документ</a>` : 
+		cell.innerHTML += `${assets[assetType]["document"] ? 
+			`<a href="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType]["document"]}">Документ</a>` : 
 			''
 		}`;
 
-		cell.innerHTML += `${assets[assetKey]["text"] ? `${assets[assetKey]["text"]}` : ''}`;
+		cell.innerHTML += `${assets[assetType]["text"] ? `${assets[assetType]["text"]}` : ''}`;
 		
 	}
 		
