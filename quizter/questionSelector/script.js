@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 76';
+logBox.innerText = 'Версия 77';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -206,11 +206,11 @@ async function expandRow(rowToExpand) {
 
 	for (const cell of [stR2C1, stR4C1, stR6C1]) {
 		let assetType = cell.getAttribute("data-assetType");
-		
+		cell.innerHTML = '';
 		for (const imgType of ["photo", "animation_img", "sticker_img"]) {
-			cell.innerHTML = `${
+			cell.innerHTML += `${
 				assets[assetType][imgType] ? 
-				`<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][imgType]}"></img>` : 
+				`<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][imgType]}" />` : 
 				''
 			}`;
 		}
