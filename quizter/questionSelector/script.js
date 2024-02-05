@@ -5,7 +5,7 @@ function myLog(msg) {
 	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 83');
+myLog('Версия 84');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
@@ -207,6 +207,33 @@ async function expandRow(rowToExpand) {
 						[1, 2, 2, 5, 5]
 					);
 					logBox.innerText = 'selectRes = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
+					try {
+						if (selectRes.data.status = "OK") {
+							window.Telegram.WebApp.close();
+						}
+					} catch (err) {
+						// TODO выдать сообщение об ошибке
+					}
+				});
+			}
+			if (assetColumn == 'edit') {
+				assetHeadingCell.innerText = "ред.";
+				assetHeadingCell.setAttribute("data-rowid", rowid);
+				assetHeadingCell.addEventListener("click", async (evt) => {
+					let rData = {};
+					rData[settingsObj[startappJson.action]['queries']['editAsset']['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
+					rData['assetType'] = evt.currentTarget.getAttribute("data-assetType");
+					let selectRes = await webappRequest(
+						'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+						JSON.stringify({
+							'initData': window.Telegram.WebApp.initData, 
+							'type': settingsObj[startappJson.action]['queries']['editAsset']['name'], 
+							'data': rData,
+							'startappData': startappJson,
+						}),
+						[1, 2, 2, 5, 5]
+					);
+					logBox.innerText = 'editAsset = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
 					try {
 						if (selectRes.data.status = "OK") {
 							window.Telegram.WebApp.close();
