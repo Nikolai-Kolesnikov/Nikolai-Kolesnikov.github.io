@@ -5,7 +5,7 @@ function myLog(msg) {
 	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 84');
+myLog('Версия 85');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
@@ -27,8 +27,7 @@ try {
 
 } catch (err) {
 	
-	logBox.innerText = 'Неверный или отсутствует параметр startapp\n' 
-		+ err + '\n' + logBox.innerText;
+	myLog('Неверный или отсутствует параметр startapp\n' + err);
 	
 }
 logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
@@ -47,7 +46,7 @@ const settingsObj = {
 			{assetType: 'qstnContent', headingText: 'Содержание вопроса'},
 			{assetType: 'answerContent', headingText: 'Правильный ответ'},			
 		],
-		'assetColumns': ['content', 'select'],
+		'assetColumns': ['content', 'selectAsset'],
 		'queries': {
 			'getList': {name: 'requestQuestionsList'},
 			'getAssets': {name: 'requestQuestionAssets', rowidName: 'qstnid'},
@@ -66,7 +65,7 @@ const settingsObj = {
 			{assetType: 'qstnContent', headingText: 'Содержание вопроса'},
 			{assetType: 'answerContent', headingText: 'Правильный ответ'},			
 		],
-		'assetColumns': ['content', 'edit', 'erase'],
+		'assetColumns': ['content', 'editAsset', 'eraseAsset'],
 		'queries': {
 			'getList': {name: 'requestQuestionsList'},
 			'getAssets': {name: 'requestQuestionAssets', rowidName: 'qstnid'},
@@ -181,6 +180,8 @@ async function expandRow(rowToExpand) {
 		for (const assetColumn of settingsObj[startappJson.action]['assetColumns']) {
 			let assetHeadingCell = assetHeadingRow.insertCell();
 			assetHeadingCell.setAttribute("data-assetType", assetSettings['assetType']);
+			assetHeadingCell.setAttribute("data-assetColumn", assetColumn);
+			
 			if (assetColumn != 'content') {
 				assetHeadingCell.rowSpan = 2;
 			} else {
@@ -189,26 +190,26 @@ async function expandRow(rowToExpand) {
 				assetContentCell.setAttribute("data-assetType", assetSettings['assetType']);
 				contentCells.push(assetContentCell);		
 			}
-			if (assetColumn == 'select') {
-				assetHeadingCell.innerText = "🔘";
+			if (['selectAsset', 'editAsset'].includes(assetColumn)) {
 				assetHeadingCell.setAttribute("data-rowid", rowid);
 				assetHeadingCell.addEventListener("click", async (evt) => {
 					let rData = {};
-					rData[settingsObj[startappJson.action]['queries']['selectAsset']['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
+					let assetColumnClicked = evt.currentTarget.getAttribute("data-assetColumn");
+					rData[settingsObj[startappJson.action]['queries'][assetColumnClicked]['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
 					rData['assetType'] = evt.currentTarget.getAttribute("data-assetType");
-					let selectRes = await webappRequest(
+					let wareqRes = await webappRequest(
 						'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 						JSON.stringify({
 							'initData': window.Telegram.WebApp.initData, 
-							'type': settingsObj[startappJson.action]['queries']['selectAsset']['name'], 
+							'type': settingsObj[startappJson.action]['queries'][assetColumnClicked]['name'], 
 							'data': rData,
 							'startappData': startappJson,
 						}),
 						[1, 2, 2, 5, 5]
 					);
-					logBox.innerText = 'selectRes = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
+					myLog('wareqRes = ' + JSON.stringify(wareqRes));
 					try {
-						if (selectRes.data.status = "OK") {
+						if (wareqRes.data.status = "OK") {
 							window.Telegram.WebApp.close();
 						}
 					} catch (err) {
@@ -216,32 +217,11 @@ async function expandRow(rowToExpand) {
 					}
 				});
 			}
+			if (assetColumn == 'select') {
+				assetHeadingCell.innerText = "🔘";				
+			}
 			if (assetColumn == 'edit') {
 				assetHeadingCell.innerText = "ред.";
-				assetHeadingCell.setAttribute("data-rowid", rowid);
-				assetHeadingCell.addEventListener("click", async (evt) => {
-					let rData = {};
-					rData[settingsObj[startappJson.action]['queries']['editAsset']['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
-					rData['assetType'] = evt.currentTarget.getAttribute("data-assetType");
-					let selectRes = await webappRequest(
-						'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-						JSON.stringify({
-							'initData': window.Telegram.WebApp.initData, 
-							'type': settingsObj[startappJson.action]['queries']['editAsset']['name'], 
-							'data': rData,
-							'startappData': startappJson,
-						}),
-						[1, 2, 2, 5, 5]
-					);
-					logBox.innerText = 'editAsset = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
-					try {
-						if (selectRes.data.status = "OK") {
-							window.Telegram.WebApp.close();
-						}
-					} catch (err) {
-						// TODO выдать сообщение об ошибке
-					}
-				});
 			}
 		}
 	}	
