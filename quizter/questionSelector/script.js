@@ -1,15 +1,19 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 81';
+function myLog(msg) {
+	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
+}
 
-logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
-logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
+myLog('Версия 82');
+
+myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
+myLog('window.location.search = ' + window.location.search);
 
 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
-let goOn = true;
+
 
 let startappJson = {};
 try {
@@ -103,7 +107,7 @@ document.getElementById("searchInput").addEventListener("keyup", (e) => {
 
 // To create table 
 function addItem(e) { 
-	logBox.innerText = `addItem(${JSON.stringify(e)})`;
+	logBox.innerText = `addItem(${JSON.stringify(e)})\n`+logBox.innerText;
 	let row = table.insertRow(); 
 	row.setAttribute("data-rowid", e.rowid);
 	row.setAttribute("data-expanded", "no");
@@ -195,12 +199,14 @@ async function expandRow(rowToExpand) {
 		}
 	}	
 	
+	let rData = {};
+	rData[settingsObj[startappJson.action]['queries']['getAssets']['rowidName']] = rowid;
 	let wareqRes = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 		JSON.stringify({
 			'initData': window.Telegram.WebApp.initData, 
 			'type': settingsObj[startappJson.action]['queries']['getAssets']['name'], 
-			'data':{}[settingsObj[startappJson.action]['queries']['getAssets']['rowidName']] = rowid,
+			'data': rData,
 			'startappData': startappJson,
 		}),
 		[1, 2, 2, 5, 5]
