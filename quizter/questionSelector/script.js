@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 79';
+logBox.innerText = 'Версия 80';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -27,7 +27,7 @@ try {
 		+ err + '\n' + logBox.innerText;
 	
 }
-
+logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
 
 
 const settingsObj = {
@@ -58,8 +58,6 @@ for (const column of settingsObj[startappJson.action]['columns']) {
 	if (column['searchable']) searchableColumns.push(column.dataKey);
 }
 
-
-logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
 
 let data = [];
 
