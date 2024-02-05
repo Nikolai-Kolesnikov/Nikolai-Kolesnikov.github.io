@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 80';
+logBox.innerText = 'Версия 81';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -33,9 +33,9 @@ logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + log
 const settingsObj = {
 	'editSending': {
 		'columns': [
-			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic', searchable},
+			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic', searchable: 'yes'},
 			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%', sortable: 'dateTime'},
-			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic', searchable},
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic', searchable: 'yes'},
 			{control: 'expandRow', name: '(_)', width: '10%'},
 		],
 		'assets': [
@@ -55,7 +55,7 @@ const settingsObj = {
 
 let searchableColumns = [];
 for (const column of settingsObj[startappJson.action]['columns']) {
-	if (column['searchable']) searchableColumns.push(column.dataKey);
+	if (column['searchable'] == 'yes') searchableColumns.push(column.dataKey);
 }
 
 
