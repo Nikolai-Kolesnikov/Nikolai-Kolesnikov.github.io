@@ -1,7 +1,7 @@
 // script.js 
 
 let logBox = document.getElementById("logbox");
-logBox.innerText = 'Версия 77';
+logBox.innerText = 'Версия 78';
 
 logBox.innerText = 'window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param + '\n' + logBox.innerText;
 logBox.innerText = 'window.location.search = ' + window.location.search + '\n' + logBox.innerText;
@@ -33,14 +33,30 @@ try {
 const settingsObj = {
 	'editSending': {
 		'columns': [
-			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic'},
+			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic', searchable},
 			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%', sortable: 'dateTime'},
-			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic'},
-			{control: 'expandRow', name: '(_)', width: '10%'}
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic', searchable},
+			{control: 'expandRow', name: '(_)', width: '10%'},
 		],
+		'assets': [
+			{assetType: 'rubricContent', headingText: 'Рубрика'},
+			{assetType: 'qstnContent', headingText: 'Содержание вопроса'},
+			{assetType: 'answerContent', headingText: 'Правильный ответ'},			
+		],
+		'assetColumns': ['content', 'select'],
+		'queries': {
+			'getList': {name: 'requestQuestionsList'},
+			'getAssets': {name: 'requestQuestionAssets', rowidName: 'qstnid'},
+			'selectAsset': {name: 'selectQuestionAsset', rowidName: 'qstnid'},
+		}
 		
 	}
 };
+
+const searchableColumns = [];
+for (const column of settingsObj[startappJson.action]['columns']) {
+	if (column['searchable']) searchableColumns.push(column.dataKey);
+}
 
 
 logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
@@ -58,8 +74,9 @@ for (const column of settingsObj[startappJson.action]['columns']) {
 		th.id = column.dataKey;
 	}
 	if (column.sortable) {
+		th.setAttribute('data-sortable', column.sortable);
 		th.addEventListener("click", (evt) => {
-			sortItems(evt.currentTarget.id);		
+			sortItems(evt.currentTarget.id, evt.currentTarget.getAttribute('data-sortable'));		
 		});
 		flag[column.dataKey] = false;
 	}
@@ -133,78 +150,66 @@ async function expandRow(rowToExpand) {
 	c.colSpan = settingsObj[startappJson.action]['columns'].length;
 	let subTable = document.createElement("table");
 	c.appendChild(subTable);
-	let stR1 = subTable.insertRow(); // для названия рубрики
-	let stR1C1 = stR1.insertCell(); 
-	let stR1C2 = stR1.insertCell(); 
-	let stR2 = subTable.insertRow(); // для сообщения с описанием рубрики
-	let stR2C1 = stR2.insertCell();
-	//let stR2C2 = stR2.insertCell();
-	let stR3 = subTable.insertRow(); // для "Содержание вопроса"
-	let stR3C1 = stR3.insertCell();
-	let stR3C2 = stR3.insertCell();
-	let stR4 = subTable.insertRow(); // для сообщения с содержанием вопроса
-	let stR4C1 = stR4.insertCell();
-	//let stR4C2 = stR4.insertCell();
-	let stR5 = subTable.insertRow(); // для "Правильный ответ"
-	let stR5C1 = stR5.insertCell();
-	let stR5C2 = stR5.insertCell();
-	let stR6 = subTable.insertRow(); // для сообщения с содержанием правильного ответа
-	let stR6C1 = stR6.insertCell();
-	//let stR6C2 = stR6.insertCell();	
+
+	let contentCells = [];
+
+	for (const assetSettings of settingsObj[startappJson.action]['assets']) {
+		let assetHeadingRow = subTable.insertRow();
+		let assetContentRow = subTable.insertRow();
+		for (const assetColumn of settingsObj[startappJson.action]['assetColumns']) {
+			let assetHeadingCell = assetHeadingRow.insertCell();
+			assetHeadingCell.setAttribute("data-assetType", assetSettings['assetType']);
+			if (assetColumn != 'content') {
+				assetHeadingCell.rowSpan = 2;
+			} else {
+				assetHeadingCell.innerText = assetSettings['headingText'];
+				let assetContentCell = assetContentRow.insertCell();
+				assetContentCell.setAttribute("data-assetType", assetSettings['assetType']);
+				contentCells.push(assetContentCell);		
+			}
+			if (assetColumn == 'select') {
+				assetHeadingCell.innerText = "🔘";
+				assetHeadingCell.setAttribute("data-rowid", rowid);
+				assetHeadingCell.addEventListener("click", async (evt) => {
+					let rData = {};
+					rData[settingsObj[startappJson.action]['queries']['selectAsset']['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
+					rData['assetType'] = evt.currentTarget.getAttribute("data-assetType");
+					let selectRes = await webappRequest(
+						'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+						JSON.stringify({
+							'initData': window.Telegram.WebApp.initData, 
+							'type': settingsObj[startappJson.action]['queries']['selectAsset']['name'], 
+							'data': rData,
+							'startappData': startappJson,
+						}),
+						[1, 2, 2, 5, 5]
+					);
+					logBox.innerText = 'selectRes = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
+					try {
+						if (selectRes.data.status = "OK") {
+							window.Telegram.WebApp.close();
+						}
+					} catch (err) {
+						// TODO выдать сообщение об ошибке
+					}
+				});
+			}
+		}
+	}	
 	
 	let wareqRes = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 		JSON.stringify({
 			'initData': window.Telegram.WebApp.initData, 
-			'type': 'requestQuestionAssets', 
-			'data':{'qstnid': rowid},
+			'type': settingsObj[startappJson.action]['queries']['getAssets']['name'], 
+			'data':{}[settingsObj[startappJson.action]['queries']['getAssets']['rowidName']] = rowid,
 			'startappData': startappJson,
 		}),
 		[1, 2, 2, 5, 5]
 	);
 	let assets = wareqRes['data'];
 
-	stR1C2.setAttribute("data-assetType", "rubricContent");
-	stR3C2.setAttribute("data-assetType", "qstnContent");
-	stR5C2.setAttribute("data-assetType", "answerContent");
-	stR2C1.setAttribute("data-assetType", "rubricContent");
-	stR4C1.setAttribute("data-assetType", "qstnContent");
-	stR6C1.setAttribute("data-assetType", "answerContent");
-	
-	stR1C1.innerText = "Рубрика " + (assets.rubricContent.title || "не определена");
-	stR3C1.innerText = "Содержание вопроса";
-	stR5C1.innerText = "Правильный ответ";
-	
-	for (const cell of [stR1C2, stR3C2, stR5C2]) {
-		cell.rowSpan = 2;
-		cell.innerText = "🔘";
-		cell.setAttribute("data-rowid", rowid);
-		cell.addEventListener("click", async (evt) => {
-			let selectRes = await webappRequest(
-				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-				JSON.stringify({
-					'initData': window.Telegram.WebApp.initData, 
-					'type': 'selectQuestionAsset', 
-					'data':{
-						'qstnid': evt.currentTarget.getAttribute("data-rowid"), 
-						'assetType': evt.currentTarget.getAttribute("data-assetType"),
-					},
-					'startappData': startappJson,
-				}),
-				[1, 2, 2, 5, 5]
-			);
-			logBox.innerText = 'selectRes = ' + JSON.stringify(selectRes) + '\n' + logBox.innerText;
-			try {
-				if (selectRes.data.status = "OK") {
-					window.Telegram.WebApp.close();
-				}
-			} catch (err) {
-				// TODO выдать сообщение об ошибке
-			}
-		});
-	}
-
-	for (const cell of [stR2C1, stR4C1, stR6C1]) {
+	for (const cell of contentCells) {
 		let assetType = cell.getAttribute("data-assetType");
 		cell.innerHTML = '';
 		for (const imgType of ["photo", "animation_img", "sticker_img"]) {
@@ -244,6 +249,7 @@ async function expandRow(rowToExpand) {
 
 		cell.innerHTML += `${assets[assetType]["text"] ? `${assets[assetType]["text"]}` : ''}`;
 		
+		if (cell.innerHTML == '') cell.innerText = 'не определено';
 	}
 		
 	logBox.innerText = JSON.stringify(assets) + "\n" + logBox.innerText;
@@ -261,14 +267,12 @@ function renderTable() {
 	}); 
 }
 
-
 // For sorting in different cases 
-function sortItems(title) {
+function sortItems(title, method) {
 	//logBox.innerText = `sortItems(${title}) launched\n` + logBox.innerText;
 	removeTable(); 
-	switch (title) { 
-		case "qstnName":
-		case "rubric":
+	switch (method) { 
+		case "alphabetic":
 			data.sort((a, b) => { 
 				let fa = (a[title] || '').toLowerCase(), 
 				fb = (b[title] || '').toLowerCase(); 
@@ -285,7 +289,7 @@ function sortItems(title) {
 			flag[title] = !flag[title]; 
 			break;
 
-		case "modifiedAt":
+		case "dateTime":
 			data.sort((a, b) => new Date(a[title]) - new Date(b[title]));
 			if (flag[title]) data.reverse(); 
 			flag[title] = !flag[title]; 
@@ -301,7 +305,11 @@ function searchItems(searchStr) {
 		.getElementById("searchInput") 
 		.value.toLowerCase(); */
 	data.map((e) => { 
-		e.filteredOut = !e.qstnName.toLowerCase().includes(searchStr); 
+		let includes = false;
+		for (const column of searchableColumns) {
+			includes = includes || e[column].toLowerCase().includes(searchStr);			
+		}
+		e.filteredOut = !includes;
 	}); 
 
 	removeTable(); 
@@ -312,7 +320,7 @@ let wareqRes = await webappRequest(
 	'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 	JSON.stringify({
 		'initData': window.Telegram.WebApp.initData, 
-		'type': 'requestQuestionsList',
+		'type': settingsObj[startappJson.action]['queries']['getList']['name'],
 		'startappData': startappJson,
 	}),
 	[1, 2, 2, 5, 5]
