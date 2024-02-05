@@ -5,7 +5,7 @@ function myLog(msg) {
 	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 82');
+myLog('Версия 83');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
@@ -52,9 +52,29 @@ const settingsObj = {
 			'getList': {name: 'requestQuestionsList'},
 			'getAssets': {name: 'requestQuestionAssets', rowidName: 'qstnid'},
 			'selectAsset': {name: 'selectQuestionAsset', rowidName: 'qstnid'},
-		}
-		
-	}
+		},		
+	},
+	'viewQuestions': {
+		'columns': [
+			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic', searchable: 'yes'},
+			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%', sortable: 'dateTime'},
+			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic', searchable: 'yes'},
+			{control: 'expandRow', name: '(_)', width: '10%'},
+		],
+		'assets': [
+			{assetType: 'rubricContent', headingText: 'Рубрика'},
+			{assetType: 'qstnContent', headingText: 'Содержание вопроса'},
+			{assetType: 'answerContent', headingText: 'Правильный ответ'},			
+		],
+		'assetColumns': ['content', 'edit', 'erase'],
+		'queries': {
+			'getList': {name: 'requestQuestionsList'},
+			'getAssets': {name: 'requestQuestionAssets', rowidName: 'qstnid'},
+			'editAsset': {name: 'selectQuestionAssetToEdit', rowidName: 'qstnid'},
+			'eraseAsset': {name: 'eraseQuestionAsset', rowidName: 'qstnid'},
+			
+		},		
+	},
 };
 
 let searchableColumns = [];
