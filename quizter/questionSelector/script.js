@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 98');
+myLog('Версия 99');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -75,6 +75,27 @@ const settingsObj = {
 			
 		},		
 	},
+	'viewSendings': {
+		'columns': [
+			{dataKey: 'quizName', name: 'Квиз', parsingType: '', width: '10%', sortable: 'alphabetic', searchable: 'yes'},
+			{dataKey: 'eventName', name: 'Игра', parsingType: '', width: '20%', sortable: 'alphabetic', searchable: 'yes'},
+			{dataKey: 'sendingSyntName', name: 'Сообщение', parsingType: '', width: '35%', sortable: 'alphabetic', searchable: 'yes'},
+			{dataKey: 'sendingDateTime', name: 'Дата отправки', parsingType: 'dateTimeString', width: '25%', sortable: 'dateTime'},
+			{control: 'expandRow', name: '(_)', width: '10%'},
+		],
+		'assets': [
+			{assetType: 'sendingContent', headingText: 'Содержание сообщения'},	
+		],
+		'assetColumns': ['content', 'editAsset', 'eraseAsset'],
+		'queries': {
+			'getList': {name: 'requestSendingsList'},
+			'getAssets': {name: 'requestSendingAssets', rowidName: 'quizSendid'},
+			'editAsset': {name: 'selectSendingAssetToEdit', rowidName: 'quizSendid'},
+			'eraseAsset': {name: 'eraseSendingAsset', rowidName: 'quizSendid'},
+			
+		},		
+	}
+
 };
 
 let searchableColumns = [];
