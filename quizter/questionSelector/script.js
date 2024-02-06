@@ -2,10 +2,11 @@
 
 let logBox = document.getElementById("logbox");
 function myLog(msg) {
-	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
+	let curDate = new Date(Date.now());
+	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 87');
+myLog('Версия 88');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
