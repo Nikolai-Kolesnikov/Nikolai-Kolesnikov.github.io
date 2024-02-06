@@ -170,8 +170,12 @@ function addItem(e) {
 					cell.innerText = e[column.dataKey];
 					break;
 				case 'dateTimeString':
-					let tempDateTime = new Date(e[column.dataKey]);
-					cell.innerText = tempDateTime.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+					if (e[column.dataKey]) {
+						let tempDateTime = new Date(e[column.dataKey]);
+						cell.innerText = tempDateTime.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+					} else {
+						cell.innerText = '❓не определено❗';
+					}
 					break;
 			}
 		}
