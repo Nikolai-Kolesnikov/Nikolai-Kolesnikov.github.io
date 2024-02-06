@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 97');
+myLog('Версия 98');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -355,7 +355,7 @@ function searchItems(searchStr) {
 	for (const entry of data) {
 		let includes = false;
 		for (const column of searchableColumns) {
-			includes = entry[column].toLowerCase().includes(searchStr);		
+			includes = (entry[column] || '').toLowerCase().includes(searchStr);		
 			if (includes) break;	
 		}
 		entry.filteredOut = !includes;
