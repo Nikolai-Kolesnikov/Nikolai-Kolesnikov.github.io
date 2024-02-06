@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 90');
+myLog('Версия 91');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -108,8 +108,9 @@ for (const column of settingsObj[startappJson.action]['columns']) {
 }
 //const table = document.getElementById("table"); 
 
-document.getElementById("searchInput").addEventListener("keyup", (e) => {
-	searchItems(e.currentTarget.value.toLowerCase());
+document.getElementById("searchInput").addEventListener("input", (e) => {
+	myLog('searchInput input event triggered');
+	searchItems(e.target.value.toLowerCase());
 });
 
 
