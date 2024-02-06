@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 93');
+myLog('Версия 94');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -295,10 +295,13 @@ async function expandRow(rowToExpand) {
 
 // Clear the table before updation 
 function removeTable() { 
+	myLog(`removeTable() called.`);
 	while (table.rows.length > 1) table.deleteRow(-1); 
 } 
 
 function renderTable() {
+	myLog(`renderTable() called.`);
+	
 	data.map((e) => {
 		
 		if (!e.filteredOut) {
@@ -347,6 +350,7 @@ function searchItems(searchStr) {
 	/*let input = document 
 		.getElementById("searchInput") 
 		.value.toLowerCase(); */
+	myLog(`searchItems(${searchStr}) called.`);
 	data.map((e) => { 
 		let includes = false;
 		for (const column of searchableColumns) {
