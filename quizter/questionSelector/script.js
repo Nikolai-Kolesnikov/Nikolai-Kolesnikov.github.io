@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 92');
+myLog('Версия 93');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -81,6 +81,7 @@ let searchableColumns = [];
 for (const column of settingsObj[startappJson.action]['columns']) {
 	if (column['searchable'] == 'yes') searchableColumns.push(column.dataKey);
 }
+myLog(`searchableColumns = ${JSON.stringify(searchableColumns)}`);
 
 
 let data = [];
