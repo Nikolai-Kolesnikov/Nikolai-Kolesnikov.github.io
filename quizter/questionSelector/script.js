@@ -110,8 +110,8 @@ for (const column of settingsObj[startappJson.action]['columns']) {
 //const table = document.getElementById("table"); 
 
 document.getElementById("searchInput").addEventListener("input", (e) => {
-	myLog('searchInput input event triggered');
-	myLog(`e.target.value.toLowerCase() = ${e.target.value.toLowerCase()}`);
+	//myLog('searchInput input event triggered');
+	//myLog(`e.target.value.toLowerCase() = ${e.target.value.toLowerCase()}`);
 	searchItems(e.target.value.toLowerCase());
 });
 
@@ -305,10 +305,10 @@ function renderTable() {
 	data.map((e) => {
 		
 		if (!e.filteredOut) {
-			myLog(`e.filteredOut = ${e.filteredOut}. Добавляем.`);
+			//myLog(`e.filteredOut = ${e.filteredOut}. Добавляем.`);
 			addItem(e);
 		} else {
-			myLog(`e.filteredOut = ${e.filteredOut}. НЕ добавляем.`);
+			//myLog(`e.filteredOut = ${e.filteredOut}. НЕ добавляем.`);
 		}
 	}); 
 }
@@ -363,7 +363,7 @@ function searchItems(searchStr) {
 	} catch (err) {
 		myLog(err);
 	} 
-	myLog(`updated DATA = ${JSON.stringify(data)}`);
+	//myLog(`updated DATA = ${JSON.stringify(data)}`);
 	removeTable(); 
 	renderTable(); 
 } 
