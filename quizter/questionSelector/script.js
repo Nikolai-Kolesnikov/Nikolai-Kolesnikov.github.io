@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 88');
+myLog('Версия 89');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
@@ -31,7 +31,7 @@ try {
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 	
 }
-logBox.innerText = 'startappJson = ' + JSON.stringify(startappJson) + '\n' + logBox.innerText;
+myLog('startappJson = ' + JSON.stringify(startappJson));
 
 
 const settingsObj = {
@@ -127,12 +127,13 @@ document.getElementById("searchInput").addEventListener("keyup", (e) => {
 
 // To create table 
 function addItem(e) { 
-	logBox.innerText = `addItem(${JSON.stringify(e)})\n`+logBox.innerText;
+	myLog(`addItem(${JSON.stringify(e)})`);
+	
 	let row = table.insertRow(); 
 	row.setAttribute("data-rowid", e.rowid);
 	row.setAttribute("data-expanded", "no");
 	row.addEventListener("click", (evt) => {
-		logBox.innerText = "row clicked: " + evt.currentTarget.rowIndex + "\n" + logBox.innerText;
+		myLog("row clicked: " + evt.currentTarget.rowIndex);
 		expandRow(evt.currentTarget);
 	});
 	for (const column of settingsObj[startappJson.action]['columns']) {
@@ -284,7 +285,8 @@ async function expandRow(rowToExpand) {
 		if (cell.innerHTML == '') cell.innerText = 'не определено';
 	}
 		
-	logBox.innerText = JSON.stringify(assets) + "\n" + logBox.innerText;
+	myLog(JSON.stringify(assets));
+	
 	
 }
 
@@ -359,7 +361,8 @@ let wareqRes = await webappRequest(
 	[1, 2, 2, 5, 5]
 );
 data = wareqRes['data'];
-logBox.innerText = JSON.stringify(data) + '\nДанные загрузились!\n' + logBox.innerText;
+myLog(JSON.stringify(data) + '\nДанные загрузились!');
+
 
 // Initiate table
 renderTable();
