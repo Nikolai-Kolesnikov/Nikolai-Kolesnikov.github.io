@@ -5,7 +5,7 @@ function myLog(msg) {
 	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 86');
+myLog('Версия 87');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
@@ -341,6 +341,7 @@ function searchItems(searchStr) {
 			includes = includes || e[column].toLowerCase().includes(searchStr);			
 		}
 		e.filteredOut = !includes;
+		myLog(e.filteredOut);
 	}); 
 
 	removeTable(); 
