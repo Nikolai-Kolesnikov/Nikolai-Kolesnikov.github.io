@@ -5,7 +5,7 @@ function myLog(msg) {
 	logBox.innerText = msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 85');
+myLog('Версия 86');
 
 myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 myLog('window.location.search = ' + window.location.search);
@@ -217,10 +217,10 @@ async function expandRow(rowToExpand) {
 					}
 				});
 			}
-			if (assetColumn == 'select') {
+			if (assetColumn == 'selectAsset') {
 				assetHeadingCell.innerText = "🔘";				
 			}
-			if (assetColumn == 'edit') {
+			if (assetColumn == 'editAsset') {
 				assetHeadingCell.innerText = "ред.";
 			}
 		}
