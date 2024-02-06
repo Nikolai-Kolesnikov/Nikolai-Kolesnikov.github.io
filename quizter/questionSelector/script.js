@@ -6,10 +6,10 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 89');
+myLog('Версия 90');
 
-myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
-myLog('window.location.search = ' + window.location.search);
+//myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
+//myLog('window.location.search = ' + window.location.search);
 
 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
@@ -31,7 +31,7 @@ try {
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 	
 }
-myLog('startappJson = ' + JSON.stringify(startappJson));
+//myLog('startappJson = ' + JSON.stringify(startappJson));
 
 
 const settingsObj = {
@@ -127,13 +127,13 @@ document.getElementById("searchInput").addEventListener("keyup", (e) => {
 
 // To create table 
 function addItem(e) { 
-	myLog(`addItem(${JSON.stringify(e)})`);
+	//myLog(`addItem(${JSON.stringify(e)})`);
 	
 	let row = table.insertRow(); 
 	row.setAttribute("data-rowid", e.rowid);
 	row.setAttribute("data-expanded", "no");
 	row.addEventListener("click", (evt) => {
-		myLog("row clicked: " + evt.currentTarget.rowIndex);
+		//myLog("row clicked: " + evt.currentTarget.rowIndex);
 		expandRow(evt.currentTarget);
 	});
 	for (const column of settingsObj[startappJson.action]['columns']) {
@@ -209,7 +209,7 @@ async function expandRow(rowToExpand) {
 						}),
 						[1, 2, 2, 5, 5]
 					);
-					myLog('wareqRes = ' + JSON.stringify(wareqRes));
+					//myLog('wareqRes = ' + JSON.stringify(wareqRes));
 					try {
 						if (wareqRes.data.status = "OK") {
 							window.Telegram.WebApp.close();
@@ -285,7 +285,7 @@ async function expandRow(rowToExpand) {
 		if (cell.innerHTML == '') cell.innerText = 'не определено';
 	}
 		
-	myLog(JSON.stringify(assets));
+	//myLog(JSON.stringify(assets));
 	
 	
 }
@@ -297,7 +297,13 @@ function removeTable() {
 
 function renderTable() {
 	data.map((e) => {
-		if (!e.filteredOut) addItem(e);
+		
+		if (!e.filteredOut) {
+			myLog(`e.filteredOut = ${e.filteredOut}. Добавляем.`);
+			addItem(e);
+		} else {
+			myLog(`e.filteredOut = ${e.filteredOut}. НЕ добавляем.`);
+		}
 	}); 
 }
 
@@ -344,7 +350,7 @@ function searchItems(searchStr) {
 			includes = includes || e[column].toLowerCase().includes(searchStr);			
 		}
 		e.filteredOut = !includes;
-		myLog(e.filteredOut);
+		//myLog(e.filteredOut);
 	}); 
 
 	removeTable(); 
@@ -361,7 +367,7 @@ let wareqRes = await webappRequest(
 	[1, 2, 2, 5, 5]
 );
 data = wareqRes['data'];
-myLog(JSON.stringify(data) + '\nДанные загрузились!');
+//myLog(JSON.stringify(data) + '\nДанные загрузились!');
 
 
 // Initiate table
