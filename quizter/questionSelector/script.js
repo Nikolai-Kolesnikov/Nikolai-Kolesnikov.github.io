@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 100');
+myLog('Версия 101');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -41,6 +41,7 @@ const settingsObj = {
 			{dataKey: 'modifiedAt', name: 'Изменено', parsingType: 'dateTimeString', width: '30%', sortable: 'dateTime'},
 			{dataKey: 'rubric', name: 'Рубрика', parsingType: '', width: '20%', sortable: 'alphabetic', searchable: 'yes'},
 			{control: 'expandRow', name: '(_)', width: '10%'},
+
 		],
 		'assets': [
 			{assetType: 'rubricContent', headingText: 'Рубрика'},
@@ -81,7 +82,9 @@ const settingsObj = {
 			{dataKey: 'eventName', name: 'Игра', parsingType: '', width: '20%', sortable: 'alphabetic', searchable: 'yes'},
 			{dataKey: 'sendingSyntName', name: 'Сообщение', parsingType: '', width: '35%', sortable: 'alphabetic', searchable: 'yes'},
 			{dataKey: 'sendingDateTime', name: 'Дата отправки', parsingType: 'dateTimeString', width: '25%', sortable: 'dateTime'},
-			{control: 'expandRow', name: '(_)', width: '10%'},
+			{control: 'expandRow', name: '(_)', width: '5%'},
+			{control: 'deleteRow', name: '(_)', width: '5%'},
+			
 		],
 		'assets': [
 			{assetType: 'sendingContent', headingText: 'Содержание сообщения'},	
@@ -89,6 +92,7 @@ const settingsObj = {
 		'assetColumns': ['content', 'editAsset', 'eraseAsset'],
 		'queries': {
 			'getList': {name: 'requestSendingsList'},
+			'deleteRow': {name: 'deleteSending', rowidName: 'quizSendid'},
 			'getAssets': {name: 'requestSendingAssets', rowidName: 'quizSendid'},
 			'editAsset': {name: 'selectSendingAssetToEdit', rowidName: 'quizSendid'},
 			'eraseAsset': {name: 'eraseSendingAsset', rowidName: 'quizSendid'},
@@ -201,6 +205,37 @@ function addItem(e) {
 			case 'expandRow':
 				cell.innerText = 'v';
 				break;
+			case 'deleteRow':
+				cell.innerText = 'X';
+				cell.setAttribute("data-rowid", e.rowid);
+				cell.addEventListener('click', async (evt) => {
+					evt.handled = true;
+
+					let rData = {};
+					rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
+					let wareqRes = await webappRequest(
+						'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+						JSON.stringify({
+							'initData': window.Telegram.WebApp.initData,
+							'startappData': startappJson,
+							'type': settingsObj[startappJson.action]['queries'][column.control]['name'], 
+							'data': rData,
+							
+						}),
+						[1, 2, 2, 5, 5]
+					);
+					try {
+						//if (wareqRes.data.status = "OK") {
+							if (table.rows[evt.currentTarget.parent.rowIndex + 1].getAttribute("data-rowid") == evt.currentTarget.getAttribute("data-rowid")) {
+								table.deleteRow(evt.currentTarget.parent.rowIndex + 1);
+							}
+							table.deleteRow(evt.currentTarget.parent.rowIndex);
+						//}
+					} catch (err) {
+						// TODO выдать сообщение об ошибке
+					}
+				});
+				break;
 		}
 	} 	
 }
@@ -215,6 +250,7 @@ async function expandRow(rowToExpand) {
 	rowToExpand.setAttribute("data-expanded", "yes");
 	let rowid = rowToExpand.getAttribute("data-rowid");
 	let extraRow = table.insertRow(rowToExpand.rowIndex + 1);
+	extraRow.setAttribute("data-rowid", rowid);
 	let c = extraRow.insertCell(0);
 	c.colSpan = settingsObj[startappJson.action]['columns'].length;
 	let subTable = document.createElement("table");
