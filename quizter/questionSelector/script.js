@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 101');
+myLog('Версия 102');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -180,7 +180,7 @@ function addItem(e) {
 	row.setAttribute("data-expanded", "no");
 	row.addEventListener("click", (evt) => {
 		//myLog("row clicked: " + evt.currentTarget.rowIndex);
-		expandRow(evt.currentTarget);
+		if (!evt.handled) expandRow(evt.currentTarget);
 	});
 	for (const column of settingsObj[startappJson.action]['columns']) {
 		let cell = row.insertCell();
@@ -210,7 +210,7 @@ function addItem(e) {
 				cell.setAttribute("data-rowid", e.rowid);
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
-
+					/*
 					let rData = {};
 					rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
 					let wareqRes = await webappRequest(
@@ -224,6 +224,7 @@ function addItem(e) {
 						}),
 						[1, 2, 2, 5, 5]
 					);
+					*/
 					try {
 						//if (wareqRes.data.status = "OK") {
 							if (table.rows[evt.currentTarget.parent.rowIndex + 1].getAttribute("data-rowid") == evt.currentTarget.getAttribute("data-rowid")) {
