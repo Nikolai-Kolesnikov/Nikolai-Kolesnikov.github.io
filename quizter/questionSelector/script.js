@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 103');
+myLog('Версия 104');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -228,10 +228,10 @@ function addItem(e) {
 					*/
 					try {
 						//if (wareqRes.data.status = "OK") {
-							if (table.rows[evt.currentTarget.parent.rowIndex + 1].getAttribute("data-rowid") == evt.currentTarget.getAttribute("data-rowid")) {
-								table.deleteRow(evt.currentTarget.parent.rowIndex + 1);
+							if (table.rows[evt.currentTarget.parentElement.rowIndex + 1].getAttribute("data-rowid") == evt.currentTarget.getAttribute("data-rowid")) {
+								table.deleteRow(evt.currentTarget.parentElement.rowIndex + 1);
 							}
-							table.deleteRow(evt.currentTarget.parent.rowIndex);
+							table.deleteRow(evt.currentTarget.parentElement.rowIndex);
 						//}
 					} catch (err) {
 						// TODO выдать сообщение об ошибке
