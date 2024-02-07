@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 105');
+myLog('Версия 106');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -208,41 +208,41 @@ function addItem(e) {
 			case 'deleteRow':
 				cell.innerText = 'X';
 				cell.setAttribute("data-rowid", e.rowid);
-				try {
+				
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
-					/*
-					let rData = {};
-					rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
-					let wareqRes = await webappRequest(
-						'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-						JSON.stringify({
-							'initData': window.Telegram.WebApp.initData,
-							'startappData': startappJson,
-							'type': settingsObj[startappJson.action]['queries'][column.control]['name'], 
-							'data': rData,
-							
-						}),
-						[1, 2, 2, 5, 5]
-					);
-					*/
 					try {
-						//if (wareqRes.data.status = "OK") {
+						let rData = {};
+						rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
+						let wareqRes = await webappRequest(
+							'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+							JSON.stringify({
+								'initData': window.Telegram.WebApp.initData,
+								'startappData': startappJson,
+								'type': settingsObj[startappJson.action]['queries'][column.control]['name'], 
+								'data': rData,
+								
+							}),
+							[1, 2, 2, 5, 5]
+						);
+					
+					
+						if (wareqRes.data.status = "OK") {
 							if (evt.currentTarget.parentElement.rowIndex + 1 < table.rows.length) {
 								if (table.rows[evt.currentTarget.parentElement.rowIndex + 1].getAttribute("data-rowid") == evt.currentTarget.getAttribute("data-rowid")) {
 									table.deleteRow(evt.currentTarget.parentElement.rowIndex + 1);
 								}
 							}
 							table.deleteRow(evt.currentTarget.parentElement.rowIndex);
-						//}
+						} else {
+							myLog(`deleteRow click: что-то пошло не так.`);
+						}
 					} catch (err) {
 						// TODO выдать сообщение об ошибке
 						myLog(err);
 					}
 				});
-				} catch (err) {
-					myLog(err);
-				}
+				
 				break;
 		}
 	} 	
