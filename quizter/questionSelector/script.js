@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 107');
+myLog('Версия 108');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -233,14 +233,16 @@ function addItem(e) {
 							let rowiToDelete = [];
 							for (const row of table.rows) {
 								if (row.getAttribute("data-rowid") == rowidClicked) rowiToDelete.push(row.rowIndex);
-							}
-							// Сортируем rowiToDelete как числа по убыванию
-							rowiToDelete.sort(function(a, b) {
+							}							
+							rowiToDelete.sort(function(a, b) { // Сортируем rowiToDelete как числа по убыванию
 								return b - a;
 							});
 							for (const rowi of rowiToDelete) {
 								table.deleteRow(rowi);
 							}
+							// Удаляем из объекта data
+							data.splice(data.findIndex( (entry) => {entry.rowid == rowidClicked} ), 1);
+							
 							
 							
 						} else {
