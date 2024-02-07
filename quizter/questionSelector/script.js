@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 102');
+myLog('Версия 103');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -208,6 +208,7 @@ function addItem(e) {
 			case 'deleteRow':
 				cell.innerText = 'X';
 				cell.setAttribute("data-rowid", e.rowid);
+				try {
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
 					/*
@@ -234,8 +235,12 @@ function addItem(e) {
 						//}
 					} catch (err) {
 						// TODO выдать сообщение об ошибке
+						myLog(err);
 					}
 				});
+				} catch (err) {
+					myLog(err);
+				}
 				break;
 		}
 	} 	
