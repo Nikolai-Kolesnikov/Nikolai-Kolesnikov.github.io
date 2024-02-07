@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 106');
+myLog('Версия 107');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -212,8 +212,9 @@ function addItem(e) {
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
 					try {
+						let rowidClicked = evt.currentTarget.getAttribute("data-rowid");
 						let rData = {};
-						rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = evt.currentTarget.getAttribute("data-rowid");
+						rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = rowidClicked;
 						let wareqRes = await webappRequest(
 							'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 							JSON.stringify({
@@ -228,12 +229,20 @@ function addItem(e) {
 					
 					
 						if (wareqRes.data.status = "OK") {
-							if (evt.currentTarget.parentElement.rowIndex + 1 < table.rows.length) {
-								if (table.rows[evt.currentTarget.parentElement.rowIndex + 1].getAttribute("data-rowid") == evt.currentTarget.getAttribute("data-rowid")) {
-									table.deleteRow(evt.currentTarget.parentElement.rowIndex + 1);
-								}
+							// Удаляем все строки с атрибутом "data-rowid" == rowidClicked
+							let rowiToDelete = [];
+							for (const row of table.rows) {
+								if (row.getAttribute("data-rowid") == rowidClicked) rowiToDelete.push(row.rowIndex);
 							}
-							table.deleteRow(evt.currentTarget.parentElement.rowIndex);
+							// Сортируем rowiToDelete как числа по убыванию
+							rowiToDelete.sort(function(a, b) {
+								return b - a;
+							});
+							for (const rowi of rowiToDelete) {
+								table.deleteRow(rowi);
+							}
+							
+							
 						} else {
 							myLog(`deleteRow click: что-то пошло не так.`);
 						}
