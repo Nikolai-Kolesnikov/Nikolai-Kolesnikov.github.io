@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 108');
+myLog('Версия 109');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -212,6 +212,9 @@ function addItem(e) {
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
 					try {
+						if (!window.confirm("Удалить сообщение?")) {
+							return;
+						}
 						let rowidClicked = evt.currentTarget.getAttribute("data-rowid");
 						let rData = {};
 						rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = rowidClicked;
