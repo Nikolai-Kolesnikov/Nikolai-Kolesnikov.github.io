@@ -89,7 +89,7 @@ const settingsObj = {
 		'assets': [
 			{assetType: 'sendingContent', headingText: 'Содержание сообщения'},	
 		],
-		'assetColumns': ['content', 'editAsset', 'eraseAsset'],
+		'assetColumns': ['content'],
 		'queries': {
 			'getList': {name: 'requestSendingsList'},
 			'deleteRow': {name: 'deleteSending', rowidName: 'quizSendid'},
@@ -104,13 +104,15 @@ const settingsObj = {
 			{dataKey: 'sendingDateTime', name: 'Дата отправки', parsingType: 'dateTimeString', width: '50%', sortable: 'dateTime'},
 			{dataKey: 'sendingSyntName', name: 'Сообщение', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
 			{control: 'expandRow', name: '(_)', width: '5%'},
+			{control: 'deleteRow', name: '(_)', width: '5%'},
 		],
 		'assets': [
 			{assetType: 'sendingContent', headingText: 'Содержание сообщения'},	
 		],
-		'assetColumns': ['content', 'editAsset', 'eraseAsset'],
+		'assetColumns': ['content'],
 		'queries': {
 			'getList': {name: 'requestSendingsList'},
+			'deleteRow': {name: 'deleteSending', rowidName: 'quizSendid'},
 			'getAssets': {name: 'requestSendingAssets', rowidName: 'quizSendid'},
 			'editAsset': {name: 'selectSendingAssetToEdit', rowidName: 'quizSendid'},
 			'eraseAsset': {name: 'eraseSendingAsset', rowidName: 'quizSendid'},
