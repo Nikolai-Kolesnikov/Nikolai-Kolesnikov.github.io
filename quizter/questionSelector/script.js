@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 113');
+myLog('Версия 114');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -215,18 +215,19 @@ function addItem(e) {
 				
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
+					let tempEvtCurrentTarget = evt.currentTarget; // фиксируем evt.currentTarget, иначе - после применения await - evt.currentTarget обnullится
 					try {
 						// Подсвечиваем строку, которую пользователь хочет удалить
-						let tempbgc = evt.currentTarget.parentElement.style.backgroundColor;
-						evt.currentTarget.parentElement.style.backgroundColor = "pink";
+						let tempbgc = tempEvtCurrentTarget.parentElement.style.backgroundColor;
+						tempEvtCurrentTarget.parentElement.style.backgroundColor = "pink";
 						await timeout(10); // корявый способ заставить браузер применить стиль до вывода на экран окна confirm
 						if (!window.confirm("Удалить сообщение?")) {
 							// Если пользователь отменил удаление строки, убираем подсветку
-							evt.currentTarget.parentElement.style.backgroundColor = tempbgc;
+							tempEvtCurrentTarget.parentElement.style.backgroundColor = tempbgc;
 							return;
 						}
 
-						let rowidClicked = evt.currentTarget.getAttribute("data-rowid");
+						let rowidClicked = tempEvtCurrentTarget.getAttribute("data-rowid");
 						let rData = {};
 						rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = rowidClicked;
 						let wareqRes = await webappRequest(
