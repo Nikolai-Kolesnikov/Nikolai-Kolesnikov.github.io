@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 111');
+myLog('Версия 112');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -14,7 +14,9 @@ myLog('Версия 111');
 
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
-
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 let startappJson = {};
 try {
@@ -215,9 +217,7 @@ function addItem(e) {
 					evt.handled = true;
 					try {
 						evt.currentTarget.parentElement.style.backgroundColor = "pink";
-						let tw = evt.currentTarget.style.width;
-						evt.currentTarget.style.width = "1%";
-						evt.currentTarget.style.width = tw;
+						await timeout(100); // корявый способ заставить браузер применить стиль до вывода на экран окна confirm
 						if (!window.confirm("Удалить сообщение?")) {
 							return;
 						}
