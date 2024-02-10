@@ -46,7 +46,7 @@ const settingsObj = {
 		'assets': [],
 		'assetColumns': [],
 		'queries': {
-			'getList': {name: 'requestEventsList'},
+			'getList': {name: 'requestEventsList', rowidName: 'eventid'},
 			'selectRow': {name: 'selectEvent', rowidName: 'eventid'},
 			
 		},		
