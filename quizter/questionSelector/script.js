@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 114');
+myLog('Версия 115');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -37,6 +37,20 @@ try {
 
 
 const settingsObj = {
+	'selectEventToView': {
+		'columns': [
+			{dataKey: 'name', name: 'Игра', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
+			{dataKey: 'createdAtUTC', name: 'Создана', parsingType: 'dateTimeString', width: '50%', sortable: 'dateTime'},
+			{control: 'selectRow', name: '(_)', width: '5%'},
+		],
+		'assets': [],
+		'assetColumns': [],
+		'queries': {
+			'getList': {name: 'requestEventsList'},
+			'selectRow': {name: 'selectEvent', rowidName: 'eventid'},
+			
+		},		
+	},
 	'editSending': {
 		'columns': [
 			{dataKey: 'qstnName', name: 'Вопрос', parsingType: '', width: '40%', sortable: 'alphabetic', searchable: 'yes'},
@@ -215,7 +229,7 @@ function addItem(e) {
 				
 				cell.addEventListener('click', async (evt) => {
 					evt.handled = true;
-					let tempEvtCurrentTarget = evt.currentTarget; // фиксируем evt.currentTarget, иначе - после применения await - evt.currentTarget обnullится
+					let tempEvtCurrentTarget = evt.currentTarget; // фиксируем evt.currentTarget, т.к. - после применения await - evt.currentTarget обnullится
 					try {
 						// Подсвечиваем строку, которую пользователь хочет удалить
 						let tempbgc = tempEvtCurrentTarget.parentElement.style.backgroundColor;
@@ -262,6 +276,49 @@ function addItem(e) {
 							
 						} else {
 							myLog(`deleteRow click: что-то пошло не так.`);
+						}
+					} catch (err) {
+						// TODO выдать сообщение об ошибке
+						myLog(err);
+					}
+				});
+				
+				break;
+			case 'selectRow':
+				cell.innerText = '🔘';
+				cell.setAttribute("data-rowid", e.rowid);
+				
+				cell.addEventListener('click', async (evt) => {
+					evt.handled = true;
+					let tempEvtCurrentTarget = evt.currentTarget; // фиксируем evt.currentTarget, т.к. - после применения await - evt.currentTarget обnullится
+					try {
+						// Подсвечиваем строку, которую пользователь выбрал
+						let tempbgc = tempEvtCurrentTarget.parentElement.style.backgroundColor;
+						tempEvtCurrentTarget.parentElement.style.backgroundColor = "green";
+						await timeout(10); // корявый способ заставить браузер применить стиль до вывода на экран окна confirm
+						
+						let rowidClicked = tempEvtCurrentTarget.getAttribute("data-rowid");
+						let rData = {};
+						rData[settingsObj[startappJson.action]['queries'][column.control]['rowidName']] = rowidClicked;
+						let wareqRes = await webappRequest(
+							'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+							JSON.stringify({
+								'initData': window.Telegram.WebApp.initData,
+								'startappData': startappJson,
+								'type': settingsObj[startappJson.action]['queries'][column.control]['name'], 
+								'data': rData,
+								
+							}),
+							[1, 2, 2, 5, 5]
+						);
+					
+					
+						if (wareqRes.data.status = "OK") {
+							window.Telegram.WebApp.close();
+							
+						} else {
+							tempEvtCurrentTarget.parentElement.style.backgroundColor = tempbgc;
+							myLog(`selectRow click: что-то пошло не так.`);
 						}
 					} catch (err) {
 						// TODO выдать сообщение об ошибке
