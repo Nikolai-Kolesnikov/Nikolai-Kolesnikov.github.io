@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 116');
+myLog('Версия 117');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -455,7 +455,11 @@ async function expandRow(rowToExpand) {
 
 		cell.innerHTML += `${assets[assetType]["text"] ? `${assets[assetType]["text"]}` : ''}`;
 		
-		if (cell.innerHTML == '') cell.innerText = 'не определено';
+		if (cell.innerHTML == '') {
+			cell.innerText = 'не определено';
+		} else if (assetType == 'qstnContent') {
+			cell.innerHTML += `<br><button>${assets[assetType]['replyButtonText'] || 'Ответить >>>'}</button>`;
+		}
 	}
 		
 	//myLog(JSON.stringify(assets));
