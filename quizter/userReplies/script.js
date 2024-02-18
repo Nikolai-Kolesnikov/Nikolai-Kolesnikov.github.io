@@ -53,4 +53,8 @@ try {
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 	
 }
-//myLog('startappJson = ' + JSON.stringify(startappJson));
+
+myLog('startappJson = ' + JSON.stringify(startappJson));
+
+
+
