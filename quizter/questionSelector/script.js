@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 119');
+myLog('Версия 120');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -416,6 +416,7 @@ async function expandRow(rowToExpand) {
 	let assets = wareqRes['data'];
 
 	myLog(`assets = ${JSON.stringify(assets)}`);
+	myLog(`contentCells = ${JSON.stringify(contentCells)}`);
 
 	for (const cell of contentCells) {
 		let assetType = cell.getAttribute("data-assetType");
