@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 120');
+myLog('Версия 121');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -420,9 +420,9 @@ async function expandRow(rowToExpand) {
 
 	for (const cell of contentCells) {
 		let assetType = cell.getAttribute("data-assetType");
-		cell.innerHTML = '';
+		let cellHTML = '';
 		for (const imgType of ["photo", "animation_img", "sticker_img"]) {
-			cell.innerHTML += `${
+			cellHTML += `${
 				assets[assetType][imgType] ? 
 				`<img src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][imgType]}" />` : 
 				''
@@ -430,7 +430,7 @@ async function expandRow(rowToExpand) {
 		}
 
 		for (const videoType of ["video", "video_note", "animation_video", "sticker_video"]) {
-			cell.innerHTML += `${
+			cellHTML += `${
 				assets[assetType][videoType] ? 
 				`<video width="200" controls>
 				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][videoType]}">
@@ -441,7 +441,7 @@ async function expandRow(rowToExpand) {
 		}
 
 		for (const audioType of ["audio", "voice"]) {
-			cell.innerHTML += `${
+			cellHTML += `${
 				assets[assetType][audioType] ? 
 				`<audio controls>
 				<source src="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType][audioType]}">
@@ -451,18 +451,19 @@ async function expandRow(rowToExpand) {
 			}`;
 		}
 
-		cell.innerHTML += `${assets[assetType]["document"] ? 
+		cellHTML += `${assets[assetType]["document"] ? 
 			`<a href="https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}&type=getFileFromBot&fileId=${assets[assetType]["document"]}">Документ</a>` : 
 			''
 		}`;
 
-		cell.innerHTML += `${assets[assetType]["text"] ? `${assets[assetType]["text"]}` : ''}`;
+		cellHTML += `${assets[assetType]["text"] ? `${assets[assetType]["text"]}` : ''}`;
 		
-		if (cell.innerHTML == '') {
-			cell.innerText = 'не определено';
+		if (cellHTML == '') {
+			cellHTML = 'не определено';
 		} else if (assetType == 'qstnContent' || assets[assetType]['msgType'] == 'qstnContent_by_qstnid') {
-			cell.innerHTML += `<br><button>${assets[assetType]['replyButtonText'] || 'Ответить >>>'}</button>`;
+			cellHTML += `<br><button>${assets[assetType]['replyButtonText'] || 'Ответить >>>'}</button>`;
 		}
+		cell.innerHTML = cellHTML;
 	}
 		
 	//myLog(JSON.stringify(assets));
