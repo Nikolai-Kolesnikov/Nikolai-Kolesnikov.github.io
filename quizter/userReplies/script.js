@@ -15,7 +15,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 	try {
 		let replyText = replyInput.value;
 		myLog(`replyText = ${replyText}`);
-		if (!replyText || replyText == 0) {
+		if (replyText || replyText == 0) {
 			let wareqres = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 				JSON.stringify({
@@ -75,7 +75,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 6');
+myLog('Версия 7');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
