@@ -11,7 +11,8 @@ function myLog(msg) {
 }*/
 
 async function onReplySubmitBtnClick(btn, evt) {
-	try {
+	myLog('btn click');
+	/*try {
 		let replyText = replyInput.value;
 		if (!replyText || replyText == 0) {
 			let wareqres = await webappRequest(
@@ -32,7 +33,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 		}
 	} catch (err) {
 		myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
-	}
+	}*/
 
 }
 
@@ -60,7 +61,7 @@ function OnInput() {
 
 let replySubmitBtn = document.createElement("button");
 replySubmitBtn.innerHTML = '>>>';
-replySubmitBtn.addEventListener('click', () => {myLog('btn click')});
+replySubmitBtn.addEventListener('click', onReplySubmitBtnClick);
 
 let submittedRepliesDiv = document.createElement('div');
 
@@ -73,7 +74,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 4');
+myLog('Версия 5');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
