@@ -26,7 +26,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 				}),
 				[1, 2, 2, 5, 5]
 			);
-			if (wareqres.status == 'OK') {
+			if (((wareqres || {}).data || {}).status == 'OK') {
 				addToSubmittedReplies(replyText);
 			} else {
 				addToSubmittedReplies('Ошибка отправки ответа!');
@@ -75,7 +75,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 7');
+myLog('Версия 8');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
