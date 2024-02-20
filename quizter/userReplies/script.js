@@ -11,8 +11,9 @@ function myLog(msg) {
 }*/
 
 async function onReplySubmitBtnClick(btn, evt) {
-	try {
-		let replyText = replyInput.value;
+	let replyText = replyInput.value;
+	replyInput.value = '';
+	try {				
 		if (replyText || replyText == 0) {
 			let wareqres = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
@@ -27,10 +28,12 @@ async function onReplySubmitBtnClick(btn, evt) {
 			if (((wareqres || {}).data || {}).status == 'OK') {
 				addToSubmittedReplies(replyText);
 			} else {
+				replyInput.value = replyText;
 				addToSubmittedReplies('Ошибка отправки ответа!');
 			}
 		}
 	} catch (err) {
+		replyInput.value = replyText;
 		addToSubmittedReplies('Ошибка отправки ответа!');
 		myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
 	}
@@ -80,7 +83,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 9');
+myLog('Версия 10');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
