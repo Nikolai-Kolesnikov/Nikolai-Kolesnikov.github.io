@@ -12,8 +12,9 @@ function myLog(msg) {
 
 async function onReplySubmitBtnClick(btn, evt) {
 	myLog('btn click');
-	/*try {
+	try {
 		let replyText = replyInput.value;
+		myLog(`replyText = ${replyText}`);
 		if (!replyText || replyText == 0) {
 			let wareqres = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
@@ -33,7 +34,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 		}
 	} catch (err) {
 		myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
-	}*/
+	}
 
 }
 
@@ -74,7 +75,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 5');
+myLog('Версия 6');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
