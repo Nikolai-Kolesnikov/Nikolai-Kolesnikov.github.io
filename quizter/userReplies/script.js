@@ -11,10 +11,8 @@ function myLog(msg) {
 }*/
 
 async function onReplySubmitBtnClick(btn, evt) {
-	myLog('btn click');
 	try {
 		let replyText = replyInput.value;
-		myLog(`replyText = ${replyText}`);
 		if (replyText || replyText == 0) {
 			let wareqres = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
@@ -33,12 +31,14 @@ async function onReplySubmitBtnClick(btn, evt) {
 			}
 		}
 	} catch (err) {
+		addToSubmittedReplies('Ошибка отправки ответа!');
 		myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
 	}
 
 }
 
 function addToSubmittedReplies(replyText) {
+	submittedRepliesHeading.style.visibility = 'visible';
 	let rdiv = document.createElement('div');
 	rdiv.innerText = replyText;
 	submittedRepliesDiv.prepend(rdiv);
@@ -64,18 +64,23 @@ let replySubmitBtn = document.createElement("button");
 replySubmitBtn.innerHTML = '>>>';
 replySubmitBtn.addEventListener('click', onReplySubmitBtnClick);
 
+let submittedRepliesHeading = document.createElement('div');
+submittedRepliesHeading.innerText = 'Вы ответили:';
+submittedRepliesHeading.style.visibility = 'hidden';
+
 let submittedRepliesDiv = document.createElement('div');
 
 
 document.getElementById('dynamicDiv').appendChild(replyInput);
 document.getElementById('dynamicDiv').appendChild(replySubmitBtn);
+document.getElementById('dynamicDiv').appendChild(submittedRepliesHeading);
 document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
 // Конец LAYOUT
 //
     
 
-myLog('Версия 8');
+myLog('Версия 9');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -92,6 +97,30 @@ try {
 }
 myLog('startappJson = ' + JSON.stringify(startappJson));
 
-
+try {
+	
+	let wareqres = await webappRequest(
+		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+		JSON.stringify({
+			'initData': window.Telegram.WebApp.initData, 
+			'startappData': startappJson,
+			'type': 'getUserRepliesByQuizSendid',
+			
+		}),
+		[1, 2, 2, 5, 5]
+	);
+	if (((wareqres || {}).data || {}).status == 'OK') {
+		let repArr = wareqres.data.data;
+		repArr.sort((a, b) => Number(b['replyTimestamp']) - Number(a['replyTimestamp']));
+		for (const rep of repArr) {
+			addToSubmittedReplies(rep['replyText']);
+		}
+	} else {
+		addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
+	}	
+} catch (err) {
+	addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
+	//myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
+}
 
 
