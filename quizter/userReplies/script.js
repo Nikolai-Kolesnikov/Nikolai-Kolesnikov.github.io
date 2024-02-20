@@ -11,23 +11,27 @@ function myLog(msg) {
 }*/
 
 async function onReplySubmitBtnClick(btn, evt) {
-	let replyText = replyInput.value;
-	if (!replyText || replyText == 0) {
-		let wareqres = await webappRequest(
-			'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-			JSON.stringify({
-				'initData': window.Telegram.WebApp.initData, 
-				'startappData': startappJson,
-				'type': 'submitUserReply',
-				'data': {'userReplyText': replyText}
-			}),
-			[1, 2, 2, 5, 5]
-		);
-		if (wareqres.status == 'OK') {
-			addToSubmittedReplies(replyText);
-		} else {
-			addToSubmittedReplies('Ошибка отправки ответа!');
+	try {
+		let replyText = replyInput.value;
+		if (!replyText || replyText == 0) {
+			let wareqres = await webappRequest(
+				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+				JSON.stringify({
+					'initData': window.Telegram.WebApp.initData, 
+					'startappData': startappJson,
+					'type': 'submitUserReply',
+					'data': {'userReplyText': replyText}
+				}),
+				[1, 2, 2, 5, 5]
+			);
+			if (wareqres.status == 'OK') {
+				addToSubmittedReplies(replyText);
+			} else {
+				addToSubmittedReplies('Ошибка отправки ответа!');
+			}
 		}
+	} catch (err) {
+		myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
 	}
 
 }
@@ -69,7 +73,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 2');
+myLog('Версия 3');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
