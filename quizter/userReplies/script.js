@@ -60,7 +60,7 @@ function OnInput() {
 
 let replySubmitBtn = document.createElement("button");
 replySubmitBtn.innerHTML = '>>>';
-replySubmitBtn.addEventListener('click', onReplySubmitBtnClick);
+replySubmitBtn.addEventListener('click', () => {myLog('btn click')});
 
 let submittedRepliesDiv = document.createElement('div');
 
@@ -73,7 +73,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 3');
+myLog('Версия 4');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
