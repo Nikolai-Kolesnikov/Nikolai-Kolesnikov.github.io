@@ -102,7 +102,7 @@ try {
 }
 myLog('startappJson = ' + JSON.stringify(startappJson));
 
-
+// Получаем из БД предыдущие ответы пользователя на этот вопрос и отображаем их, если они есть
 try {
 	let wareqres = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
@@ -124,9 +124,10 @@ try {
 		addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
 	}	
 } catch (err) {
-
+	addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
 }
 
+// Получаем из БД заголовок формы ответа пользователя для этого вопроса
 try {	
 	let wareqres = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
