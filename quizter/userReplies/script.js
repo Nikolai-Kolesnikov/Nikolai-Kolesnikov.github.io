@@ -109,7 +109,7 @@ try {
 		JSON.stringify({
 			'initData': window.Telegram.WebApp.initData, 
 			'startappData': startappJson,
-			'type': 'getReplyFormHeading',
+			'type': 'getUserRepliesByQuizSendid',
 			
 		}),
 		[1, 2, 2, 5, 5]
@@ -133,7 +133,7 @@ try {
 		JSON.stringify({
 			'initData': window.Telegram.WebApp.initData, 
 			'startappData': startappJson,
-			'type': 'getUserRepliesByQuizSendid',
+			'type': 'getReplyFormHeading',
 			
 		}),
 		[1, 2, 2, 5, 5]
