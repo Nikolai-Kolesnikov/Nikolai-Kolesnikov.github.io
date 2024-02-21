@@ -52,6 +52,8 @@ function addToSubmittedReplies(replyText) {
 //
 let logBox = document.getElementById("logbox");
 
+let replyFormHeading = document.createElement('div');
+
 let replyInput = document.createElement("textarea");
 // Делаем, чтобы textarea для ввода ответа стала auto resize
 // Source: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
@@ -73,7 +75,7 @@ submittedRepliesHeading.style.visibility = 'hidden';
 
 let submittedRepliesDiv = document.createElement('div');
 
-
+document.getElementById('dynamicDiv').appendChild(replyFormHeading);
 document.getElementById('dynamicDiv').appendChild(replyInput);
 document.getElementById('dynamicDiv').appendChild(replySubmitBtn);
 document.getElementById('dynamicDiv').appendChild(submittedRepliesHeading);
@@ -83,7 +85,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 10');
+myLog('Версия 11');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -100,14 +102,14 @@ try {
 }
 myLog('startappJson = ' + JSON.stringify(startappJson));
 
+
 try {
-	
 	let wareqres = await webappRequest(
 		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 		JSON.stringify({
 			'initData': window.Telegram.WebApp.initData, 
 			'startappData': startappJson,
-			'type': 'getUserRepliesByQuizSendid',
+			'type': 'getReplyFormHeading',
 			
 		}),
 		[1, 2, 2, 5, 5]
@@ -122,8 +124,27 @@ try {
 		addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
 	}	
 } catch (err) {
-	addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
-	//myLog(`onReplySubmitBtnClick(btn, evt): ERROR = ${err.toString()}`);
+
+}
+
+try {	
+	let wareqres = await webappRequest(
+		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+		JSON.stringify({
+			'initData': window.Telegram.WebApp.initData, 
+			'startappData': startappJson,
+			'type': 'getUserRepliesByQuizSendid',
+			
+		}),
+		[1, 2, 2, 5, 5]
+	);
+	if (((wareqres || {}).data || {}).status == 'OK') {
+		replyFormHeading.innerText = wareqres.data.data || 'Введите Ваш ответ';
+	} else {
+		replyFormHeading.innerText = 'Введите Ваш ответ';
+	}	
+} catch (err) {
+	replyFormHeading.innerText = 'Введите Ваш ответ';
 }
 
 
