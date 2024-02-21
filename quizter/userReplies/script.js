@@ -14,7 +14,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 	let replyText = replyInput.value;
 	replyInput.value = '';
 	try {				
-		if (replyText || replyText == 0) {
+		if (replyText || replyText === 0) {
 			let wareqres = await webappRequest(
 				'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 				JSON.stringify({
