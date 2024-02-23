@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 121');
+myLog('Версия 122');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -81,7 +81,9 @@ const settingsObj = {
 		'assets': [
 			{assetType: 'rubricContent', headingText: 'Рубрика'},
 			{assetType: 'qstnContent', headingText: 'Содержание вопроса'},
-			{assetType: 'answerContent', headingText: 'Правильный ответ'},			
+			{assetType: 'answerContent', headingText: 'Правильный ответ'},
+			{assetType: 'testingRegexp', headingText: 'Шаблон для проверки ответов'},
+			
 		],
 		'assetColumns': ['content', 'editAsset', 'eraseAsset'],
 		'queries': {
