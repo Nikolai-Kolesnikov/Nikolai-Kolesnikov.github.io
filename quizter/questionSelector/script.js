@@ -37,6 +37,18 @@ try {
 
 
 const settingsObj = {
+	'viewUserReplies': {
+		'columns': [
+			{dataKey: 'name', name: 'Игра', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
+			{dataKey: 'createdAtUTC', name: 'Создана', parsingType: 'dateTimeString', width: '50%', sortable: 'dateTime'},
+			{control: 'toggle', name: '(_)', width: '5%'},
+		],
+		'queries': {
+			'getList': {name: 'requestEventsList', rowidName: 'eventid'},
+			'selectRow': {name: 'selectEvent', rowidName: 'eventid'},
+			
+		},		
+	},
 	'selectEventToView': {
 		'columns': [
 			{dataKey: 'name', name: 'Игра', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
@@ -333,9 +345,10 @@ function addItem(e) {
 	} 	
 }
 
-// Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей и загрузить в неё данные.
+// Развернуть строку: добавить под ней строку со вложенной таблицей для отображения подробностей (assets) и загрузить в неё данные.
 // Если подстрока уже создана, то изменить её видимость.
 async function expandRow(rowToExpand) {
+	if ((settingsObj[startappJson.action]['assets'] || []).length == 0) return; // Не разворачивать строку, если нет assets
 	if (rowToExpand.getAttribute("data-expanded") == "yes") {
 		table.rows[rowToExpand.rowIndex + 1].style.visibility = table.rows[rowToExpand.rowIndex + 1].style.visibility == "collapse" ? "visible" : "collapse";
 		return;
