@@ -37,18 +37,6 @@ try {
 
 
 const settingsObj = {
-	'viewUserReplies': {
-		'columns': [
-			{dataKey: 'name', name: 'Игра', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
-			{dataKey: 'createdAtUTC', name: 'Создана', parsingType: 'dateTimeString', width: '50%', sortable: 'dateTime'},
-			{control: 'toggle', name: '(_)', width: '5%'},
-		],
-		'queries': {
-			'getList': {name: 'requestEventsList', rowidName: 'eventid'},
-			'selectRow': {name: 'selectEvent', rowidName: 'eventid'},
-			
-		},		
-	},
 	'selectEventToView': {
 		'columns': [
 			{dataKey: 'name', name: 'Игра', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
