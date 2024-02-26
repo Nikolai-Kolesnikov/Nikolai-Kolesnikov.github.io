@@ -4,6 +4,7 @@ const settingsObj = {
 	'userReplies': {
 		'_filters': [
 			{
+				'_filterid': 'quizSendid',
 				'_label': 'Вопрос', 
 				'_options': {
 					'_getQuery': {
@@ -14,15 +15,12 @@ const settingsObj = {
 					'_selectQuery': {
 						'_name': 'getUserRepliesByQuizSendid',
 						'_key': 'quizSendid',
+						'_onSuccess': 'RENDER_TABLE',
 					}
 				},
 			},
 		],
 		'_table': {
-			'_query': {
-				'_name': 'getUserRepliesByQuizsendid',
-				'_rowidKey': 'replyid',
-			},
 			'_columns': [
 				{
 					'_label': 'Ответ',
@@ -36,6 +34,7 @@ const settingsObj = {
 					'_toggle4': {'SOFT': 'isCorrectAuto', 'FIRM': 'isCorrectManual'},
 					'_queryOnInput': {
 						'_name':'updateUserReply',
+						'_rowidName': 'replyid',
 						'_key': 'isCorrectManual',
 						'_value': 'CHECKED',
 					},
@@ -56,6 +55,62 @@ function myLog(msg) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }*/
 
+async function onFilterChange(evt) {
+	let filterid = evt.target.getAttribute('data-filterid');
+	let filterObj;
+	for (const f of settingsObj[startappJson['action']]['_filters']) {
+		if (f['_filterid'] == filterid) {
+			filterObj = f;
+			break;
+		};
+	}
+	try {
+		let rData = {
+			'initData': window.Telegram.WebApp.initData, 
+			'startappData': startappJson,
+			'type': filterObj['_options']['_selectQuery']['_name'],			
+		}
+		rData[filterObj['_options']['_selectQuery']['_name']] = evt.target.value;
+		let wareqres = await webappRequest(
+			'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+			JSON.stringify(rData),
+			[1, 2, 2, 5, 5]
+		);
+		if (((wareqres || {}).data || {}).status == 'OK') {
+			switch (filterObj['_options']['_selectQuery']['_onSuccess']) {
+				case 'RENDER_TABLE':
+					renderTable(wareqres.data.data);
+					break;
+			}			
+		} else {
+			myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_selectQuery']['_name']}`);
+		}	
+	} catch (err) {
+		myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_selectQuery']['_name']}`);
+	}
+}
+
+function renderTable(data) {
+	while (table.rows.length > 0) table.deleteRow(-1);
+	for (const dataRow of data) {
+		let row = table.insertRow();
+		for (const column of settingsObj[startappJson['action']]['_table']['_columns']) {
+			let cell = row.insertCell();
+			if (column['_dataKey'] || column['_parsingType']) {
+				switch (column['_parsingType']) {
+					case  '':
+					case undefined:
+					case null:
+						cell.innerText = dataRow[column['_dataKey']];
+						break;
+					case 'TOGGLE4':
+
+						break;
+				}
+			}
+		}
+	}
+}
 
 //
 // LAYOUT
@@ -77,7 +132,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 2');
+myLog('Версия 3');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -103,6 +158,8 @@ for (const filterObj of settingsObj[startappJson.action]['_filters']) {
 	label.innerText = filterObj['_label'];
 	filtersContainer.appendChild(label);
 	let selectElm = document.createElement('select');
+	selectElm.setAttribute('data-filterid', filterObj['_filterid']);
+	selectElm.addEventListener('change', onFilterChange);
 	filtersContainer.appendChild(selectElm);
 	try {
 		let wareqres = await webappRequest(
