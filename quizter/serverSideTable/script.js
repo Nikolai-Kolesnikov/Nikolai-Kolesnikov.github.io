@@ -77,7 +77,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 1');
+myLog('Версия 2');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -95,31 +95,41 @@ try {
 myLog('startappJson = ' + JSON.stringify(startappJson));
 
 // Добавляем блок "фильтры" исходя из параметров startappJson
-
-
-
-
-// 
-try {
-	let wareqres = await webappRequest(
-		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-		JSON.stringify({
-			'initData': window.Telegram.WebApp.initData, 
-			'startappData': startappJson,
-			'type': 'getUserRepliesByQuizSendid',
-			
-		}),
-		[1, 2, 2, 5, 5]
-	);
-	if (((wareqres || {}).data || {}).status == 'OK') {
-		let repArr = wareqres.data.data;
-		repArr.sort((a, b) => Number(b['replyTimestamp']) - Number(a['replyTimestamp']));
-		for (const rep of repArr) {
-			addToSubmittedReplies(rep['replyText']);
-		}
-	} else {
-		addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
-	}	
-} catch (err) {
-	addToSubmittedReplies('Ошибка загрузки предыдущих ответов!');
+for (const filterObj of settingsObj[startappJson.action]['_filters']) {
+	if (filtersContainer.style.visibility == 'hidden') {
+		filtersContainer.style.visibility = 'visible';
+	}
+	let label = document.createElement('span');
+	label.innerText = filterObj['_label'];
+	filtersContainer.appendChild(label);
+	let selectElm = document.createElement('select');
+	filtersContainer.appendChild(selectElm);
+	try {
+		let wareqres = await webappRequest(
+			'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+			JSON.stringify({
+				'initData': window.Telegram.WebApp.initData, 
+				'startappData': startappJson,
+				'type': filterObj['_options']['_getQuery']['_name'],
+				
+			}),
+			[1, 2, 2, 5, 5]
+		);
+		if (((wareqres || {}).data || {}).status == 'OK') {
+			for (const optionObj of wareqres.data.data) {
+				let optionElm = document.createElement('option');
+				optionElm.value = optionObj[filterObj['_options']['_getQuery']['_valueKey']];
+				optionElm.innerText = optionObj[filterObj['_options']['_getQuery']['_labelKey']];
+				selectElm.appendChild(optionElm);
+			}
+		} else {
+			myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+		}	
+	} catch (err) {
+		myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+	}
 }
+
+
+
+
