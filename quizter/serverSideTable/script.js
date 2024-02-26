@@ -3,9 +3,47 @@ import {webappRequest} from '/webappRequest.js'; // функция для отп
 const settingsObj = {
 	'userReplies': {
 		'_filters': [
-			{'_label': 'Вопрос', '_options': {'_query': 'sst_getQuestionsForFilter'}},
-		] 
-	}
+			{
+				'_label': 'Вопрос', 
+				'_options': {
+					'_getQuery': {
+						'_name': 'getQuestionsByEventid',
+						'_labelKey': 'qstnName',
+						'_valueKey': 'quizSendid',
+					},
+					'_selectQuery': {
+						'_name': 'getUserRepliesByQuizSendid',
+						'_key': 'quizSendid',
+					}
+				},
+			},
+		],
+		'_table': {
+			'_query': {
+				'_name': 'getUserRepliesByQuizsendid',
+				'_rowidKey': 'replyid',
+			},
+			'_columns': [
+				{
+					'_label': 'Ответ',
+					'_dataKey': 'replyText',
+					'_parsingType': '',	
+					'_width': '80%',			
+				},
+				{
+					'_label': '',
+					'_parsingType': 'TOGGLE4',
+					'_toggle4': {'SOFT': 'isCorrectAuto', 'FIRM': 'isCorrectManual'},
+					'_queryOnInput': {
+						'_name':'updateUserReply',
+						'_key': 'isCorrectManual',
+						'_value': 'CHECKED',
+					},
+					'_width': '20%',	
+				},
+			],
+		},
+	},
 }
 
 
@@ -55,6 +93,11 @@ try {
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 }
 myLog('startappJson = ' + JSON.stringify(startappJson));
+
+// Добавляем блок "фильтры" исходя из параметров startappJson
+
+
+
 
 // 
 try {
