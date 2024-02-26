@@ -1,5 +1,13 @@
 import {webappRequest} from '/webappRequest.js'; // функция для отправки ajax-запросов
 
+const settingsObj = {
+	'userReplies': {
+		'_filters': [
+			{'_label': 'Вопрос', '_options': {'_query': 'sst_getQuestionsForFilter'}},
+		] 
+	}
+}
+
 
 function myLog(msg) {
 	let curDate = new Date(Date.now());
@@ -16,34 +24,16 @@ function myLog(msg) {
 //
 let logBox = document.getElementById("logbox");
 
-let replyFormHeading = document.createElement('div');
+let filtersContainer = document.createElement('div');
+filtersContainer.style.visibility = 'hidden';
 
-let replyInput = document.createElement("textarea");
-// Делаем, чтобы textarea для ввода ответа стала auto resize
-// Source: https://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize
-replyInput.setAttribute("style", "height:16px;overflow-y:hidden;");
-//answerInputElm.setAttribute("style", "height:" + (answerInputElm.scrollHeight) + "px;overflow-y:hidden;");
-replyInput.addEventListener("input", OnInput, false);
-function OnInput() {
-  this.style.height = 0;
-  this.style.height = (this.scrollHeight) + "px";
-}
+let tableContainer = document.createElement('div');
 
-let replySubmitBtn = document.createElement("button");
-replySubmitBtn.innerHTML = '>>>';
-replySubmitBtn.addEventListener('click', onReplySubmitBtnClick);
+let table = document.createElement('table');
 
-let submittedRepliesHeading = document.createElement('div');
-submittedRepliesHeading.innerText = 'Вы ответили:';
-submittedRepliesHeading.style.visibility = 'hidden';
-
-let submittedRepliesDiv = document.createElement('div');
-
-document.getElementById('dynamicDiv').appendChild(replyFormHeading);
-document.getElementById('dynamicDiv').appendChild(replyInput);
-document.getElementById('dynamicDiv').appendChild(replySubmitBtn);
-document.getElementById('dynamicDiv').appendChild(submittedRepliesHeading);
-document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
+document.getElementById('dynamicDiv').appendChild(filtersContainer);
+document.getElementById('dynamicDiv').appendChild(tableContainer);
+tableContainer.appendChild(table);
 //
 // Конец LAYOUT
 //
