@@ -13,7 +13,7 @@ const settingsObj = {
 						'_valueKey': 'quizSendid',
 					},
 					'_selectQuery': {
-						'_name': 'getUserRepliesByQuizSendid',
+						'_name': 'getRepliesFromAllUsersByQuizSendid',
 						'_key': 'quizSendid',
 						'_onSuccess': 'RENDER_TABLE',
 					}
@@ -132,7 +132,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 3');
+myLog('Версия 4');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
