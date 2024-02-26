@@ -70,7 +70,7 @@ async function onFilterChange(evt) {
 			'startappData': startappJson,
 			'type': filterObj['_options']['_selectQuery']['_name'],			
 		}
-		rData[filterObj['_options']['_selectQuery']['_name']] = evt.target.value;
+		rData[filterObj['_options']['_selectQuery']['_key']] = evt.target.value;
 		let wareqres = await webappRequest(
 			'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 			JSON.stringify(rData),
