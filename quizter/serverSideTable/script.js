@@ -115,6 +115,7 @@ for (const filterObj of settingsObj[startappJson.action]['_filters']) {
 			}),
 			[1, 2, 2, 5, 5]
 		);
+		myLog(`${filterObj['_options']['_getQuery']['_name']}: wareqres = ${JSON.stringify(wareqres)}`);
 		if (((wareqres || {}).data || {}).status == 'OK') {
 			for (const optionObj of wareqres.data.data) {
 				let optionElm = document.createElement('option');
