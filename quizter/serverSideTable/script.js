@@ -105,7 +105,17 @@ function renderTable(data) {
 						cell.innerText = dataRow[column['_dataKey']];
 						break;
 					case 'TOGGLE4':
-
+						{
+							let label = document.createElement('label');
+							label.className = 'switch';
+							cell.appendChild(label);
+							let checkbox = document.createElement('input');
+							checkbox.type = 'checkbox';
+							label.appendChild(checkbox);
+							let span = document.createElement('span');
+							span.className = 'slider round';
+							label.appendChild(span);
+						}
 						break;
 				}
 			}
@@ -133,7 +143,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 5');
+myLog('Версия 6');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
