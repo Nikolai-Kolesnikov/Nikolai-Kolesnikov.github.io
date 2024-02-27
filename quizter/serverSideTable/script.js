@@ -162,6 +162,7 @@ function renderTable(data) {
 											};
 											rData['data'][rowidName] = checkboxClicked.getAttribute('data-rowid');
 											rData['data'][keyToSet] = valueToSet;
+											
 											let wareqres = await webappRequest(
 												'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 												JSON.stringify(rData),
