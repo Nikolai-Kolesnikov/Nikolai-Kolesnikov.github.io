@@ -111,6 +111,12 @@ function renderTable(data) {
 							cell.appendChild(label);
 							let checkbox = document.createElement('input');
 							checkbox.type = 'checkbox';
+							checkbox.addEventListener(
+								'click', 
+								(evt) => {
+									evt.currentTarget.setAttribute('data-clicked', 'clicked');
+								}
+							);
 							label.appendChild(checkbox);
 							let span = document.createElement('span');
 							span.className = 'slider round';
@@ -143,7 +149,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 6');
+myLog('Версия 7');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
