@@ -12,7 +12,7 @@ const settingsObj = {
 						'_labelKey': 'qstnName',
 						'_valueKey': 'quizSendid',
 					},
-					'_optgroup': {
+					'_headOption': {
 						'_label': '--- Выберите вопрос ---',
 					},
 					'_selectQuery': {
@@ -221,7 +221,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 16');
+myLog('Версия 17');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -263,15 +263,16 @@ for (const filterObj of settingsObj[startappJson.action]['_filters']) {
 		);
 		myLog(`${filterObj['_options']['_getQuery']['_name']}: wareqres = ${JSON.stringify(wareqres)}`);
 		if (((wareqres || {}).data || {}).status == 'OK') {
-			let optgroup = document.createElement('optgroup');
-			optgroup.label = filterObj['_options']['_optgroup']['_label'];
-			selectElm.appendChild(optgroup);
+			let headOption = document.createElement('option');
+			headOption.innerText = filterObj['_options']['_headOption']['_label'];
+			headOption.disabled = true;
+			selectElm.appendChild(headOption);
 
 			for (const optionObj of wareqres.data.data) {
 				let optionElm = document.createElement('option');
 				optionElm.value = optionObj[filterObj['_options']['_getQuery']['_valueKey']];
 				optionElm.innerText = optionObj[filterObj['_options']['_getQuery']['_labelKey']];
-				optgroup.appendChild(optionElm);
+				selectElm.appendChild(optionElm);
 			}
 		} else {
 			myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
