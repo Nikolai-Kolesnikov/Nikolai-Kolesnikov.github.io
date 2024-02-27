@@ -221,7 +221,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 17');
+myLog('Версия 18');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -265,8 +265,15 @@ for (const filterObj of settingsObj[startappJson.action]['_filters']) {
 		if (((wareqres || {}).data || {}).status == 'OK') {
 			let headOption = document.createElement('option');
 			headOption.innerText = filterObj['_options']['_headOption']['_label'];
-			headOption.disabled = true;
+			//headOption.disabled = true;
 			selectElm.appendChild(headOption);
+			selectElm.addEventListener(
+				'click', 
+				(evt) => {
+					evt.currentTarget.options[0].disabled = true;
+				},
+				{once : true}
+			);
 
 			for (const optionObj of wareqres.data.data) {
 				let optionElm = document.createElement('option');
