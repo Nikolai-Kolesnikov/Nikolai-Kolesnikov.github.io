@@ -143,6 +143,11 @@ function renderTable(data) {
 									let rowidName = checkboxClicked.getAttribute('data-queryOnInput-rowidName');
 									let keyToSet = checkboxClicked.getAttribute('data-queryOnInput-key');
 									let valueToSet = checkboxClicked.getAttribute('data-queryOnInput-value');
+									if (valueToSet == 'CHECKED') {
+										valueToSet = checkboxClicked.checked;
+										myLog(valueToSet);
+									}
+
 									/*if (queryName) {
 										checkboxClicked.disabled = true;
 										try {
@@ -205,7 +210,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 10');
+myLog('Версия 11');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
