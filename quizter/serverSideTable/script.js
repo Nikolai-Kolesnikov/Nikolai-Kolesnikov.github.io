@@ -21,6 +21,7 @@ const settingsObj = {
 			},
 		],
 		'_table': {
+			'_rowidDataKey': 'quizSendid',
 			'_columns': [
 				{
 					'_label': 'Ответ',
@@ -110,6 +111,10 @@ function renderTable(data) {
 							label.className = 'switch';
 							cell.appendChild(label);
 							let checkbox = document.createElement('input');
+							checkbox.setAttribute(
+								'data-rowid', 
+								dataRow[settingsObj[startappJson['action']]['_table']['_rowidDataKey']]
+							);
 							checkbox.type = 'checkbox';
 							if (
 								typeof column['_queryOnInput'] === 'object' &&
@@ -138,44 +143,45 @@ function renderTable(data) {
 								'click', 
 								(evt) => {
 									let checkboxClicked = evt.currentTarget;
-									checkboxClicked.setAttribute('data-clicked', 'clicked');
 									let queryName = checkboxClicked.getAttribute('data-queryOnInput-name');
 									let rowidName = checkboxClicked.getAttribute('data-queryOnInput-rowidName');
 									let keyToSet = checkboxClicked.getAttribute('data-queryOnInput-key');
 									let valueToSet = checkboxClicked.getAttribute('data-queryOnInput-value');
 									if (valueToSet == 'CHECKED') {
 										valueToSet = checkboxClicked.checked;
-										myLog(valueToSet);
 									}
 
-									/*if (queryName) {
+									if (queryName) {
 										checkboxClicked.disabled = true;
 										try {
+											let rData = {
+												'initData': window.Telegram.WebApp.initData, 
+												'startappData': startappJson,
+												'type': queryName,
+												'data': {},
+											};
+											rData['data'][rowidName] = checkboxClicked.getAttribute('data-rowid');
+											rData['data'][keyToSet] = valueToSet;
 											let wareqres = await webappRequest(
 												'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
-												JSON.stringify({
-													'initData': window.Telegram.WebApp.initData, 
-													'startappData': startappJson,
-													'type': filterObj['_options']['_getQuery']['_name'],
-													
-												}),
+												JSON.stringify(rData),
 												[1, 2, 2, 5, 5]
 											);
-											myLog(`${filterObj['_options']['_getQuery']['_name']}: wareqres = ${JSON.stringify(wareqres)}`);
 											if (((wareqres || {}).data || {}).status == 'OK') {
-												for (const optionObj of wareqres.data.data) {
-													let optionElm = document.createElement('option');
-													optionElm.value = optionObj[filterObj['_options']['_getQuery']['_valueKey']];
-													optionElm.innerText = optionObj[filterObj['_options']['_getQuery']['_labelKey']];
-													selectElm.appendChild(optionElm);
-												}
+												checkboxClicked.setAttribute('data-clicked', 'clicked');
 											} else {
-												myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+												checkboxClicked.checked = !checkboxClicked.checked;
+												myLog(`Ошибка загрузки! Запрос ${queryName}`);
 											}	
 										} catch (err) {
-											myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+											checkboxClicked.checked = !checkboxClicked.checked;
+											myLog(`Ошибка загрузки! Запрос ${queryName}`);
 										}
-									}*/
+										checkboxClicked.disabled = false;
+									} else {
+										// Если не надо делать запрос на сервер, то сразу ставим атрибут 'clicked'
+										checkboxClicked.setAttribute('data-clicked', 'clicked');
+									}
 								}
 							);
 							label.appendChild(checkbox);
@@ -210,7 +216,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 11');
+myLog('Версия 12');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};

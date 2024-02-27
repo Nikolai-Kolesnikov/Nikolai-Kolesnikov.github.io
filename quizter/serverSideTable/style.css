@@ -53,6 +53,10 @@ input[data-clicked="clicked"] + .slider {
   background-color: red;
 }
 
+input:disabled + .slider {
+  background-color: grey;
+}
+
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
