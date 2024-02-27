@@ -141,7 +141,7 @@ function renderTable(data) {
 							}
 							checkbox.addEventListener(
 								'click', 
-								(evt) => {
+								async (evt) => {
 									let checkboxClicked = evt.currentTarget;
 									let queryName = checkboxClicked.getAttribute('data-queryOnInput-name');
 									let rowidName = checkboxClicked.getAttribute('data-queryOnInput-rowidName');
@@ -216,7 +216,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 12');
+myLog('Версия 13');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
