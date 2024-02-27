@@ -111,6 +111,16 @@ function renderTable(data) {
 							cell.appendChild(label);
 							let checkbox = document.createElement('input');
 							checkbox.type = 'checkbox';
+							if (
+								typeof column['_queryOnInput'] === 'object' &&
+								!Array.isArray(column['_queryOnInput']) &&
+								column['_queryOnInput'] !== null
+							) {
+								checkbox.setAttribute('data-queryOnInput-name', column['_queryOnInput']['_name']);
+								checkbox.setAttribute('data-queryOnInput-rowidName', column['_queryOnInput']['_rowidName']);
+								checkbox.setAttribute('data-queryOnInput-key', column['_queryOnInput']['_key']);
+								checkbox.setAttribute('data-queryOnInput-value', column['_queryOnInput']['_value']);
+							}
 							if (dataRow[column['_toggle4']['FIRM']] === true) {
 								checkbox.checked = true;
 								checkbox.setAttribute('data-clicked', 'clicked');
@@ -124,10 +134,15 @@ function renderTable(data) {
 								checkbox.checked = false;
 								checkbox.setAttribute('data-clicked', 'no');
 							}
+							checkbox.disabled = true;
 							checkbox.addEventListener(
 								'click', 
 								(evt) => {
-									evt.currentTarget.setAttribute('data-clicked', 'clicked');
+									let checkboxClicked = evt.currentTarget;
+									checkboxClicked.setAttribute('data-clicked', 'clicked');
+									if (checkboxClicked.getAttribute('data-queryOnInput-name')) {
+										
+									}
 								}
 							);
 							label.appendChild(checkbox);
@@ -162,7 +177,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 8');
+myLog('Версия 9');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
