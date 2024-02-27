@@ -134,16 +134,43 @@ function renderTable(data) {
 								checkbox.checked = false;
 								checkbox.setAttribute('data-clicked', 'no');
 							}
-							checkbox.disabled = true;
 							checkbox.addEventListener(
 								'click', 
 								(evt) => {
 									let checkboxClicked = evt.currentTarget;
-									myLog('toggle4 click');
 									checkboxClicked.setAttribute('data-clicked', 'clicked');
-									if (checkboxClicked.getAttribute('data-queryOnInput-name')) {
-										
-									}
+									let queryName = checkboxClicked.getAttribute('data-queryOnInput-name');
+									let rowidName = checkboxClicked.getAttribute('data-queryOnInput-rowidName');
+									let keyToSet = checkboxClicked.getAttribute('data-queryOnInput-key');
+									let valueToSet = checkboxClicked.getAttribute('data-queryOnInput-value');
+									/*if (queryName) {
+										checkboxClicked.disabled = true;
+										try {
+											let wareqres = await webappRequest(
+												'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+												JSON.stringify({
+													'initData': window.Telegram.WebApp.initData, 
+													'startappData': startappJson,
+													'type': filterObj['_options']['_getQuery']['_name'],
+													
+												}),
+												[1, 2, 2, 5, 5]
+											);
+											myLog(`${filterObj['_options']['_getQuery']['_name']}: wareqres = ${JSON.stringify(wareqres)}`);
+											if (((wareqres || {}).data || {}).status == 'OK') {
+												for (const optionObj of wareqres.data.data) {
+													let optionElm = document.createElement('option');
+													optionElm.value = optionObj[filterObj['_options']['_getQuery']['_valueKey']];
+													optionElm.innerText = optionObj[filterObj['_options']['_getQuery']['_labelKey']];
+													selectElm.appendChild(optionElm);
+												}
+											} else {
+												myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+											}	
+										} catch (err) {
+											myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+										}
+									}*/
 								}
 							);
 							label.appendChild(checkbox);
