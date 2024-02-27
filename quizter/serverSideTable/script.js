@@ -68,9 +68,10 @@ async function onFilterChange(evt) {
 		let rData = {
 			'initData': window.Telegram.WebApp.initData, 
 			'startappData': startappJson,
-			'type': filterObj['_options']['_selectQuery']['_name'],			
+			'type': filterObj['_options']['_selectQuery']['_name'],
+			'data': {},	
 		}
-		rData[filterObj['_options']['_selectQuery']['_key']] = evt.target.value;
+		rData['data'][filterObj['_options']['_selectQuery']['_key']] = evt.target.value;
 		let wareqres = await webappRequest(
 			'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 			JSON.stringify(rData),
@@ -132,7 +133,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 4');
+myLog('Версия 5');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
