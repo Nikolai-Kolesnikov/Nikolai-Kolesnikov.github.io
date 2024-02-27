@@ -115,7 +115,14 @@ function renderTable(data) {
 								checkbox.checked = true;
 								checkbox.setAttribute('data-clicked', 'clicked');
 							} else if (dataRow[column['_toggle4']['FIRM']] === false) {
-								
+								checkbox.checked = false;
+								checkbox.setAttribute('data-clicked', 'clicked');
+							} else if (dataRow[column['_toggle4']['SOFT']] === true) {
+								checkbox.checked = true;
+								checkbox.setAttribute('data-clicked', 'no');
+							} else if (dataRow[column['_toggle4']['SOFT']] === false) {
+								checkbox.checked = false;
+								checkbox.setAttribute('data-clicked', 'no');
 							}
 							checkbox.addEventListener(
 								'click', 
@@ -155,7 +162,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 7');
+myLog('Версия 8');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
