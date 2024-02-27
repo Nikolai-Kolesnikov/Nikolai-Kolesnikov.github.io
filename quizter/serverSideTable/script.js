@@ -139,6 +139,7 @@ function renderTable(data) {
 								'click', 
 								(evt) => {
 									let checkboxClicked = evt.currentTarget;
+									myLog('toggle4 click');
 									checkboxClicked.setAttribute('data-clicked', 'clicked');
 									if (checkboxClicked.getAttribute('data-queryOnInput-name')) {
 										
@@ -177,7 +178,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 9');
+myLog('Версия 10');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
