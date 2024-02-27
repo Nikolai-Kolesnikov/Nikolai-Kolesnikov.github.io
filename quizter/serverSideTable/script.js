@@ -111,6 +111,12 @@ function renderTable(data) {
 							cell.appendChild(label);
 							let checkbox = document.createElement('input');
 							checkbox.type = 'checkbox';
+							if (dataRow[column['_toggle4']['FIRM']] === true) {
+								checkbox.checked = true;
+								checkbox.setAttribute('data-clicked', 'clicked');
+							} else if (dataRow[column['_toggle4']['FIRM']] === false) {
+								
+							}
 							checkbox.addEventListener(
 								'click', 
 								(evt) => {
