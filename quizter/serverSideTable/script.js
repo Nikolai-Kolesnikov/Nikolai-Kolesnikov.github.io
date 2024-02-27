@@ -21,7 +21,7 @@ const settingsObj = {
 			},
 		],
 		'_table': {
-			'_rowidDataKey': 'quizSendid',
+			'_rowidDataKey': 'replyid',
 			'_columns': [
 				{
 					'_label': 'Ответ',
@@ -79,6 +79,7 @@ async function onFilterChange(evt) {
 			[1, 2, 2, 5, 5]
 		);
 		if (((wareqres || {}).data || {}).status == 'OK') {
+			myLog(JSON.stringify(wareqres.data.data));
 			switch (filterObj['_options']['_selectQuery']['_onSuccess']) {
 				case 'RENDER_TABLE':
 					renderTable(wareqres.data.data);
@@ -217,7 +218,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 13');
+myLog('Версия 15');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
