@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 123');
+myLog('Версия 124');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -188,10 +188,12 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 					[1, 2, 2, 5, 5]
 				);
 				if (((wareqres || {}).data || {}).status == 'OK') {
-					let dtValue = new Date(wareqres.data.data[obj.getQuery.keyToRead]);
-					dtValue = dtValue.toISOString();
-					dtValue = dtValue.slice(0,-5);	
-					dateTimePicker.value = dtValue;		
+					if (wareqres.data.data[obj.getQuery.keyToRead]) {
+						let dtValue = new Date(wareqres.data.data[obj.getQuery.keyToRead]);
+						dtValue = dtValue.toISOString();
+						dtValue = dtValue.slice(0,-5);	
+						dateTimePicker.value = dtValue;		
+					}
 				} else {
 					myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
 				}	
