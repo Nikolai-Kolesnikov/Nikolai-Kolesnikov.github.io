@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 122');
+myLog('Версия 123');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -175,7 +175,68 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 			min = min.slice(0, -5);
 		}
 		dateTimePicker.min = min;
-		
+		if (obj.getQuery) {
+			try {
+				let wareqres = await webappRequest(
+					'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+					JSON.stringify({
+						'initData': window.Telegram.WebApp.initData, 
+						'startappData': startappJson,
+						'type': obj.getQuery.name,
+						
+					}),
+					[1, 2, 2, 5, 5]
+				);
+				if (((wareqres || {}).data || {}).status == 'OK') {
+					let dtValue = new Date(wareqres.data.data[obj.getQuery.keyToRead]);
+					dtValue = dtValue.toISOString();
+					dtValue = dtValue.slice(0,-5);	
+					dateTimePicker.value = dtValue;		
+				} else {
+					myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
+				}	
+			} catch (err) {
+				myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
+			}
+		}
+		if (obj.setQuery) {
+			dateTimePicker.setAttribute('data-setQuery-name', obj.setQuery.name);
+			dateTimePicker.setAttribute('data-setQuery-keyToSet');
+			dateTimePicker.addEventListener(
+				'change', 
+				async (evt) => {
+					let inputChanged = evt.currentTarget;
+					inputChanged.disabled = true;
+					let queryName = inputChanged.getAttribute('data-setQuery-name');
+					let keyToSet = inputChanged.getAttribute('data-setQuery-keyToSet');
+					let valueToSet = inputChanged.value;
+					let rData = {
+						'initData': window.Telegram.WebApp.initData, 
+						'startappData': startappJson,
+						'type': queryName,
+						'data': {}
+					}
+					rData.data[keyToSet] = valueToSet;
+
+					try {
+						let wareqres = await webappRequest(
+							'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+							JSON.stringify(rData),
+							[1, 2, 2, 5, 5]
+						);
+						if (((wareqres || {}).data || {}).status == 'OK') {
+							//
+						} else {
+							myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
+						}	
+					} catch (err) {
+						myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
+					}
+					inputChanged.disabled = false;
+				}
+			);
+		}
+		div.appendChild(dateTimePicker);
 	}
 }
 
