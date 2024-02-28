@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 124');
+myLog('Версия 125');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -655,7 +655,7 @@ data = wareqRes['data'];
 if (settingsObj[startappJson.action]['queries']['getList']['rowidName']) {
 	data.map((entry) => entry['rowid'] = entry[settingsObj[startappJson.action]['queries']['getList']['rowidName']]);
 }
-//myLog(JSON.stringify(data) + '\nДанные загрузились!');
+myLog(JSON.stringify(data) + '\nДанные загрузились!');
 
 // Initiate table
 renderTable();
