@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 126');
+myLog('Версия 127');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -204,7 +204,7 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 		try {
 		if (obj.setQuery) {
 			dateTimePicker.setAttribute('data-setQuery-name', obj.setQuery.name);
-			dateTimePicker.setAttribute('data-setQuery-keyToSet');
+			dateTimePicker.setAttribute('data-setQuery-keyToSet', obj.setQuery.keyToSet);
 			dateTimePicker.addEventListener(
 				'change', 
 				async (evt) => {
