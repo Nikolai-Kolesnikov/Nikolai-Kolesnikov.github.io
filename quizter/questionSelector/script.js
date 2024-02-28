@@ -118,6 +118,15 @@ const settingsObj = {
 		},		
 	},
 	'viewSendingsForEvent': {
+		'aboveTable': [
+			{
+				type: 'dateTimePicker', 
+				params: {min: 'NOW', step: '1'}, 
+				label: 'Принимать ответы до:',
+				getQuery: {name: 'getDeadlineForReplies', keyToRead: 'repliesAcceptedUntil'}, 
+				setQuery: {name: 'setDeadlineForReplies', keyToSet: 'repliesAcceptedUntil'},
+			},
+		],
 		'columns': [
 			{dataKey: 'sendingDateTime', name: 'Дата отправки', parsingType: 'dateTimeString', width: '50%', sortable: 'dateTime'},
 			{dataKey: 'sendingSyntName', name: 'Сообщение', parsingType: '', width: '45%', sortable: 'alphabetic', searchable: 'yes'},
@@ -150,6 +159,26 @@ myLog(`searchableColumns = ${JSON.stringify(searchableColumns)}`);
 let data = [];
 
 let flag = {};
+
+// Добавляем DOM-элементы, определённые в aboveTable
+for (const obj of settingsObj[startappJson.action]['aboveTable']) {
+	let div = document.createElement('div');
+	document.getElementById('aboveTableDiv').appendChild(div);
+	if (obj['type'] == 'dateTimePicker') {
+		let dateTimePicker = document.createElement('input');
+		dateTimePicker.type = 'datetime-local';
+		dateTimePicker.step = obj.params.step;
+		let min = obj.params.min;
+		if (min == 'NOW') {
+			min = new Date(Date.now());
+			min = min.toISOString();
+			min = min.slice(0, -5);
+		}
+		dateTimePicker.min = min;
+		
+	}
+}
+
 
 const table = document.createElement('table');
 document.getElementById('mainTableDiv').appendChild(table);
@@ -549,6 +578,7 @@ function searchItems(searchStr) {
 	renderTable(); 
 } 
 
+// Загружаем данные для таблицы
 let wareqRes = await webappRequest(
 	'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
 	JSON.stringify({
@@ -564,8 +594,9 @@ if (settingsObj[startappJson.action]['queries']['getList']['rowidName']) {
 }
 //myLog(JSON.stringify(data) + '\nДанные загрузились!');
 
-
 // Initiate table
 renderTable();
+
+
 
 
