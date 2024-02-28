@@ -170,7 +170,7 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 		dateTimePicker.step = obj.params.step;
 		let min = obj.params.min;
 		if (min == 'NOW') {
-			min = new Date(Date.now());
+			min = new Date(Date.now()+3*60*60*1000);
 			min = min.toISOString();
 			min = min.slice(0, -5);
 		}
