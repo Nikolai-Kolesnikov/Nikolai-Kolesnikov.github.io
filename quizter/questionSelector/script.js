@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 125');
+myLog('Версия 126');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -201,6 +201,7 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 				myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
 			}
 		}
+		try {
 		if (obj.setQuery) {
 			dateTimePicker.setAttribute('data-setQuery-name', obj.setQuery.name);
 			dateTimePicker.setAttribute('data-setQuery-keyToSet');
@@ -237,6 +238,9 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 					inputChanged.disabled = false;
 				}
 			);
+		}
+		} catch (err) {
+			myLog(err.toString());
 		}
 		div.appendChild(dateTimePicker);
 	}
