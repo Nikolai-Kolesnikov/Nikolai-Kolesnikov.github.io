@@ -123,7 +123,7 @@ const settingsObj = {
 				type: 'dateTimePicker', 
 				params: {min: 'NOW', step: '1'}, 
 				label: 'Принимать ответы до:',
-				getQuery: {name: 'getDeadlineForReplies', keyToRead: 'repliesAcceptedUntil'}, 
+				getQuery: {name: 'getEvent', keyToRead: 'repliesAcceptedUntil'}, 
 				setQuery: {name: 'setDeadlineForReplies', keyToSet: 'repliesAcceptedUntil'},
 			},
 		],
