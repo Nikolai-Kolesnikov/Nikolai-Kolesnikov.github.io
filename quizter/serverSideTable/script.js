@@ -37,7 +37,7 @@ const settingsObj = {
 					'_parsingType': 'TOGGLE4',
 					'_toggle4': {'SOFT': 'isCorrectAuto', 'FIRM': 'isCorrectManual'},
 					'_queryOnInput': {
-						'_name':'updateUserReply',
+						'_name':'updateIdenticalReplies',
 						'_rowidName': 'replyid',
 						'_key': 'isCorrectManual',
 						'_value': 'CHECKED',
@@ -221,7 +221,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 18');
+myLog('Версия 19');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
