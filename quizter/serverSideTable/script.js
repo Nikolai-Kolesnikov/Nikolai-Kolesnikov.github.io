@@ -16,7 +16,7 @@ const settingsObj = {
 						'_label': '--- Выберите вопрос ---',
 					},
 					'_selectQuery': {
-						'_name': 'getRepliesFromAllUsersByQuizSendid',
+						'_name': 'getAggrRepliesFromAllUsersByQuizSendid',
 						'_key': 'quizSendid',
 						'_onSuccess': 'RENDER_TABLE',
 					},
@@ -221,7 +221,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 19');
+myLog('Версия 20');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
