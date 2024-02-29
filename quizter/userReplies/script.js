@@ -35,7 +35,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 						errorMsg += ' Закончилось время для подачи ответа.'
 						break;
 				}
-				addToSubmittedReplies('Ошибка отправки ответа!');
+				addToSubmittedReplies(errorMsg);
 			}
 		}
 	} catch (err) {
