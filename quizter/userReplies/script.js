@@ -32,7 +32,7 @@ async function onReplySubmitBtnClick(btn, evt) {
 				let errorMsg = 'Ошибка отправки ответа!';
 				switch (((wareqres || {}).data || {}).error) {
 					case 'QUIZ_REPLIES_DEADLINE_EXPIRED':
-						errorMsg += ' Закончилось время для подачи ответа.'
+						errorMsg += ' Закончилось время для подачи ответа.';
 						break;
 				}
 				addToSubmittedReplies(errorMsg);
@@ -91,7 +91,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 12');
+myLog('Версия 13');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
