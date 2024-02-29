@@ -29,6 +29,12 @@ async function onReplySubmitBtnClick(btn, evt) {
 				addToSubmittedReplies(replyText);
 			} else {
 				replyInput.value = replyText;
+				let errorMsg = 'Ошибка отправки ответа!';
+				switch (((wareqres || {}).data || {}).error) {
+					case 'QUIZ_REPLIES_DEADLINE_EXPIRED':
+						errorMsg += ' Закончилось время для подачи ответа.'
+						break;
+				}
 				addToSubmittedReplies('Ошибка отправки ответа!');
 			}
 		}
@@ -85,7 +91,7 @@ document.getElementById('dynamicDiv').appendChild(submittedRepliesDiv);
 //
     
 
-myLog('Версия 11');
+myLog('Версия 12');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
