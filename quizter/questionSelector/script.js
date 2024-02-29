@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 129');
+myLog('Версия 130');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -165,6 +165,9 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 	let div = document.createElement('div');
 	document.getElementById('aboveTableDiv').appendChild(div);
 	if (obj['type'] == 'dateTimePicker') {
+		let label = document.createElement('label');
+		label.innerText = obj.label;
+		div.appendChild(label);
 		let dateTimePicker = document.createElement('input');
 		dateTimePicker.type = 'datetime-local';
 		dateTimePicker.step = obj.params.step;
@@ -242,7 +245,7 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 		} catch (err) {
 			myLog(err.toString());
 		}
-		div.appendChild(dateTimePicker);
+		label.appendChild(dateTimePicker);
 	}
 }
 
