@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 133');
+myLog('Версия 134');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -218,8 +218,8 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 					let keyToSet = inputChanged.getAttribute('data-setQuery-keyToSet');
 					let valueToSet = inputChanged.value;
 					//valueToSet = new Date(new Date(valueToSet).getTime() - 3*60*60*1000);
-					valueToSet = valueToSet.toISOString();
-					valueToSet = valueToSet.slice(0,-5);
+					//valueToSet = valueToSet.toISOString();
+					//valueToSet = valueToSet.slice(0,-5);
 					let rData = {
 						'initData': window.Telegram.WebApp.initData, 
 						'startappData': startappJson,
