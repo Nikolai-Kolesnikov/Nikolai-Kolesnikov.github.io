@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 127');
+myLog('Версия 128');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -230,10 +230,10 @@ for (const obj of settingsObj[startappJson.action]['aboveTable']) {
 						if (((wareqres || {}).data || {}).status == 'OK') {
 							//
 						} else {
-							myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
+							myLog(`Ошибка загрузки! Запрос ${obj.setQuery.name}`);
 						}	
 					} catch (err) {
-						myLog(`Ошибка загрузки! Запрос ${obj.getQuery.name}`);
+						myLog(`Ошибка загрузки! Запрос ${obj.setQuery.name}`);
 					}
 					inputChanged.disabled = false;
 				}
