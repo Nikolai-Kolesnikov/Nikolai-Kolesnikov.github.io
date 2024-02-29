@@ -154,4 +154,29 @@ try {
 	replyFormHeading.innerText = 'Введите Ваш ответ';
 }
 
+/*
+// Запрашиваем сервер, не поздно ли ещё отвечать на вопрос
+try {	
+	let wareqres = await webappRequest(
+		'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+		JSON.stringify({
+			'initData': window.Telegram.WebApp.initData, 
+			'startappData': startappJson,
+			'type': 'getExpirationStatusForReplies',
+			
+		}),
+		[1, 2, 2, 5, 5]
+	);
+	if (((wareqres || {}).data || {}).status == 'OK') {
+		if (wareqres.data.data == 'EXPIRED') {
+			// 
+
+		}
+	} else {
+		// ничего не делаем
+	}	
+} catch (err) {
+	// ничего не делаем
+}
+*/
 
