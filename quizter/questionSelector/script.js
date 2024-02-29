@@ -6,7 +6,7 @@ function myLog(msg) {
 	logBox.innerText = curDate.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }) + ': ' + msg + '\n' + `${logBox.innerText || ''}`;
 }
 
-myLog('Версия 128');
+myLog('Версия 129');
 
 //myLog('window.Telegram.WebApp.initDataUnsafe.start_param = ' + window.Telegram.WebApp.initDataUnsafe.start_param);
 //myLog('window.location.search = ' + window.location.search);
@@ -124,7 +124,7 @@ const settingsObj = {
 				params: {min: 'NOW', step: '1'}, 
 				label: 'Принимать ответы до:',
 				getQuery: {name: 'getEvent', keyToRead: 'repliesAcceptedUntil'}, 
-				setQuery: {name: 'setDeadlineForReplies', keyToSet: 'repliesAcceptedUntil'},
+				setQuery: {name: 'updateEvent', keyToSet: 'repliesAcceptedUntil'},
 			},
 		],
 		'columns': [
