@@ -26,7 +26,7 @@ try {
 } catch (err) {	
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 }
-myLog('3startappJson = ' + JSON.stringify(startappJson));
+myLog('4startappJson = ' + JSON.stringify(startappJson));
 
 // Получаем лог сообщений
 try {
@@ -44,9 +44,8 @@ try {
 	if (((wareqres || {}).data || {}).status == 'ok') {
 		let entries = wareqres.data.data;
 		//repArr.sort((a, b) => Number(b['replyTimestamp']) - Number(a['replyTimestamp']));
-		myLog('Что-то получили');
 		for (const entry of entries) {
-			mainDiv.innerText = mainDiv.innerText || '' + entry.timestamp + (entry.event == 'out msg' ? '📤' : (entry.event == 'in msg' ? '📥' : '❓'))  + entry.body;
+			mainDiv.innerText = (mainDiv.innerText || '') + entry.timestamp + (entry.event == 'out msg' ? '📤' : (entry.event == 'in msg' ? '📥' : '❓'))  + entry.body;
 		}
 	} else {
 		myLog(`ОШИБКА! ${((wareqres || {}).data || {}).error}`);
