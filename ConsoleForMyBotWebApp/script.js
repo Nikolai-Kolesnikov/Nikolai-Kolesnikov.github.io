@@ -10,6 +10,7 @@ function myLog(msg) {
 // LAYOUT
 //
 let logBox = document.getElementById("logbox");
+let mainDiv = document.getElementById("dynamicDiv");
 
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
@@ -25,7 +26,7 @@ try {
 } catch (err) {	
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 }
-myLog('2startappJson = ' + JSON.stringify(startappJson));
+myLog('3startappJson = ' + JSON.stringify(startappJson));
 
 // Получаем лог сообщений
 try {
@@ -45,7 +46,7 @@ try {
 		//repArr.sort((a, b) => Number(b['replyTimestamp']) - Number(a['replyTimestamp']));
 		myLog('Что-то получили');
 		for (const entry of entries) {
-			myLog(entry.timestamp);
+			mainDiv.innerText = mainDiv.innerText || '' + entry.timestamp + (entry.event == 'out msg' ? '📤' : (entry.event == 'in msg' ? '📥' : '❓'))  + entry.body;
 		}
 	} else {
 		myLog(`ОШИБКА! ${((wareqres || {}).data || {}).error}`);
