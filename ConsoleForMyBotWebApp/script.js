@@ -45,7 +45,7 @@ try {
 		let entries = wareqres.data.data;
 		//repArr.sort((a, b) => Number(b['replyTimestamp']) - Number(a['replyTimestamp']));
 		for (const entry of entries) {
-			mainDiv.innerText = (mainDiv.innerText || '') + entry.timestamp + (entry.event == 'out msg' ? '📤' : (entry.event == 'in msg' ? '📥' : '❓'))  + entry.body;
+			mainDiv.innerText = (mainDiv.innerText || '') + entry.timestamp + (entry.event == 'out msg' ? '📤' : (entry.event == 'in msg' ? '📥' : '❓'))  + entry.body + '\n';
 		}
 	} else {
 		myLog(`ОШИБКА! ${((wareqres || {}).data || {}).error}`);
