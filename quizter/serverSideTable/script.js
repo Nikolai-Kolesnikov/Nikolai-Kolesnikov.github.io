@@ -47,6 +47,35 @@ const settingsObj = {
 			],
 		},
 	},
+	'msgLog': {
+		'_filters': [],
+		'_table': {
+			'_getQuery': 'requestMsgLog',
+			'_rowidDataKey': 'timestamp',
+			'_columns': [
+				{
+					'_label': 'Когда',
+					'_dataKey': 'timestamp',
+					'_parsingType': '',	
+					'_width': '45%',			
+				},
+				{
+					'_label': '',
+					'_dataKey': 'event',
+					'_parsingType': 'MAP',
+					'_map': {'_pairs': {'in msg': '🔰', 'out msg': '🔺'}, '_default': '❓'},
+					'_width': '5%',			
+				},
+				{
+					'_label': 'Сообщение',
+					'_dataKey': 'body',
+					'_parsingType': '',
+					'_width': '50%',			
+				},
+				
+			],
+		},
+	},
 }
 
 
@@ -108,6 +137,9 @@ function renderTable(data) {
 					case undefined:
 					case null:
 						cell.innerText = dataRow[column['_dataKey']];
+						break;
+					case 'MAP':
+						cell.innerText = column['_map']['_pairs'][dataRow[column['_dataKey']]] || column['_map']['_default'];
 						break;
 					case 'TOGGLE4':
 						{
@@ -221,7 +253,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 20');
+myLog('Версия 21');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -286,6 +318,33 @@ for (const filterObj of settingsObj[startappJson.action]['_filters']) {
 		}	
 	} catch (err) {
 		myLog(`Ошибка загрузки! Запрос ${filterObj['_options']['_getQuery']['_name']}`);
+	}
+}
+
+// Загружаем таблицу с сервера (если определён запрос)
+if (settingsObj[startappJson.action]['_table']['_getQuery']) {
+	try {
+		let rData = {
+			'bot': startappJson.bot || 'QuizterBot',
+			'initData': window.Telegram.WebApp.initData, 
+			'startappData': startappJson,
+			'type': settingsObj[startappJson.action]['_table']['_getQuery'],
+			
+		}
+		let wareqres = await webappRequest(
+			'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+			JSON.stringify(rData),
+			[1, 2, 2, 5, 5]
+		);
+		if ((((wareqres || {}).data || {}).status || 'x').toLowerCase() == 'ok') {
+			myLog(JSON.stringify(wareqres.data.status));
+			renderTable(wareqres.data.data);
+					
+		} else {
+			myLog(`Ошибка загрузки! Запрос ${settingsObj[startappJson.action]['_table']['_getQuery']}`);
+		}	
+	} catch (err) {
+		myLog(`Ошибка загрузки! Запрос ${settingsObj[startappJson.action]['_table']['_getQuery']}`);
 	}
 }
 
