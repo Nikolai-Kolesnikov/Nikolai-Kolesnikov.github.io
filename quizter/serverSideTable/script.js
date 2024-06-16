@@ -253,7 +253,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 22');
+myLog('Версия 23');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -346,6 +346,8 @@ if (settingsObj[startappJson.action]['_table']['_getQuery']) {
 		myLog(`Ошибка загрузки! Запрос ${settingsObj[startappJson.action]['_table']['_getQuery']}`);
 	}
 }
+
+myLog(JSON.stringify(window.Telegram));
 
 
 
