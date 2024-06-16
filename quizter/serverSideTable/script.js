@@ -253,7 +253,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 21');
+myLog('Версия 22');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -325,7 +325,6 @@ for (const filterObj of settingsObj[startappJson.action]['_filters']) {
 if (settingsObj[startappJson.action]['_table']['_getQuery']) {
 	try {
 		let rData = {
-			'bot': startappJson.bot || 'QuizterBot',
 			'initData': window.Telegram.WebApp.initData, 
 			'startappData': startappJson,
 			'type': settingsObj[startappJson.action]['_table']['_getQuery'],
