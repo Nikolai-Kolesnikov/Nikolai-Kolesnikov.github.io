@@ -126,7 +126,27 @@ async function onFilterChange(evt) {
 }
 
 function renderTable(data) {
+
 	while (table.rows.length > 0) table.deleteRow(-1);
+
+	let headRow = table.insertRow();
+	for (const column of settingsObj[startappJson['action']]['_table']['_columns']) {
+		let th = document.createElement('th');
+		//if (column.dataKey) {
+		//	th.id = column.dataKey;
+		//}
+		//if (column.sortable) {
+		//	th.setAttribute('data-sortable', column.sortable);
+		//	th.addEventListener("click", (evt) => {
+		//		sortItems(evt.currentTarget.id, evt.currentTarget.getAttribute('data-sortable'));		
+		//	});
+		//	flag[column.dataKey] = false;
+		//}
+		th.style.width = column['_width'];
+		th.innerText = column['_label'];
+		headRow.appendChild(th);		
+	}
+
 	for (const dataRow of data) {
 		let row = table.insertRow();
 		for (const column of settingsObj[startappJson['action']]['_table']['_columns']) {
@@ -253,7 +273,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 23');
+myLog('Версия 25');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -346,9 +366,6 @@ if (settingsObj[startappJson.action]['_table']['_getQuery']) {
 		myLog(`Ошибка загрузки! Запрос ${settingsObj[startappJson.action]['_table']['_getQuery']}`);
 	}
 }
-
-myLog(JSON.stringify(window.Telegram));
-
 
 
 
