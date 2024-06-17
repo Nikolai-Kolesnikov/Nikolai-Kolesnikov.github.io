@@ -47,6 +47,7 @@ const settingsObj = {
 			],
 		},
 	},
+	
 	'msgLog': {
 		'_filters': [],
 		'_table': {
