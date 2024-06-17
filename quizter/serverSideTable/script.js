@@ -285,7 +285,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 29');
+myLog('Версия 31');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -323,7 +323,6 @@ if (settingsObj[startappJson.action]['_customVars']) {
 					[1, 2, 2, 5, 5]
 				);
 				if ((((wareqres || {}).data || {}).status || 'x').toLowerCase() == 'ok') {
-					myLog(JSON.stringify(wareqres.data.data));
 					for (const key in wareqres.data.data) {
 						customVarsObj[ queryName ][ key ] = wareqres.data.data[key];
 					}
@@ -335,9 +334,15 @@ if (settingsObj[startappJson.action]['_customVars']) {
 				myLog(`Ошибка загрузки! Запрос ${queryName}`);
 			}
 		}
-
+		// Меняем каждый {{customVar}} на полученное значение custom var
+		settingsObj[startappJson.action]['_aboveTable'] = settingsObj[startappJson.action]['_aboveTable'].replaceAll(
+			`{{${customVar}}}`, 
+			customVarsObj[queryName][ settingsObj[startappJson.action]['_customVars'][customVar]['_key'] ]
+		);
 	}
 }
+
+
 
 // Добавляем блок aboveTable, если он определён
 if (settingsObj[startappJson.action]['_aboveTable']) {
