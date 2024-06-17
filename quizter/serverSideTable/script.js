@@ -63,7 +63,7 @@ const settingsObj = {
 					'_label': '',
 					'_dataKey': 'event',
 					'_parsingType': 'MAP',
-					'_map': {'_pairs': {'in msg': '🔰', 'out msg': '🔺'}, '_default': '❓'},
+					'_map': {'_pairs': {'in msg': '<img src="greenArrowDown.png">', 'out msg': '🔺'}, '_default': '❓'},
 					'_width': '5%',			
 				},
 				{
@@ -273,7 +273,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 25');
+myLog('Версия 26');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
