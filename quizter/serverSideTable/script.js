@@ -323,7 +323,7 @@ if (settingsObj[startappJson.action]['_customVars']) {
 					[1, 2, 2, 5, 5]
 				);
 				if ((((wareqres || {}).data || {}).status || 'x').toLowerCase() == 'ok') {
-					myLog(JSON.stringify(wareqres.data.status));
+					myLog(JSON.stringify(wareqres.data.data));
 					for (const key in wareqres.data.data) {
 						customVarsObj[ queryName ][ key ] = wareqres.data.data[key];
 					}
