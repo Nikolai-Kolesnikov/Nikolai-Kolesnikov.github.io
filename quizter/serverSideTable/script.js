@@ -159,7 +159,7 @@ function renderTable(data) {
 						cell.innerText = dataRow[column['_dataKey']];
 						break;
 					case 'MAP':
-						cell.innerText = column['_map']['_pairs'][dataRow[column['_dataKey']]] || column['_map']['_default'];
+						cell.innerHTML = column['_map']['_pairs'][dataRow[column['_dataKey']]] || column['_map']['_default'];
 						break;
 					case 'TOGGLE4':
 						{
@@ -273,7 +273,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 26');
+myLog('Версия 27');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
