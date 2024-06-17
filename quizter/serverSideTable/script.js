@@ -49,6 +49,13 @@ const settingsObj = {
 	},
 
 	'msgLog': {
+		'_aboveTable': '<b>{{tlgid}}</b> {{firstName}} {{lastName}}<br>Переход от <b>{{fromPartner}}</b>',
+		'_customVars': {
+			'tlgid': {'_getQuery': 'getUserByBotTlgid', '_key': 'tlgid'},
+			'firstName': {'_getQuery': 'getUserByBotTlgid', '_key': 'firstName'},
+			'lastName': {'_getQuery': 'getUserByBotTlgid', '_key': 'lastName'},
+			'fromPartner': {'_getQuery': 'getUserByBotTlgid', '_key': 'fromPartner'},
+		},
 		'_filters': [],
 		'_table': {
 			'_getQuery': 'requestMsgLog',
@@ -259,6 +266,9 @@ function renderTable(data) {
 //
 let logBox = document.getElementById("logbox");
 
+let aboveTableDiv = document.createElement('div');
+aboveTableDiv.style.visibility = 'hidden';
+
 let filtersContainer = document.createElement('div');
 filtersContainer.style.visibility = 'hidden';
 
@@ -266,6 +276,7 @@ let tableContainer = document.createElement('div');
 
 let table = document.createElement('table');
 
+document.getElementById('dynamicDiv').appendChild(aboveTableDiv);
 document.getElementById('dynamicDiv').appendChild(filtersContainer);
 document.getElementById('dynamicDiv').appendChild(tableContainer);
 tableContainer.appendChild(table);
@@ -274,7 +285,7 @@ tableContainer.appendChild(table);
 //
     
 
-myLog('Версия 28');
+myLog('Версия 29');
 
 // Выявляем стартовые параметры, с которыми была вызвана webApp, и заносим их в объект startappJson
 let startappJson = {};
@@ -290,6 +301,51 @@ try {
 	myLog('Неверный или отсутствует параметр startapp\n' + err);
 }
 myLog('startappJson = ' + JSON.stringify(startappJson));
+
+// Получаем значения custom vars
+let customVarsObj = {};
+if (settingsObj[startappJson.action]['_customVars']) {
+
+	for (const customVar in settingsObj[startappJson.action]['_customVars']) {
+		let queryName = settingsObj[startappJson.action]['_customVars'][customVar]['_getQuery'];
+		if (!customVarsObj[ queryName ]) {
+			customVarsObj[ queryName ] = {};
+			try {
+				let rData = {
+					'initData': window.Telegram.WebApp.initData, 
+					'startappData': startappJson,
+					'type': queryName,
+					
+				}
+				let wareqres = await webappRequest(
+					'https://functions.yandexcloud.net/d4e05ufk7qv7aq1cepqf', 
+					JSON.stringify(rData),
+					[1, 2, 2, 5, 5]
+				);
+				if ((((wareqres || {}).data || {}).status || 'x').toLowerCase() == 'ok') {
+					myLog(JSON.stringify(wareqres.data.status));
+					for (const key in wareqres.data.data) {
+						customVarsObj[ queryName ][ key ] = wareqres.data.data[key];
+					}
+							
+				} else {
+					myLog(`Ошибка загрузки! Запрос ${queryName}`);
+				}	
+			} catch (err) {
+				myLog(`Ошибка загрузки! Запрос ${queryName}`);
+			}
+		}
+
+	}
+}
+
+// Добавляем блок aboveTable, если он определён
+if (settingsObj[startappJson.action]['_aboveTable']) {
+	if (aboveTableDiv.style.visibility == 'hidden') {
+		aboveTableDiv.style.visibility = 'visible';
+	}
+	aboveTableDiv.innerHTML = settingsObj[startappJson.action]['_aboveTable'];
+}
 
 // Добавляем блок "фильтры" исходя из параметров startappJson
 for (const filterObj of settingsObj[startappJson.action]['_filters']) {
